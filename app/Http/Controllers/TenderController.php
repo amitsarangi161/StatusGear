@@ -105,7 +105,7 @@ public function viewalltenders()
            $tender->keypositionbemanaged=$request->keypositionbemanaged;
            $tender->projectdurationsufficient=$request->projectdurationsufficient;
            $tender->localofficesetup=$request->localofficesetup;
-           $tender->recomended=$request->recomended;
+          
            $tender->paymentscheduleclear=$request->paymentscheduleclear;
            $tender->paymentscheduleambiguty=$request->paymentscheduleambiguty;
            $tender->penalityclause=$request->penalityclause;
@@ -189,7 +189,6 @@ public function viewalltenders()
            $tender->keypositionbemanaged=$request->keypositionbemanaged;
            $tender->projectdurationsufficient=$request->projectdurationsufficient;
            $tender->localofficesetup=$request->localofficesetup;
-           $tender->recomended=$request->recomended;
            $tender->paymentscheduleclear=$request->paymentscheduleclear;
            $tender->paymentscheduleambiguty=$request->paymentscheduleambiguty;
            $tender->penalityclause=$request->penalityclause;
@@ -228,7 +227,6 @@ public function viewalltenders()
            $tender->keypositionbemanaged=$request->keypositionbemanaged;
            $tender->projectdurationsufficient=$request->projectdurationsufficient;
            $tender->localofficesetup=$request->localofficesetup;
-           $tender->recomended=$request->recomended;
            $tender->paymentscheduleclear=$request->paymentscheduleclear;
            $tender->paymentscheduleambiguty=$request->paymentscheduleambiguty;
            $tender->penalityclause=$request->penalityclause;
@@ -335,6 +333,7 @@ public function viewalltenders()
                 $tender=tender::find($id);
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
+                $tender->recomended=$request->recomended;
                 $tender->workvalue=$request->workvalue;
                 $tender->nitpublicationdate=$request->nitpublicationdate;
                 $tender->source=$request->source;
@@ -611,6 +610,7 @@ public function viewalltenders()
                 $tender=new tender();
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
+                $tender->recomended=$request->recomended;
                 $tender->workvalue=$request->workvalue;
                 $tender->nitpublicationdate=$request->nitpublicationdate;
                 $tender->source=$request->source;
