@@ -55,6 +55,40 @@ class ApiController extends Controller
         return response()->json($attendance);
 
      }
+
+    public function saveattendancetest(Request $request)
+     {
+        header('Access-Control-Allow-Origin: *');
+        header( 'Access-Control-Allow-Headers: Authorization, Content-Type' );
+       
+        
+        
+        $get_result_arr = json_decode($request->getContent(), true);
+        $countdata=0;
+        $count=sizeof($get_result_arr['locations']);
+        
+        for ($i=0; $i < $count; $i++) { 
+
+        $attendance=new attendance();
+        $attendance->userid=$get_result_arr['userid'];
+        $attendance->deviceid=$get_result_arr['deviceid'];
+        $attendance->present=$get_result_arr['locations'][$i]['present'];
+        $attendance->latitude=$get_result_arr['locations'][$i]['latitude'];
+        $attendance->longitude=$get_result_arr['locations'][$i]['longitude'];
+        $attendance->battery=$get_result_arr['locations'][$i]['battery'];
+        $attendance->time=$get_result_arr['locations'][$i]['time'];
+        $attendance->mode=$get_result_arr['locations'][$i]['mode'];
+        $attendance->save();
+        ++$countdata;
+
+        }
+        
+        $data=['statuscode'=>200,'noofdatasaved'=>$countdata,'msg'=>'success'];
+
+        return response()->json($data);
+
+
+     }
      public function savetraveldetails(Request $request)
      {
          header('Access-Control-Allow-Origin: *');

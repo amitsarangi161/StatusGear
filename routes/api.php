@@ -16,7 +16,10 @@ use App\User;
 Route::post('/authenticateuser','ApiController@authenticateuser');
 Route::post('/saveuserlocation','ApiController@saveuserlocation');
 Route::post('/savetraveldetails','ApiController@savetraveldetails');
+
 Route::post('/saveattendance','ApiController@saveattendance');
+Route::post('/saveattendancetest','ApiController@saveattendancetest');
+
 Route::post('/saveuser','ApiController@saveuser');
 Route::get('/getusers/{id}','ApiController@getusers');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
