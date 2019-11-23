@@ -66,7 +66,7 @@ class ApiController extends Controller
         $get_result_arr = json_decode($request->getContent(), true);
         $countdata=0;
         $count=sizeof($get_result_arr['locations']);
-        
+
         for ($i=0; $i < $count; $i++) { 
 
         $attendance=new attendance();
@@ -82,6 +82,7 @@ class ApiController extends Controller
         ++$countdata;
 
         }
+        //done
         
         $data=['statuscode'=>200,'noofdatasaved'=>$countdata,'msg'=>'success'];
 

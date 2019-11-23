@@ -18,6 +18,7 @@ Route::post('/saveuserlocation','ApiController@saveuserlocation');
 Route::post('/savetraveldetails','ApiController@savetraveldetails');
 
 Route::post('/saveattendance','ApiController@saveattendance');
+/*Test Api*/
 Route::post('/saveattendancetest','ApiController@saveattendancetest');
 
 Route::post('/saveuser','ApiController@saveuser');
