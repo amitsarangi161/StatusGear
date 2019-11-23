@@ -109,9 +109,6 @@ class HomeController extends Controller
     {
         $document=document::find($id);
 
-        
-       
-
         return view('singledocumentview',compact('document'));
     }
 
