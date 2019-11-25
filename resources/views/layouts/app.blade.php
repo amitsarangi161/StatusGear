@@ -934,7 +934,7 @@ var jqf = $.noConflict();
   $('.datatable').DataTable({
 
      "order": [[ 0, "desc" ]],
-     "iDisplayLength": 25
+     "iDisplayLength": 10
   });
 
 
