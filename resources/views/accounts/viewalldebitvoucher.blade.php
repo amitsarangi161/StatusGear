@@ -4,7 +4,7 @@
 @inject('provider', 'App\Http\Controllers\AccountController')
 
 <div style="overflow-x:auto;">
-<table class="table table-responsive table-hover table-bordered table-striped datatable" style="width: 100%;">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescroll" style="width: 100%;">
 	<thead>
 		<tr class="bg-navy">
 		<th>Id</th>
