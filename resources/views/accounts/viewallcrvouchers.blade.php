@@ -2,7 +2,7 @@
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
 <style type="text/css">
-<style type="text/css">
+
 	    .b {
     white-space: nowrap; 
     width: 120px; 
