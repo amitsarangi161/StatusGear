@@ -38,7 +38,7 @@
 	<tbody>
 		@foreach($bills as $bill)
 		<tr>
-		<td><a href="/printbill/{{$bill->id}}" target="_blank" class="btn btn-success">{{$bill->id}}</a></td>
+		<td><a href="/printinvoice/{{$bill->id}}" target="_blank" class="btn btn-success">{{$bill->id}}</a></td>
 		<td>{{$bill->fullinvno}}</td>
 		<td>{{$bill->clientname}}</td>
 		<td><p class="b" title="{{$bill->nameofthework}}">{{$bill->nameofthework}}</p></td>
@@ -57,7 +57,7 @@
 		@else
          <td><button type="button" disabled="" class="btn btn-warning">DONE</button></td>
 		@endif
-		<td class="text-center" style="font-size: 20px;"><a href="/printbill/{{$bill->id}}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a></td>
+		<td class="text-center" style="font-size: 20px;"><a href="/printinvoice/{{$bill->id}}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a></td>
   
 	   </tr>
 		@endforeach

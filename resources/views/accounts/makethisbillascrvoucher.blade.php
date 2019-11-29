@@ -25,34 +25,30 @@
 		<td width="15%"><strong>NAME OF THE WORK</strong></td>
 		<td width="35%">
 			<input type="hidden" name="projectid" id="projectid" value="{{$billheader->projectid}}">
-         <select name="nameofthework" id="nameofthework" class="form-control select2" onchange="fetchdata();" required="">
-         	 <option value="">Select a Project</option>
-         	 @foreach($projects as $project)
-              <option value="{{$project->projectname}}" clientname="{{$project->clientname}}" address="{{$project->officeaddress}}" gstn="{{$project->gstn}}" panno="{{$project->panno}}" contactno="{{$project->contactno}}" projectid="{{$project->id}}" email="{{$project->email}}" {{ ( $billheader->projectid == $project->id) ? 'selected' : '' }}>{{$project->projectname}}</option>
-         	 @endforeach
-         </select>
+       
+         <textarea name="nameofthework"  placeholder="Work Name" id="now" class="form-control" readonly="">{{$billheader->nameofthework}}</textarea>
 
 		 </td>
 		<td width="15%"><strong>ADDRESS:</strong></td>
-		<td width="35%"><textarea name="address" id="address" class="form-control" placeholder="Enter Address Here" required="">{{$billheader->address}}</textarea></td>
+		<td width="35%"><textarea name="address" id="address" class="form-control" placeholder="Enter Address Here" readonly="" required="">{{$billheader->address}}</textarea></td>
 	</tr>
 		<tr>
 		<td width="15%"><strong>CLIENT NAME:</strong></td>
-		<td width="35%"><input type="text" name="clientname" id="clientname" placeholder="Enter Client Name Here" class="form-control" value="{{$billheader->clientname}}" required=""></td>
+		<td width="35%"><input type="text" name="clientname" id="clientname" placeholder="Enter Client Name Here" readonly="" class="form-control" value="{{$billheader->clientname}}" required=""></td>
 		<td width="15%"><strong>CLIENT EMAIL:</strong></td>
-		<td width="35%"><input type="email" value="{{$billheader->email}}" name="email" id="email" class="form-control" placeholder="Enter Client Email Here"></td>
+		<td width="35%"><input type="email" readonly="" value="{{$billheader->email}}" name="email" id="email" class="form-control" placeholder="Enter Client Email Here"></td>
 	</tr>
 	<tr>
 		<td width="15%"><strong>GST NO:</strong></td>
-		<td width="35%"><input type="text" value="{{$billheader->gstno}}" name="gstno" id="gstno" class="form-control" placeholder="Enter GST no Here"></td>
+		<td width="35%"><input type="text" value="{{$billheader->gstno}}" name="gstno" id="gstno" class="form-control" readonly="" placeholder="Enter GST no Here"></td>
 		<td width="15%"><strong>PAN NO:</strong></td>
-		<td width="35%"><input type="text" value="{{$billheader->panno}}" name="panno" id="panno" class="form-control" placeholder="Enter PAN no Here"></td>
+		<td width="35%"><input type="text" value="{{$billheader->panno}}" name="panno" id="panno" class="form-control" readonly="" placeholder="Enter PAN no Here"></td>
 	</tr>
 	<tr>
 		<td width="15%"><strong>CONTACT NO:</strong></td>
-		<td width="35%"><input type="text" name="contactno" id="contactno" class="form-control" value="{{$billheader->contactno}}" placeholder="Enter Contact No Here"></td>
+		<td width="35%"><input type="text" name="contactno" id="contactno" class="form-control" value="{{$billheader->contactno}}" readonly="" placeholder="Enter Contact No Here"></td>
 		<td width="15%"><strong>FAX:</strong></td>
-		<td width="35%"><input type="text" name="fax" value="{{$billheader->fax}}" class="form-control" placeholder="Enter FAX No Here"></td>
+		<td width="35%"><input type="text" name="fax" value="{{$billheader->fax}}" class="form-control" placeholder="Enter FAX No Here" readonly=""></td>
 	</tr>
 
 	<tr>
@@ -66,12 +62,13 @@
 	   
 		<td width="15%"><strong>BILL FROM(STEPL/SA)</strong></td>
 		<td width="35%">
-			<select name="company" required="" class="form-control">
+			<!-- <select name="company" required="" class="form-control">
 				<option value="">Select a Company</option>
 				<option value="SA" {{ ( $billheader->company == 'SA') ? 'selected' : '' }}>SA</option>
 				<option value="STEPL" {{ ( $billheader->company == 'STEPL') ? 'selected' : '' }}>STEPL</option>
 				<option value="STECS" {{ ( $billheader->company == 'STECS') ? 'selected' : '' }}>STECS</option>
-		    </select>
+		    </select> -->
+		    <input type="text" class="form-control" name="company" readonly="" value="{{$billheader->company}}">
 	</td>
 	</tr>
 	
@@ -119,7 +116,7 @@
 			 <td><input type="text" id="rate" class="form-control cal"></td>
 			 <td><input type="text" id="qty" class="form-control cal"></td>
 			 <td><input type="text" id="amount" class="form-control" readonly=""></td>
-			  <td><button type="button" id="addnew" class="addauthor btn btn-primary">ADD</button></td>
+			  <td><button type="button" id="addnew" disabled="" class="addauthor btn btn-primary">ADD</button></td>
 
 			
 		    </tr>
@@ -156,7 +153,7 @@
           <td class="col-md-1">{{$billitem->quantity}}<input type="hidden" name="qty[]" value="{{$billitem->quantity}}" class="cal"/></td>
     	  <td class="col-md-1">{{$billitem->amount}}<input type="hidden" name="amount[]" class="countable" value="{{$billitem->amount}}" class="calcin"/></td>
 
-    	  <td><button type="button" class="btn btn-danger remove_field">X</button></td></tr>
+    	  <td><button type="button" disabled="" class="btn btn-danger remove_field">X</button></td></tr>
            
 
         @endforeach							 
@@ -308,6 +305,7 @@
     		<td>
     			<select name="creditedinacc" class="form-control">
     				<option value="">Select A Bank Account</option>
+    				<option value="CASH">CASH</option>
     				@foreach($bankaccounts as $bankaccount)
     				<option value="{{$bankaccount->id}}">{{$bankaccount->bankname}}(AC No:-{{$bankaccount->acno}} )</option>
     				@endforeach
@@ -317,9 +315,13 @@
     		<td><input type="text" name="creditedamt" class="form-control" placeholder="Credited Amount"></td>
     	</tr>
     	<tr>
+    		<td><strong>CREDITED DATE</strong></td>
+    		<td><input type="text" class="form-control datepicker readonly" name="crediteddate"></td>
     		<td><strong>BANK DEDUCTION CHARGES</strong></td>
     		<td><input type="text" name="deductioncrg" class="form-control" placeholder="Enter Bank Deduction Charges"></td>
     	</tr>
+    	<td><strong>NOTES</strong></td>
+    	<td><textarea class="form-control" name="notes"></textarea></td>
     	
     </table>
 

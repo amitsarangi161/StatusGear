@@ -293,6 +293,8 @@ class AccountController extends Controller
  public function saveascreditvoucher(Request $request,$id)
  {
 
+  //return $request->all();
+
       //return $request->all();
       /*     $invoicedate=date("Y-m-d");
        
@@ -382,9 +384,20 @@ class AccountController extends Controller
       $crvoucherheader->discountvalue=$request->discountvalue;
       $crvoucherheader->totaldeduction=$request->totdeduct;
 
-      $crvoucherheader->creditedinacc=$request->creditedinacc;
+     
       $crvoucherheader->creditedamt=$request->creditedamt;
       $crvoucherheader->deductioncrg=$request->deductioncrg;
+      $crvoucherheader->notes=$request->notes;
+      $crvoucherheader->crediteddate=$request->crediteddate;
+      if ($request->creditedinacc=='CASH') {
+         $crvoucherheader->typeofpayment='CASH';
+         $crvoucherheader->creditedinacc='';
+        
+      }
+      else
+      {
+        $crvoucherheader->creditedinacc=$request->creditedinacc;
+      }
 
       $crvoucherheader->save();
 
@@ -394,8 +407,8 @@ class AccountController extends Controller
 
       $crvoucherid=$crvoucherheader->id;
 
-
-      $countdeduct=count($request->deductionname);
+if ($request->deductionname) {
+  $countdeduct=count($request->deductionname);
 
       for ($i=0; $i < $countdeduct; $i++) { 
       $creditvoucherdeduction=new creditvoucherdeduction();
@@ -406,6 +419,8 @@ class AccountController extends Controller
 
       $creditvoucherdeduction->save();
       }
+}
+      
 
      
 
@@ -578,7 +593,7 @@ public function viewallinvoicenos()
    }
    public function updatecreditvoucher(Request $request,$id)
    {
-      $invoicedate=date("Y-m-d");
+     /* $invoicedate=date("Y-m-d");
        
       $invdate=$invoicedate." 00:00:00";
       $year =Carbon::createFromFormat('Y-m-d H:i:s', $invdate)->year;
@@ -612,7 +627,7 @@ public function viewallinvoicenos()
       else
       {
           $invno=1;
-      }
+      }*/
       $crvoucherheader=crvoucherheader::find($id);
       $crvoucherheader->projectid=$request->projectid;
       $crvoucherheader->clientname=$request->clientname;
@@ -623,7 +638,7 @@ public function viewallinvoicenos()
       $crvoucherheader->fax=$request->fax;
       $crvoucherheader->nameofthework=$request->nameofthework;
       $crvoucherheader->address=$request->address;
-      $crvoucherheader->invoicedate=$invoicedate;
+      //$crvoucherheader->invoicedate=$invoicedate;
       $crvoucherheader->cgstrate=$request->cgstrate;
       $crvoucherheader->cgstvalue=$request->cgstvalue;
       $crvoucherheader->sgstrate=$request->sgstrate;
@@ -643,6 +658,20 @@ public function viewallinvoicenos()
       $crvoucherheader->discount=$request->discount;
       $crvoucherheader->discountvalue=$request->discountvalue;
       $crvoucherheader->totaldeduction=$request->totdeduct;
+
+      $crvoucherheader->creditedamt=$request->creditedamt;
+      $crvoucherheader->deductioncrg=$request->deductioncrg;
+      $crvoucherheader->notes=$request->notes;
+      $crvoucherheader->crediteddate=$request->crediteddate;
+      if ($request->creditedinacc=='CASH') {
+         $crvoucherheader->typeofpayment='CASH';
+         $crvoucherheader->creditedinacc='';
+        
+      }
+      else
+      {
+        $crvoucherheader->creditedinacc=$request->creditedinacc;
+      }
 
       $crvoucherheader->save();
 
@@ -682,6 +711,11 @@ public function viewallinvoicenos()
    }
   public function editcrvouchers($id)
   {
+
+     $bankaccounts=useraccount::select('useraccounts.*','banks.bankname')
+                    ->leftJoin('banks','useraccounts.bankid','banks.id')
+                    ->where('type','COMPANY')
+                    ->get();
      $crvoucherheader=crvoucherheader::find($id);
      $deductiondefinations=deductiondefination::all();
      $crvoucheritems=crvoucheritem::select('crvoucheritems.*','units.unitname')
@@ -701,7 +735,8 @@ public function viewallinvoicenos()
                   ->where('headerid',$id)
                   ->get();
 
-      return view('accounts.editcrvouchers',compact('crvoucherheader','deductiondefinations','crvoucheritems','deductions','discounts','projects','hsncodes','units'));
+      return view('accounts.editcrvouchers',compact('crvoucherheader','deductiondefinations','crvoucheritems','deductions','discounts','projects','hsncodes','units','bankaccounts'));
+
 
 
   }
@@ -777,9 +812,10 @@ public function viewallinvoicenos()
                        ->get();
       //$this->no_to_words($crvoucherheader->netpayable);
         $amountinword=$this->getIndianCurrency($crvoucherheader->netpayable);
+        $recivedamountinword=$this->getIndianCurrency($crvoucherheader->creditedamt);
         $crvouchersetup=crsetup::where('for',$crvoucherheader->company)->first();
        // return AccountController::moneyFormatIndia($crvoucherheader->netpayable);
-        return view('invoice',compact('crvoucherheader','deductions','crvoucheritems','crvouchersetup','amountinword'));
+        return view('invoice',compact('crvoucherheader','deductions','crvoucheritems','crvouchersetup','amountinword','recivedamountinword'));
   } 
 
    public function printbill($id){

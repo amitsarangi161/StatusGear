@@ -578,7 +578,7 @@ jQuery('#addnew').click(function(event){
 	{
     event.preventDefault();
     counter++;
-    alert(Number.parseFloat(amount).toFixed(2));
+   
     var newRow = jQuery('<tr>'+
     	  '<td class="col-md-1">'+slno+'<input type="hidden" name="slno[]" value="'+slno+'"></td>'+
     	 '<td class="col-md-5">'+workdetails+'<input type="hidden" name="workdetails[]" value="'+workdetails+'"></td>'+

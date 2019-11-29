@@ -25,45 +25,42 @@
 		<td width="15%"><strong>NAME OF THE WORK</strong></td>
 		<td width="35%">
 			<input type="hidden" name="projectid" id="projectid" value="{{$crvoucherheader->projectid}}">
-         <select name="nameofthework" id="nameofthework" class="form-control select2" onchange="fetchdata();" required="">
-         	 <option value="">Select a Project</option>
-         	 @foreach($projects as $project)
-              <option value="{{$project->projectname}}" clientname="{{$project->clientname}}" address="{{$project->officeaddress}}" gstn="{{$project->gstn}}" panno="{{$project->panno}}" contactno="{{$project->contactno}}" projectid="{{$project->id}}" email="{{$project->email}}" {{ ( $crvoucherheader->projectid == $project->id) ? 'selected' : '' }}>{{$project->projectname}}</option>
-         	 @endforeach
-         </select>
+        <textarea name="nameofthework"  placeholder="Work Name" id="now" class="form-control" readonly="">{{$crvoucherheader->nameofthework}}</textarea>
 
 		 </td>
 		<td width="15%"><strong>ADDRESS:</strong></td>
-		<td width="35%"><textarea name="address" id="address" class="form-control" placeholder="Enter Address Here" required="">{{$crvoucherheader->address}}</textarea></td>
+		<td width="35%"><textarea name="address" id="address" class="form-control" placeholder="Enter Address Here" readonly="" required="">{{$crvoucherheader->address}}</textarea></td>
 	</tr>
 		<tr>
 		<td width="15%"><strong>CLIENT NAME:</strong></td>
-		<td width="35%"><input type="text" name="clientname" id="clientname" placeholder="Enter Client Name Here" class="form-control" value="{{$crvoucherheader->clientname}}" required=""></td>
+		<td width="35%"><input type="text" readonly="" name="clientname" id="clientname" placeholder="Enter Client Name Here" class="form-control" value="{{$crvoucherheader->clientname}}" readonly="" required=""></td>
 		<td width="15%"><strong>CLIENT EMAIL:</strong></td>
-		<td width="35%"><input type="email" value="{{$crvoucherheader->email}}" name="email" id="email" class="form-control" placeholder="Enter Client Email Here"></td>
+		<td width="35%"><input type="email" value="{{$crvoucherheader->email}}" name="email" id="email" class="form-control" readonly="" placeholder="Enter Client Email Here"></td>
 	</tr>
 	<tr>
 		<td width="15%"><strong>GST NO:</strong></td>
-		<td width="35%"><input type="text" value="{{$crvoucherheader->gstno}}" name="gstno" id="gstno" class="form-control" placeholder="Enter GST no Here"></td>
+		<td width="35%"><input type="text" value="{{$crvoucherheader->gstno}}" name="gstno" id="gstno" class="form-control" readonly="" placeholder="Enter GST no Here"></td>
 		<td width="15%"><strong>PAN NO:</strong></td>
-		<td width="35%"><input type="text" value="{{$crvoucherheader->panno}}" name="panno" id="panno" class="form-control" placeholder="Enter PAN no Here"></td>
+		<td width="35%"><input type="text" value="{{$crvoucherheader->panno}}" name="panno" id="panno" class="form-control" readonly="" placeholder="Enter PAN no Here"></td>
 	</tr>
 	<tr>
 		<td width="15%"><strong>CONTACT NO:</strong></td>
-		<td width="35%"><input type="text" name="contactno" id="contactno" class="form-control" value="{{$crvoucherheader->contactno}}" placeholder="Enter Contact No Here"></td>
+		<td width="35%"><input type="text" name="contactno" id="contactno" class="form-control" value="{{$crvoucherheader->contactno}}" readonly="" placeholder="Enter Contact No Here"></td>
 		<td width="15%"><strong>FAX:</strong></td>
-		<td width="35%"><input type="text" name="fax" value="{{$crvoucherheader->fax}}" class="form-control" placeholder="Enter FAX No Here"></td>
+		<td width="35%"><input type="text" name="fax" readonly="" value="{{$crvoucherheader->fax}}" class="form-control" placeholder="Enter FAX No Here"></td>
 	</tr>
 	<tr>
 	   
 		<td width="15%"><strong>BILL FROM(STEPL/SA)</strong></td>
 		<td width="35%">
-			<select name="company" required="" class="form-control" disabled="">
+			<!-- <select name="company" required="" class="form-control" >
 				<option value="">Select a Company</option>
 				<option value="SA" {{ ( $crvoucherheader->company == 'SA') ? 'selected' : '' }}>SA</option>
 				<option value="STEPL" {{ ( $crvoucherheader->company == 'STEPL') ? 'selected' : '' }}>STEPL</option>
 				<option value="STECS" {{ ( $crvoucherheader->company == 'STECS') ? 'selected' : '' }}>STECS</option>
-		    </select>
+		    </select> -->
+		    <input type="text" class="form-control" name="company" readonly="" value="{{$crvoucherheader->company}}">
+
 	</td>
 	</tr>
 	
@@ -111,7 +108,7 @@
 			 <td><input type="text" id="rate" class="form-control cal"></td>
 			 <td><input type="text" id="qty" class="form-control cal"></td>
 			 <td><input type="text" id="amount" class="form-control" readonly=""></td>
-			  <td><button type="button" id="addnew" class="addauthor btn btn-primary">ADD</button></td>
+			  <td><button type="button" disabled="" id="addnew" class="addauthor btn btn-primary">ADD</button></td>
 
 			
 		    </tr>
@@ -148,7 +145,7 @@
           <td class="col-md-1">{{$crvoucheritem->quantity}}<input type="hidden" name="qty[]" value="{{$crvoucheritem->quantity}}" class="cal"/></td>
     	  <td class="col-md-1">{{$crvoucheritem->amount}}<input type="hidden" name="amount[]" class="countable" value="{{$crvoucheritem->amount}}" class="calcin"/></td>
 
-    	  <td><button type="button" class="btn btn-danger remove_field">X</button></td></tr>
+    	  <td><button type="button" disabled="" class="btn btn-danger remove_field">X</button></td></tr>
            
 
         @endforeach							 
@@ -308,6 +305,38 @@
 	    		
 	    	</tr>
 	  		
+    </table>
+     <table class="table">
+    	<tr class="bg-blue">
+    		<td class="text-center"><strong>RECIVED PAYMENT DETAILS</strong></td>
+    	</tr>
+    	
+    </table>
+    <table class="table">
+    	<tr>
+    		<td><strong>AMOUNT CREDITED IN ACCOUNT</strong></td>
+    		<td>
+
+    			<select name="creditedinacc" class="form-control">
+    				<option value="">Select A Bank Account</option>
+    				<option value="CASH" {{($crvoucherheader->creditedinacc=='')? 'selected':''}}>CASH</option>
+    				@foreach($bankaccounts as $bankaccount)
+    				<option value="{{$bankaccount->id}}" {{($crvoucherheader->creditedinacc==$bankaccount->id)? 'selected':''}}>{{$bankaccount->bankname}}(AC No:-{{$bankaccount->acno}} )</option>
+    				@endforeach
+    			</select>
+    		</td>
+    		<td><strong>CREDITED AMOUNT</strong></td>
+    		<td><input type="text" name="creditedamt" class="form-control" placeholder="Credited Amount" value="{{$crvoucherheader->creditedamt}}"></td>
+    	</tr>
+    	<tr>
+    		<td><strong>CREDITED DATE</strong></td>
+    		<td><input type="text" class="form-control datepicker readonly" name="crediteddate" value="{{$crvoucherheader->crediteddate}}"></td>
+    		<td><strong>BANK DEDUCTION CHARGES</strong></td>
+    		<td><input type="text" name="deductioncrg" class="form-control" placeholder="Enter Bank Deduction Charges" value="{{$crvoucherheader->deductioncrg}}"></td>
+    	</tr>
+    	<td><strong>NOTES</strong></td>
+    	<td><textarea class="form-control" name="notes">{{$crvoucherheader->notes}}</textarea></td>
+    	
     </table>
 
     <table class="table">

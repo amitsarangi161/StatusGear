@@ -148,7 +148,7 @@ body
 				      <p style="font-size:20;font-weight: bold;margin-bottom: 83px;">Invoice Date: {{$idate}}</p>
 				    </th>
 			        <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="top:0;">
-				      <p class="text-center invoice" style="margin-bottom:100px;">TAX INVOICE</p>
+				      <p class="text-center invoice" style="margin-bottom:100px;">CREDIT VOUCHER</p>
 				    </th>
 				     <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="top:0;">
 				    
@@ -345,6 +345,13 @@ body
   			
   				<th> {{ $provider::moneyFormatIndia($crvoucherheader->netpayable)}}</th>
   			</tr>
+
+          <tr class="success">
+          <th colspan="3" class="text-center" style="text-transform: capitalize;">{{$recivedamountinword}} Only.</th>
+          <th colspan="3" class="text_right">Payment Recived</th>
+        
+          <th> {{ $provider::moneyFormatIndia($crvoucherheader->creditedamt)}}</th>
+        </tr>
 		</thead>
 	</table>
 
@@ -382,10 +389,17 @@ body
 			</tr>
 			<tr>
 				<td colspan="3">
-					<u>Note:</u>
-					<p>1. Please issue Cheque/Draft in fever of <b>"{{$crvouchersetup->draftdetails}}"</b>.</p>
-					
-				</td>
+					<u>Notes:</u>
+					<p><b>{{$crvoucherheader->notes}}</b></p>
+			
+          <u>Bank Charges</u>
+          <p><b>{{$crvoucherheader->deductioncrg}}</b></p>
+          
+        
+          <u>Payment Recived Date</u>
+          <p><b>{{$crvoucherheader->deductioncrg}}</b></p>
+          
+        </td>
 			</tr>
 
 		</tbody>
