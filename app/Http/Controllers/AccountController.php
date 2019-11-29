@@ -3916,50 +3916,50 @@ public function approvedebitvoucheradmin(Request $request,$id)
   {
        return view('accounts.home');
   }
-	public function deleteparticulars(Request $request,$id)
-	{
-		particular::find($id)->delete();
+  public function deleteparticulars(Request $request,$id)
+  {
+    particular::find($id)->delete();
 
-		 Session::flash('msg','Particular Deleted Successfully');
+     Session::flash('msg','Particular Deleted Successfully');
 
-		 return back();
-	}
+     return back();
+  }
 
-	public function updateparticulars(Request $request)
-	{
-		$particular=particular::find($request->pid);
-		$particular->expenseheadid=$request->expenseheadid;
-	 	  $particular->particularname=$request->particularname;
-	 	  $particular->save();
+  public function updateparticulars(Request $request)
+  {
+    $particular=particular::find($request->pid);
+    $particular->expenseheadid=$request->expenseheadid;
+      $particular->particularname=$request->particularname;
+      $particular->save();
           Session::flash('msg','Particular Updated Successfully');
           return back();
 
-	}
-	 public function saveparticulars(Request $request)
-	 {
-	 	  $particular=new particular();
-	 	  $particular->expenseheadid=$request->expenseheadid;
-	 	  $particular->particularname=$request->particularname;
-	 	  $particular->save();
+  }
+   public function saveparticulars(Request $request)
+   {
+      $particular=new particular();
+      $particular->expenseheadid=$request->expenseheadid;
+      $particular->particularname=$request->particularname;
+      $particular->save();
           Session::flash('msg','Particular Added Successfully');
-	 	  return back();
+      return back();
 
-	 }
+   }
 
-	public function particulars()
-	{
-		$expenseheads=expensehead::all();
+  public function particulars()
+  {
+    $expenseheads=expensehead::all();
 
-		$particulars=particular::select('particulars.*','expenseheads.expenseheadname')
-		             ->leftJoin('expenseheads','particulars.expenseheadid','=','expenseheads.id')
-		             ->get();
+    $particulars=particular::select('particulars.*','expenseheads.expenseheadname')
+                 ->leftJoin('expenseheads','particulars.expenseheadid','=','expenseheads.id')
+                 ->get();
 
-		return view('accounts.particulars',compact('expenseheads','particulars'));
-	}
+    return view('accounts.particulars',compact('expenseheads','particulars'));
+  }
     public function expensehead()
     {
-    	$expenseheads=expensehead::all();
-    	return view('accounts.expensehead',compact('expenseheads'));
+      $expenseheads=expensehead::all();
+      return view('accounts.expensehead',compact('expenseheads'));
     }
 
     public function saveexpensehead(Request $request)
@@ -3980,16 +3980,16 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
     public function deleteexpensehead(Request $request,$id)
     {
-    	$expensehead=expensehead::find($id);
-    	$expensehead->delete();
-    	return back();
-    	Session::flash('Expense Head Delete Successfully');
+      $expensehead=expensehead::find($id);
+      $expensehead->delete();
+      return back();
+      Session::flash('Expense Head Delete Successfully');
     }
 
     public function updateexpensehead(Request $request)
     {
-    	$expensehead=expensehead::find($request->eid);
-    	 $expensehead->expenseheadname=$request->expenseheadname;
+      $expensehead=expensehead::find($request->eid);
+       $expensehead->expenseheadname=$request->expenseheadname;
        $expensehead->userid=Auth::id();
 
        $expensehead->save();
