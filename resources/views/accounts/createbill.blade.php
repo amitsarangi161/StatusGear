@@ -16,6 +16,8 @@
 </table>
 
 
+
+
 <form action="/savebill" method="post">
 	{{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped">

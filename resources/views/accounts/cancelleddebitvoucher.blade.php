@@ -3,7 +3,7 @@
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
 
-<h3 style="text-align: center;">COMPLETED DR VOUCHER</h3>
+<h3 style="text-align: center;">CANCELLED DR VOUCHER</h3>
 
 <div style="overflow-x:auto;">
 <table class="table table-responsive table-hover table-bordered table-striped datatable" style="width: 100%;">

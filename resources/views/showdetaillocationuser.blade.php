@@ -9,7 +9,7 @@
 	</tr>
 	
 </table>
-
+<div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped datatable">
 	<thead>
 	<tr class="bg-blue">
@@ -19,7 +19,11 @@
 		<th>DEVICE ID</th>
 		<th>BATTERY</th>
 		<th>LOCATION</th>
-		<td>TIME</td>
+		<th>MODE</th>
+		<th>STATUS</th>
+		<th>VERSION</th>
+		<th>TIME</th>
+		<td>CREATED_AT</td>
 		
 	</tr>
 </thead>
@@ -32,11 +36,15 @@
 	   	<td>{{$address['deviceid']}}</td>
 	   	<td>{{$address['battery']}}</td>
 	   	<td>{{$address['address']}}</td>
+	   	<td>{{$address['mode']}}</td>
+	   	<td>{{$address['status']}}</td>
+	   	<td>{{$address['version']}}</td>
+	   	<td>{{$address['time']}}</td>
 	   	<td>{{$address['created_at']}}</td>
 
 	   </tr>
 	@endforeach
 </tbody>
 </table>
-
+</div>
 @endsection

@@ -1,6 +1,6 @@
 {
-    "userid": "12345",
-    "deviceid": "abcdefg",
+    "userid": 2,
+    "deviceid": "123456",
     "locations": [
 
         {
@@ -18,7 +18,16 @@
             "battery": "96",
             "time": "2019-11-23 10-35-12",
             "mode": "online"
+        },
+        {
+            "present": "NO",
+            "latitude": "123.00",
+            "longitude": "456.00",
+            "battery": "96",
+            "time": "2019-11-23 10-35-12",
+            "mode": "online"
         }
+
     ]
 
 }

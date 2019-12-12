@@ -386,7 +386,7 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
      {
        $fulladress="NOT FOUND";
      }
-     $arr=array('userid'=>$value->userid,'latitude'=>$value->latitude,'longitude'=>$value->longitude,'deviceid'=>$value->deviceid,'battery'=>$value->battery,'address'=>$fulladdress,'created_at'=>$value->created_at);
+     $arr=array('userid'=>$value->userid,'latitude'=>$value->latitude,'longitude'=>$value->longitude,'deviceid'=>$value->deviceid,'battery'=>$value->battery,'address'=>$fulladdress,'created_at'=>$value->created_at,'time'=>$value->time,'mode'=>$value->mode,'status'=>$value->status,'version'=>$value->version);
      $addressarr[]=$arr;
       }
      
@@ -649,23 +649,46 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
       return view('editbills',compact('billheader','billitems','discounts','projects','hsncodes','units','banks'));
       //return view('editbills');
     }
-    public function viewallbills()
+    public function viewallbills(Request $request)
     {
+      
        if (Auth::user()->usertype=='MASTER ADMIN' || Auth::user()->usertype=='ADMIN') {
-         $bills=billheader::all();
-       }
-       else
-       {
-           $bills=billheader::where('userid',Auth::id())->get();
-       }
+         $bills=billheader::where('id','>',0);
+          }
+         else
+          {
+           $bills=billheader::where('userid',Auth::id());
+          }
+            if($request->has('company') && $request->has('status'))
+             {
+                  if ($request->company!='') {
+                     $bills=$bills->where('company',$request->company);
+                  }
+                  if($request->status!='')
+                  {
+                       $bills=$bills->where('status',$request->status);
+                  }
+             }
+          $bills=$bills->get();
       
 
        return view('viewallbills',compact('bills'));
     }
-   public function viewallbillsacc()
+   public function viewallbillsacc(Request $request)
     {
 
-           $bills=billheader::all();
+            $bills=billheader::where('userid',Auth::id());
+             if($request->has('company') && $request->has('status'))
+             {
+                  if ($request->company!='') {
+                     $bills=$bills->where('company',$request->company);
+                  }
+                  if($request->status!='')
+                  {
+                       $bills=$bills->where('status',$request->status);
+                  }
+             }
+          $bills=$bills->get();
    
       
 
@@ -1049,6 +1072,8 @@ if($request->has('status') && $request->status!='')
                         ->leftJoin('users','attendances.userid','=','users.id')
                         ->where('attendances.userid',$request->uid)
                         ->where('attendances.created_at', '>=',$request->date.' 00:00:00')
+                        ->where('attendances.created_at', '<=',$request->date.' 23:59:00')
+
                         ->get();
          
          return response()->json($userlocations);
