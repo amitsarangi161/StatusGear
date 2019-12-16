@@ -156,6 +156,7 @@ Route::get('/viewverifiedreport/{id}','HomeController@viewverifiedreport');
 Route::get('/viewnotverifiedreport/{id}','HomeController@viewnotverifiedreport');
 Route::post('/adminverifyreport/{id}','HomeController@adminverifyreport');
 Route::post('/ajaxapprove','AjaxController@ajaxapprove');
+Route::post('/ajaxapproveadmin','AjaxController@ajaxapproveadmin');
 Route::get('/hod/viewadminprojects','HomeController@viewadminprojects');
 Route::get('/hod/adminprojectdetails/{id}','HomeController@adminprojectdetails');
 Route::get('/projects/adminprojectdetails/{id}','HomeController@adminprojectdetails');
@@ -246,6 +247,11 @@ Route::get('/expense/viewallexpenseentry','AccountController@viewallexpenseentry
 Route::get('/expense/pendingexpenseentry','AccountController@pendingexpenseentry');
 Route::get('/expense/walletpaidexpenseentry','AccountController@walletpaidexpenseentry');
 Route::get('/pendingexpenseentrydetailview/{empid}','AccountController@pendingexpenseentrydetailview');
+
+Route::get('/pendingexpenseentrydetailviewadmin/{empid}','AccountController@pendingexpenseentrydetailviewadmin');
+
+Route::get('/expense/pendinghodexpenseentry','AccountController@pendinghodexpenseentry');
+
 Route::get('/viewwalletpaidexpenseentrydetails/{id}','AccountController@viewwalletpaidexpenseentrydetails');
 Route::get('/walletpaidexpenseentrydetailview/{id}','AccountController@walletpaidexpenseentrydetailview');
 Route::get('/dm/userassigntohod','HomeController@userassigntohod');
@@ -267,6 +273,9 @@ Route::post('/saveuserrequisitions','HomeController@saverequisitions');
 Route::get('/viewrequisitions/viewapplicationform','AccountController@viewapplicationform');
 
 Route::get('/hodrequisition/pendingrequisition','AccountController@hodpendingrequisition');
+
+Route::get('/hodrequisition/expenseentry','AccountController@hodapproveexpenseentry');
+
 Route::get('/viewrequisitions/pendingrequisitionshod','AccountController@pendingrequisitionshod');
 
 Route::get('/useraccounts/viewapplicationform','HomeController@viewapplicationform');
@@ -358,6 +367,12 @@ Route::post('/cashierpaidrequsitiononlineupdate/{id}','AccountController@cashier
 Route::get('/prb/paidamt/{bankname}/{id}','AccountController@cashierpaidrequsitionamt');
 Route::get('/viewexpenseentrydetails/{id}','AccountController@viewexpenseentrydetails');
 Route::get('/viewpendingexpenseentrydetails/{id}','AccountController@viewpendingexpenseentrydetails');
+
+Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpendingexpenseentrydetailsadmin');
+
+Route::get('/viewpendingexpenseentrydetailsadmin/{id}','AccountController@viewpendingexpenseentrydetailsadmin');
+Route::get('//viewdetailshodexpenseentry/{id}','AccountController@viewdetailshodexpenseentry');
+
 Route::get('/viewuserexpenseentrydetails/{id}','HomeController@viewexpenseentrydetails');
 
 Route::get('/usermsg/writemsg','HomeController@writemsg');

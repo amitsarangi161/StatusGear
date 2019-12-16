@@ -36,8 +36,12 @@
 	   	<td>{{$address['deviceid']}}</td>
 	   	<td>{{$address['battery']}}</td>
 	   	<td>{{$address['address']}}</td>
-	   	<td>{{$address['mode']}}</td>
-	   	<td>{{$address['status']}}</td>
+	   	<td><label class="label label-{{($address['mode']=='online')? 'success' : 'danger'}}">{{$address['mode']}}</label></td>
+	   	<td>
+	   		@if($address['status']!='null')
+	   		<label class="label label-{{($address['status']=='start')? 'success' : 'danger'}}">
+             @endif
+	   		{{$address['status']}}</label></td>
 	   	<td>{{$address['version']}}</td>
 	   	<td>{{$address['time']}}</td>
 	   	<td>{{$address['created_at']}}</td>

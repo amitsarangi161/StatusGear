@@ -268,7 +268,7 @@
 
   <li class="{{ Request::is('hodrequisition*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-pencil"></i> <span>PENDING REQUISITION</span>
+            <i class="fa fa-bar-chart "></i> <span>PENDING REQ/EXP</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -276,6 +276,8 @@
           <ul class="treeview-menu">
             
             <li class="{{ Request::is('hodrequisition/pendingrequisition') ? 'active' : '' }}"><a href="/hodrequisition/pendingrequisition"><i class="fa fa-circle-o text-red"></i>PENDING REQUISITION</a></li>
+
+             <li class="{{ Request::is('hodrequisition/expenseentry') ? 'active' : '' }}"><a href="/hodrequisition/expenseentry"><i class="fa fa-circle-o text-red"></i>PENDING EXPENSE ENTRY</a></li>
 
           </ul>
         </li>
@@ -313,7 +315,22 @@
           </ul>
   </li>
 
+@if(Auth::user()->id=='5')
+  <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>ATTENDANCE</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+             <li class="{{ Request::is('attendance/viewattendance') ? 'active' : '' }}"><a href="/attendance/viewattendance"><i class="fa fa-circle-o text-red"></i>VIEW ATTENDANCE</a></li>
+             
+            
+          </ul>
+</li>
 
+@endif
 @endif
 
 

@@ -53,6 +53,28 @@ use Excel;
 class AccountController extends Controller
 {  
 
+
+  public function pendinghodexpenseentry()
+  {
+            $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                       ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->leftJoin('userunderhods','expenseentries.employeeid','=','userunderhods.userid')
+                       ->leftJoin('users as u4','userunderhods.hodid','=','u4.id')
+
+                       ->where('expenseentries.status','HOD PENDING')
+                      ->groupBy('expenseentries.id')
+                      ->get();
+
+          return view('accounts.pendinghodexpenseentry',compact('expenseentries'));
+  }
+
    public function updatedebitvoucher(Request $request,$id)
    {
          if(count($request->itemname)==0)
@@ -261,7 +283,17 @@ class AccountController extends Controller
 
         return view('accounts.vehicledetailsshow',compact('vehicle'));
     }
-
+  public function hodapproveexpenseentry()
+  {
+      $expenseentries=expenseentry::select('expenseentries.*','u1.name as for')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                       ->leftJoin('userunderhods','expenseentries.employeeid','=','userunderhods.userid')
+                      ->where('userunderhods.hodid',Auth::id())
+                       ->where('expenseentries.status','HOD PENDING')
+                      ->groupBy('expenseentries.employeeid')
+                      ->get();
+      return view('pendingadminexpenseentry',compact('expenseentries'));
+  }
   public function hodpendingrequisition()
   {
      $requisitions=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','userunderhods.hodid')
@@ -1407,6 +1439,24 @@ public function no_to_words($no)
          
           return response()->json($expenseheadamount);
 
+    }
+    public function pendingexpenseentrydetailviewadmin($empid)
+    {
+        $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                       ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->where('expenseentries.status','HOD PENDING')
+                       ->where('expenseentries.employeeid',$empid)
+                      ->groupBy('expenseentries.id')
+                      ->get();
+
+          return view('pendingexpenseentrydetailviewadmin',compact('expenseentries'));
     }
     public function pendingexpenseentrydetailview($empid)
     {
@@ -2752,7 +2802,143 @@ public function approvedebitvoucheradmin(Request $request,$id)
            }
            
           return view('accounts.viewpendingexpenseentrydetails',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
-       }    public function viewwalletpaidexpenseentrydetails($id)
+       }
+
+       public function viewdetailshodexpenseentry($id)
+       {
+          $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                      ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->leftJoin('userunderhods','expenseentries.employeeid','=','userunderhods.userid')
+                       ->leftJoin('users as u4','userunderhods.hodid','=','u4.id')
+                       ->where('expenseentries.id',$id)
+                      ->groupBy('expenseentries.id')
+                      ->first();
+
+          if($expenseentry->vehicleid!='')
+          {
+              $vehicledetail=vehicle::find($expenseentry->vehicleid);
+          }
+          else
+          {
+               $vehicledetail='';
+          }
+        
+          $vendor=vendor::select('vendors.*','users.name')
+            ->leftJoin('users','vendors.userid','=','users.id')
+            ->where('vendors.id',$expenseentry->vendorid)
+            ->first();
+             
+            $engagedlaboursarr=array();
+           if($expenseentry->type=='LABOUR PAYMENT' && $expenseentry->version=='NEW')
+           {
+                $expenseentrydailylabour=expenseentrydailylabour::select('dailylabours.*')
+                                 ->leftJoin('dailylabours','expenseentrydailylabours.dailylabourid','=','dailylabours.id')
+                                 ->where('expenseid',$expenseentry->id)
+                                 ->get();
+                     foreach ($expenseentrydailylabour as $key => $dailylabour) {
+            $nooflabour=engagedlabour::where('dailylabourid',$dailylabour->id)->count();
+            $engagedlaboursarr[]=[
+              'id'=>$dailylabour->id,
+              'date'=>$dailylabour->date,
+              'description'=>$dailylabour->description,
+              'labourimage'=>$dailylabour->workingimage,
+              'nooflabour'=>$nooflabour,
+            ];
+        }
+
+           }
+           elseif ($expenseentry->type=='VEHICLE PAYMENT' && $expenseentry->version=='NEW') {
+
+                  $expenseentrydailyvehicle=expenseentrydailyvehicle::select('dailyvehicles.*','vehicles.vehiclename','vehicles.vehicleno')
+                                   ->leftJoin('dailyvehicles','expenseentrydailyvehicles.dailyvehicleid','=','dailyvehicles.id')
+                                   ->leftJoin('vehicles','dailyvehicles.vehicleid','=','vehicles.id')
+                                   ->where('expenseid',$expenseentry->id)
+                                   ->get();
+           }
+           else
+           {
+               $expenseentrydailylabour=array();
+               $expenseentrydailyvehicle=array();
+
+           }
+           
+          return view('accounts.viewdetailshodexpenseentry',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
+       }
+
+       public function viewpendingexpenseentrydetailsadmin($id)
+       {
+            $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
+                      ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
+                      ->leftJoin('users as u3','expenseentries.approvedby','=','u3.id')
+                      ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                      ->leftJoin('clients','projects.clientid','=','clients.id')
+                      ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                      ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                       ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
+                       ->where('expenseentries.id',$id)
+                      ->groupBy('expenseentries.id')
+                      ->first();
+
+          if($expenseentry->vehicleid!='')
+          {
+              $vehicledetail=vehicle::find($expenseentry->vehicleid);
+          }
+          else
+          {
+               $vehicledetail='';
+          }
+        
+          $vendor=vendor::select('vendors.*','users.name')
+            ->leftJoin('users','vendors.userid','=','users.id')
+            ->where('vendors.id',$expenseentry->vendorid)
+            ->first();
+             
+            $engagedlaboursarr=array();
+           if($expenseentry->type=='LABOUR PAYMENT' && $expenseentry->version=='NEW')
+           {
+                $expenseentrydailylabour=expenseentrydailylabour::select('dailylabours.*')
+                                 ->leftJoin('dailylabours','expenseentrydailylabours.dailylabourid','=','dailylabours.id')
+                                 ->where('expenseid',$expenseentry->id)
+                                 ->get();
+                     foreach ($expenseentrydailylabour as $key => $dailylabour) {
+            $nooflabour=engagedlabour::where('dailylabourid',$dailylabour->id)->count();
+            $engagedlaboursarr[]=[
+              'id'=>$dailylabour->id,
+              'date'=>$dailylabour->date,
+              'description'=>$dailylabour->description,
+              'labourimage'=>$dailylabour->workingimage,
+              'nooflabour'=>$nooflabour,
+            ];
+        }
+
+           }
+           elseif ($expenseentry->type=='VEHICLE PAYMENT' && $expenseentry->version=='NEW') {
+
+                  $expenseentrydailyvehicle=expenseentrydailyvehicle::select('dailyvehicles.*','vehicles.vehiclename','vehicles.vehicleno')
+                                   ->leftJoin('dailyvehicles','expenseentrydailyvehicles.dailyvehicleid','=','dailyvehicles.id')
+                                   ->leftJoin('vehicles','dailyvehicles.vehicleid','=','vehicles.id')
+                                   ->where('expenseid',$expenseentry->id)
+                                   ->get();
+           }
+           else
+           {
+               $expenseentrydailylabour=array();
+               $expenseentrydailyvehicle=array();
+
+           }
+           
+          return view('viewpendingexpenseentrydetailsadmin',compact('vehicledetail','expenseentry','vendor','expenseentrydailylabour','expenseentrydailyvehicle','engagedlaboursarr'));
+       }    
+
+       public function viewwalletpaidexpenseentrydetails($id)
        {
             $expenseentry=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')

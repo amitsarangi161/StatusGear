@@ -196,6 +196,39 @@ class AjaxController extends Controller
          
 
          return "1";
+    }public function ajaxapproveadmin(Request $request)
+    {
+        
+
+         $expenseentry=expenseentry::find($request->id);
+         $expenseentry->status=$request->type;
+         $expenseentry->approvalamount=$request->amt;
+         if($request->type!='CANCELLED')
+         {
+            
+             $expenseentry->approvedby=Auth::id();
+         }
+         else
+         {
+              $expenseentry->remarks=$request->remarks;
+         }
+         
+         $expenseentry->save();
+         $towalletchk=$expenseentry->towallet;
+         $employeeid=$expenseentry->employeeid;
+         if($towalletchk=='YES')
+         {
+             $wallet=new wallet();
+             $wallet->employeeid=$employeeid;
+             $wallet->credit=$request->amt;
+             $wallet->debit='0';
+             $wallet->rid=$request->id;
+             $wallet->addedby=Auth::id();
+             $wallet->save();
+         }
+         
+
+         return "1";
     }
     public function accountkitverify(Request $request){
      
