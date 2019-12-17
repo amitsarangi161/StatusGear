@@ -96,6 +96,7 @@ Route::get('/showuserlocation/{uid}/{date}','HomeController@userlocation');
 Route::post('/getuserlocation','HomeController@getuserlocation');
 Route::post('/showattendance','HomeController@showattendance');
 Route::get('/attendance/viewattendance','HomeController@viewattendance');
+Route::get('/attendance/attendancereport','HomeController@attendancereport');
 
 Route::get('/home', 'HomeController@home');
 Route::get('/dm/activity','HomeController@activity')->name('activity');

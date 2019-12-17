@@ -616,6 +616,8 @@
           </a>
           <ul class="treeview-menu">
              <li class="{{ Request::is('attendance/viewattendance') ? 'active' : '' }}"><a href="/attendance/viewattendance"><i class="fa fa-circle-o text-red"></i>VIEW ATTENDANCE</a></li>
+
+             <li class="{{ Request::is('attendance/attendancereport') ? 'active' : '' }}"><a href="/attendance/attendancereport"><i class="fa fa-circle-o text-red"></i>ATTENDANCE REPORT</a></li>
              
             
           </ul>
@@ -928,6 +930,7 @@ $(".datepicker4").datepicker({
        maxDate: new Date()
       
        }).datepicker("setDate", "0");
+
 $(".datepicker5").datepicker({
    dateFormat: 'yy-mm-dd',
        showButtonPanel: true,
@@ -937,6 +940,25 @@ $(".datepicker5").datepicker({
        maxDate: new Date()
       
        }).datepicker("setDate", "0");
+
+$(".attfromdate").datepicker({
+   dateFormat: 'yy-mm-dd',
+       showButtonPanel: true,
+       changeYear: true,
+       changeMonth: true,
+       maxDate: 0,
+       maxDate: new Date()
+      
+       });
+$(".atttodate").datepicker({
+   dateFormat: 'yy-mm-dd',
+       showButtonPanel: true,
+       changeYear: true,
+       changeMonth: true,
+       maxDate: 0,
+       });
+
+
 </script> 
 
 <script type="text/javascript">

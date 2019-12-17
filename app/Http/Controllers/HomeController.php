@@ -62,6 +62,68 @@ use DataTables;
 //use Barryvdh\DomPDF\Facade as PDF;
 class HomeController extends Controller
 {
+
+     public function attendancereport(Request $request)
+     {
+         $users=User::all();
+         if ($request->has('user') && $request->has('fromdate') && $request->has('todate')) {
+        $name=User::FindOrFail($request->user)->name;
+
+        $datefrom = Carbon::parse($request->fromdate);
+        $dateto = Carbon::parse($request->todate);
+        $totalDuration =$datefrom->diffInDays($dateto);
+        $all=array();
+        
+        for ($x = 0; $x <= $totalDuration; $x++) {
+             if ($x==0) {
+                $date=$datefrom;
+                
+             }
+             else
+             {
+               $date = $datefrom->addDays(1);
+               
+             }
+
+             
+             $p=attendance::where('userid',$request->user)
+                 ->where('created_at', '>=',$date)
+                 ->where('created_at', '<=',$date->format('Y-m-d').' 23:59:59')
+                 ->get();
+            //dd($p);
+
+              if(count($p)>0)
+              {
+                $present='PRESENT';
+              }
+              else
+              {
+                 $present='ABSENT';
+              }  
+
+           $a=array('date'=>$date->format('Y-m-d'),'status'=>$present,'total'=>count($p),'locations'=>$p,'userid'=>$request->user);
+
+             $all[]=$a;
+             
+             } 
+
+             $count = 0;
+foreach ($all as $type) {
+    if($type['status']=='PRESENT'){
+      ++$count;
+    }
+}
+           
+         }
+
+
+
+
+
+
+         //return compact('users','all','totalDuration','count');
+         return view('attendancereport',compact('users','all','totalDuration','count','name'));
+     }
      public function datatable()
      {
          return view('datatable');
