@@ -315,7 +315,7 @@
           </ul>
   </li>
 
-@if(Auth::user()->id=='5')
+@if(Auth::user()->usertype=='ADMIN')
   <li class="{{ Request::is('attendance*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>ATTENDANCE</span>

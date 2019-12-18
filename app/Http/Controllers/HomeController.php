@@ -434,8 +434,9 @@ foreach ($all as $type) {
                  ->where('created_at', '<=',$date.' 23:59:59')
                  ->get();
 
-       
+       //return $p;
           foreach ($p as $key => $value) {
+try{
 $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->latitude).','.trim($value->longitude).'&key=AIzaSyAPpd5bBWsGyPvEBgmB_3-QjTQ8bP5yIW0';
      $json = @file_get_contents($url);
      $data=json_decode($json);
@@ -450,7 +451,13 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
      }
      $arr=array('userid'=>$value->userid,'latitude'=>$value->latitude,'longitude'=>$value->longitude,'deviceid'=>$value->deviceid,'battery'=>$value->battery,'address'=>$fulladdress,'created_at'=>$value->created_at,'time'=>$value->time,'mode'=>$value->mode,'status'=>$value->status,'version'=>$value->version);
      $addressarr[]=$arr;
-      }
+     
+    }
+      catch (\Exception $e){
+        
+    }
+    }
+  
      
      $user=User::find($uid);
      $name=$user->name;
@@ -888,15 +895,30 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
   }
     public function showattendance(Request $request)
     {
-          $users=User::all();
+         if (Auth::user()->usertype=='MASTER ADMIN') {
+             $users=User::all();
+         }
+         else
+         {
+             $auth=Auth::id();
+                 $myusers=userunderhod::select('userunderhods.userid')->where('hodid',$auth)->get();
+             $users=User::whereIn('id',$myusers)->get();
+         }
+          
            $all=array();
           foreach ($users as $key => $user) {
               $uid=$user->id;
               $uname=$user->name;
-              $p=attendance::where('userid',$uid)
+             
+                $p=attendance::where('userid',$uid)
                  ->where('created_at', '>=',$request->date.' 00:00:00')
                  ->where('created_at', '<=',$request->date.' 23:59:59')
                  ->get();
+                 
+                 
+              
+             
+              
               if(count($p)>0)
               {
                 $present='PRESENT';
@@ -1910,6 +1932,9 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                   $expenseentry->description=$request->description;
                   /*$expenseentry->fromdate=$request->fromdate;
                   $expenseentry->todate=$request->todate;*/
+                  if (Auth::user()->usertype=='ADMIN') {
+                     $expenseentry->status="PENDING";
+                  }
                   $expenseentry->date=$request->date;
                   $expenseentry->version="NEW";
                   $expenseentry->type=$request->type;
@@ -1942,6 +1967,9 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                   $expenseentry->fromdate=$request->fromdate;
                   $expenseentry->todate=$request->todate;
                  /* $expenseentry->date=$request->date;*/
+                  if (Auth::user()->usertype=='ADMIN') {
+                     $expenseentry->status="PENDING";
+                  }
                   $expenseentry->version="NEW";
                   $expenseentry->type=$request->type;
                   $expenseentry->towallet=$request->towallet;
@@ -1979,6 +2007,9 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                   $expenseentry->fromdate=$request->fromdate;
                   $expenseentry->todate=$request->todate;
                  /* $expenseentry->date=$request->date;*/
+                  if (Auth::user()->usertype=='ADMIN') {
+                     $expenseentry->status="PENDING";
+                  }
                   $expenseentry->version="NEW";
                   $expenseentry->type=$request->type;
                   $expenseentry->towallet=$request->towallet;
