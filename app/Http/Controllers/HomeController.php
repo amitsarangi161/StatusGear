@@ -1178,7 +1178,45 @@ if($request->has('status') && $request->status!='')
                $payment=$requisitionheader->sum('approvalamount');
                 $workordervalue=$project->cost;
 
-               $all=array('projectid'=>$project->id,'projectname'=>$project->projectname,'clientname'=>$project->clientname,'amount'=>$payment,'workordervalue'=>$workordervalue);
+                $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+             ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+             ->where('requisitionpayments.paymenttype','!=','WALLET')
+             ->where('requisitionheaders.projectid',$project->id)
+             ->get();
+             $reqpayments=$requisitionpayments->sum('amount');
+
+             $approamt=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name','requisitionheaders.datefrom','requisitionheaders.dateto')
+                         ->leftJoin('requisitionheaders','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                         ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                         ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+                         ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                         ->leftJoin('expenseheads','requisitions.expenseheadid','=','expenseheads.id')
+                         ->leftJoin('particulars','requisitions.particularid','=','particulars.id')
+                         ->where('requisitionpayments.paymentstatus','PAID')
+                         ->where('requisitionpayments.paymenttype','!=','WALLET')
+                         ->where('requisitions.approvestatus','!=','PENDING')
+                         ->where('requisitions.approvestatus','!=','CANCELLED')
+                         ->groupBy('requisitions.id')
+                         ->where('projects.id', $project->id)
+                         ->get();
+           
+              $totapprovalamt=$approamt->sum('approvedamount');
+               $exp=expenseentry::select('expenseentries.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name')
+                         ->leftJoin('users','expenseentries.employeeid','=','users.id')
+                         ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                         ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                         ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                         ->where('expenseentries.towallet','=','NO')
+                         ->where('expenseentries.status','!=','CANCELLED')
+                         ->groupBy('expenseentries.id')
+                         ->where('expenseentries.projectid', $project->id)
+                         ->get();
+                $expamt=$exp->sum('approvalamount');
+
+
+               $all=array('projectid'=>$project->id,'projectname'=>$project->projectname,'clientname'=>$project->clientname,'amount'=>$payment,'workordervalue'=>$workordervalue,'paidamount'=>$reqpayments,'approvalamount'=>$totapprovalamt,'expamt'=>$expamt);
 
                 $projectwisepaymentreports[]=$all;
                
@@ -1192,8 +1230,43 @@ if($request->has('status') && $request->status!='')
                        })
                         ->get();
            $payment1=$requisitionheader1->sum('approvalamount');
+           $requisitionpayments1=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+             ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+             ->where('requisitionpayments.paymenttype','!=','WALLET')
+             ->where('requisitionheaders.projectid', 'OTHERS')
+             ->get();
+             $reqpayments1=$requisitionpayments1->sum('amount');
+              $approamt1=requisition::select('requisitions.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name','requisitionheaders.datefrom','requisitionheaders.dateto')
+                         ->leftJoin('requisitionheaders','requisitions.requisitionheaderid','=','requisitionheaders.id')
+                         ->leftJoin('requisitionpayments','requisitionpayments.rid','=','requisitionheaders.id')
+                         ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+                         ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                         ->leftJoin('expenseheads','requisitions.expenseheadid','=','expenseheads.id')
+                         ->leftJoin('particulars','requisitions.particularid','=','particulars.id')
+                         ->where('requisitionpayments.paymentstatus','PAID')
+                         ->where('requisitionpayments.paymenttype','!=','WALLET')
+                         ->where('requisitions.approvestatus','!=','PENDING')
+                         ->where('requisitions.approvestatus','!=','CANCELLED')
+                         ->groupBy('requisitions.id')
+                         ->where('projects.id','OTHERS')
+                         ->get();
+              $totapprovalamt1=$approamt1->sum('approvedamount');
 
-           $all1=array('projectid'=>'0','projectname'=>'OTHERS','clientname'=>'OTHERS','amount'=>$payment1,'workordervalue'=>0);
+                $exp1=expenseentry::select('expenseentries.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name')
+                         ->leftJoin('users','expenseentries.employeeid','=','users.id')
+                         ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                         ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                         ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                         ->where('expenseentries.towallet','=','NO')
+                         ->where('expenseentries.status','!=','CANCELLED')
+                         ->groupBy('expenseentries.id')
+                         ->where('expenseentries.projectid','OTHERS')
+                         ->get();
+                $expamt1=$exp1->sum('approvalamount');
+
+           $all1=array('projectid'=>'0','projectname'=>'OTHERS','clientname'=>'OTHERS','amount'=>$payment1,'workordervalue'=>0,'paidamount'=>$reqpayments1,'approvalamount'=>$totapprovalamt1,'expamt'=>$expamt1);
 
             $projectwisepaymentreports[]=$all1;
       
