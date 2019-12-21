@@ -13,7 +13,7 @@
 </style>
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">ADMIN APPROVED TENDERS</td>
+		<td class="text-center">NOT APPLIED TENDERS</td>
 		
 	</tr>
 </table>
@@ -40,7 +40,7 @@
 		   
            
 		   <tr>
-		   	<td><a href="/viewadminapprovedtender/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
+		   	<td><a href="/viewnotappliedtender/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
 		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
 		   	<td>{{$tender->clientname}}</td>
 		   	<td>{{$tender->source}}</td>
@@ -50,13 +50,9 @@
 		   	<td>{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
 		   	<td>{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td>
-		   		<select id="status" onchange="changestatus(this.value,'{{$tender->id}}')">
-		   			<option value="ADMIN APPROVED">Select a option</option>
-		   			<option value="APPLIED">APPLIED</option>
-		   			<option value="NOT APPLIED">NOT APPLIED</option>
-		   		</select>
+		   		<span class="label label-danger">{{$tender->status}}</span>
 		   	</td>
-		   	<td><a href="/viewadminapprovedtender/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
+		   	<td><a href="/viewnotappliedtender/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   	
 		   </tr>
 

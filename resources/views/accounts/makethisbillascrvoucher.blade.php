@@ -327,7 +327,7 @@
 
     <table class="table">
     	<tr>
-    		<td class="pull-right"><button type="submit" class="btn btn-success btn-lg">SAVE</button></td>
+    		<td class="pull-right"><button onclick="return confirm('Do you want to Make this bill as CRVOUCHER ?')" type="submit" class="btn btn-success btn-lg">SAVE</button></td>
     	</tr>
     	
     </table>

@@ -397,7 +397,7 @@ body
           
         
           <u>Payment Recived Date</u>
-          <p><b>{{$crvoucherheader->deductioncrg}}</b></p>
+          <p><b>{{$crvoucherheader->crediteddate}}</b></p>
           
         </td>
 			</tr>

@@ -39,9 +39,9 @@
            	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount1[]=$projectwisepaymentreport['amount'])}}</td>
            	
            	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount2[]=$projectwisepaymentreport['approvalamount'])}}</td>
-           	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount3[]=$projectwisepaymentreport['paidamount'])}}</td>
+           	<td style="text-align: right;background-color: aqua;">{{$provider::moneyFormatIndia($sumamount3[]=$projectwisepaymentreport['paidamount'])}}</td>
            	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount4[]=$projectwisepaymentreport['workordervalue']-$projectwisepaymentreport['amount'])}}</td>
-           	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount5[]=$projectwisepaymentreport['expamt'])}}</td>
+           	<td style="text-align: right;background-color: #cfc;">{{$provider::moneyFormatIndia($sumamount5[]=$projectwisepaymentreport['expamt'])}}</td>
            
            	
            </tr>

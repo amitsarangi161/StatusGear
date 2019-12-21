@@ -81,7 +81,9 @@ table {
 
 <script type="text/javascript">
 
-  $(function () {
+
+
+
 
     
 
@@ -89,6 +91,9 @@ table {
         order: [[ 0, "desc" ]],
         processing: true, 
         serverSide: true,
+        "scrollY": 450,
+        "scrollX": true,
+        "iDisplayLength": 25,
         ajax: "{{ route('gettenderlist') }}",
         columns: [
 
@@ -112,8 +117,45 @@ table {
 
     });
 
-    
 
-  });
+function changestatus(value,id)
+    { 
+var r = confirm("Do You Want to chnage status to "+ value +"?");
+if (r == true) {
+
+   $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxchangetenderstatus")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     status:value,
+                     id:id,
+                     
+                     },
+
+               success:function(data) { 
+                    table.ajax.reload();
+               }
+               
+             });
+       
+    }
+else {
+  
+} 
+}
+      
+           
+
+  
+ 
   </script>
 @endsection

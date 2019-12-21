@@ -54,7 +54,11 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
-
+Route::get('/viewnotappliedtender/{id}','TenderController@viewnotappliedtender');
+Route::get('/tm/approvedbutnotappliedtenders','TenderController@approvedbutnotappliedtenders');
+Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');
+Route::get('/tm/appliedtenders','TenderController@appliedtenders');
+Route::post('/ajaxchangetenderstatus','TenderController@ajaxchangetenderstatus');
 Route::get('/admintender','TenderController@home');
 Route::get('/viewtender/{id}','TenderController@viewtender');
 Route::get('/edittender/{id}','TenderController@edittender');

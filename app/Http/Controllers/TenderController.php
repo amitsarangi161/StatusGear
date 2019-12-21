@@ -19,6 +19,44 @@ use DB;
 class TenderController extends Controller
 { 
 
+public function viewnotappliedtender($id)
+{
+    $tender=Tender::find($id);
+    $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+    $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+
+    return view('tender.viewnotappliedtender',compact('tender','tenderdocuments','corrigendumfiles'));
+}
+
+public function approvedbutnotappliedtenders()
+{
+       $tenders=DB::table('tenders')->where('status','NOT APPLIED')->get();
+   return view('tender.approvedbutnotappliedtenders',compact('tenders'));
+}
+
+public function viewappliedtenders($id)
+{
+    $tender=Tender::find($id);
+    $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+    $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+
+    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles'));
+} 
+public function appliedtenders()
+{
+    $tenders=DB::table('tenders')->where('status','APPLIED')->get();
+   return view('tender.appliedtenders',compact('tenders'));
+}
+
+public function ajaxchangetenderstatus(Request $request)
+{
+    $tender=Tender::find($request->id);
+    $tender->status=$request->status;
+    $tender->save();
+
+    return response()->json($tender);
+}
+
 public function viewalltenders()
 {
               $tenders=tender::all();
@@ -37,7 +75,7 @@ public function viewalltenders()
 
    public function adminapprovedtenders()
    {
-         $tenders=tender::where('status','ADMIN APPROVED')->get();
+         $tenders=DB::table('tenders')->where('status','ADMIN APPROVED')->get();
 
          return view('tender.alladminapprovedtenders',compact('tenders'));
    }
@@ -84,7 +122,7 @@ public function viewalltenders()
     }
     public function admintenderapproval()
     {
-          $tenders=tender::where('status','COMMITEE APPROVED')->get();
+          $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')->get();
           
          return view('tender.admintenderapproval',compact('tenders'));
     }
@@ -149,7 +187,7 @@ public function viewalltenders()
      public function approvedcommiteetender()
      {
 
-         $tenders=tender::where('status','COMMITEE APPROVED')->get();
+         $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')->get();
 
          return view('tender.approvedcommiteetender',compact('tenders'));
      }
@@ -166,7 +204,7 @@ public function viewalltenders()
 
       public function pendingtenderapproval()
       {
-           $tenders=tender::where('status','PENDING COMMITEE APPROVAL')
+           $tenders=DB::table('tenders')->where('status','PENDING COMMITEE APPROVAL')
                     ->get();
            return view('tender.pendingtenderapproval',compact('tenders'));
       }
@@ -320,7 +358,7 @@ public function viewalltenders()
 
         public function tenderlistforcommitee()
         {
-          $tenders=tender::where('status','ELLIGIBLE')
+          $tenders=DB::table('tenders')->where('status','ELLIGIBLE')
           ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
           ->get();
         
@@ -489,9 +527,18 @@ public function viewalltenders()
                     })
 
                   ->addColumn('sta', function($tenders) {
-                    if ($tenders->status=='PENDING') return '<span class="label label-default">'.$tenders->status.'</span>';
+                    /*if ($tenders->status=='PENDING') return '<span class="label label-default">'.$tenders->status.'</span>';*/
                       if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success">'.$tenders->status.'</span>';
                     if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning">'.$tenders->status.'</span>';
+                    if ($tenders->status=='PENDING')
+                      return '<select id="status" onchange="changestatus(this.value,'.$tenders->id.')">'.
+                               '<option value="PENDING">PENDING</option>'.
+                               '<option value="ELLIGIBLE">ELLIGIBLE</option>'.
+                               '<option value="NOT ELLIGIBLE">NOT ELLIGIBLE</option>'.
+                               '</select>';
+
+
+
                     if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info">'.$tenders->status.'</span>';
                     if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary">'.$tenders->status.'</span>';
                     if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger">'.$tenders->status.'</span>';

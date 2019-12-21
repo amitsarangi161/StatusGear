@@ -54,6 +54,9 @@
         order: [[ 0, "desc" ]],
         processing: true, 
         serverSide: true,
+        "scrollY": 450,
+        "scrollX": true,
+        "iDisplayLength": 25,
         ajax: "{{ route('getviewalltenderlist') }}",
         columns: [
 
