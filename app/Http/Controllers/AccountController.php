@@ -3558,7 +3558,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->where('requisitions.requisitionheaderid',$id)
                        ->get();
            
-           //return $requisitions;
+          //return $requisitions;
           return view('accounts.viewpendingrequisition',compact('requisitionheader','requisitions','paidamounts','totalamt','totalamtentry','bal','walletbalance'));
      }
      public function pendingrequisitionsmgr()

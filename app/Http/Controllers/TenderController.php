@@ -122,7 +122,10 @@ public function viewalltenders()
     }
     public function admintenderapproval()
     {
-          $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')->get();
+          $tenders=DB::table('tenders')
+                 ->where('status','COMMITEE APPROVED')
+                 ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+                 ->get();
           
          return view('tender.admintenderapproval',compact('tenders'));
     }

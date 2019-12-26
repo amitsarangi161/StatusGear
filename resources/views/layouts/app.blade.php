@@ -541,7 +541,7 @@
              <li class="{{ Request::is('bills/viewpendingbills') ? 'active' : '' }}"><a href="/bills/viewpendingbills"><i class="fa fa-circle-o text-red"></i>VIEW PENDING BILL</a></li>
               <li class="{{ Request::is('bills/viewapprovedbills') ? 'active' : '' }}"><a href="/bills/viewapprovedbills"><i class="fa fa-circle-o text-red"></i>VIEW APPROVED BILL</a></li>
                 <li class="{{ Request::is('bills/viewrejectbills') ? 'active' : '' }}"><a href="/bills/viewrejectbills"><i class="fa fa-circle-o text-red"></i>VIEW REJECT BILL</a></li>
-            @endif
+              @endif
             
 
             <li class="{{ Request::is('bills/viewallbills') ? 'active' : '' }}"><a href="/bills/viewallbills"><i class="fa fa-circle-o text-red"></i>VIEW ALL BILL</a></li>

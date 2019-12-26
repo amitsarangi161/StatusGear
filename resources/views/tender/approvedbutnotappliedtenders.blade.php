@@ -45,10 +45,10 @@
 		   	<td>{{$tender->clientname}}</td>
 		   	<td>{{$tender->source}}</td>
 		   	<td>{{$tender->workvalue}}</td>
-		   	<td>{{$provider::changedateformat($tender->nitpublicationdate)}}</td>
-		   	<td>{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</td>
-		   	<td>{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
-		   	<td>{{$provider::changedatetimeformat($tender->created_at)}}</td>
+		   <td data-sort="{{strtotime($tender->nitpublicationdate)}}">{{$provider::changedateformat($tender->nitpublicationdate)}}</td>
+		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</td>
+		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
+		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td>
 		   		<span class="label label-danger">{{$tender->status}}</span>
 		   	</td>

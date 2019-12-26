@@ -107,7 +107,7 @@ $requisitionheader1=\App\requisitionheader::where('projectid',$pid)
 $payment=$requisitionheader1->sum('approvalamount');
 $projectc=\App\project::where('id',$pid)->first();
 $cost=$projectc->cost;
-$balancep=$cost-$payment;  
+$balancep=$cost->$payment;  
 }
 
 @endphp

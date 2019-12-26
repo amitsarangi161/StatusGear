@@ -213,7 +213,9 @@
             </span>
           </a>
           </li>
- 
+     
+
+         
   
        @if(Auth::user()->usertype=='TENDER' || Auth::user()->usertype=='MASTER ADMIN')
        <li class="{{ Request::is('tm*') ? 'active' : '' }} treeview">
@@ -231,8 +233,8 @@
              <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS</a></li>
              <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
 
-             <li class="{{ Request::is('tm/appliedtenders') ? 'active' : '' }}"><a href="/tm/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS</a></li>
-             <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li>
+        <!--      <li class="{{ Request::is('tm/appliedtenders') ? 'active' : '' }}"><a href="/tm/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS</a></li>
+             <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
           </ul>
         </li>
         @endif
@@ -264,7 +266,7 @@
           </a>
           <ul class="treeview-menu">
 
-            <li class="{{ Request::is('ata/admintenderapproval') ? 'active' : '' }}"><a href="/ata/admintenderapproval"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVAL</a></li>
+            <li class="{{ Request::is('ata/admintenderapproval') ? 'active' : '' }}"><a href="/ata/admintenderapproval"><i class="fa fa-circle-o text-aqua"></i>PENDING ADMIN APPROVAL</a></li>
              <li class="{{ Request::is('ata/adminapprovedtenders') ? 'active' : '' }}"><a href="/ata/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
 
           </ul>
@@ -272,7 +274,28 @@
 
        @endif
 
-
+        <li class="{{ Request::is('applied*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>APPLIED TENDER</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('applied/appliedtenders') ? 'active' : '' }}"><a href="/applied/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS</a></li>
+          </ul>
+        </li>
+         <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
+          <a href="#" style="font-size: 11px;">
+            <i class="fa fa-folder"></i> <span>APPROVED BUT NOT APPLIED TENDER</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a style="font-size: 11px;;" href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED BUT NOT APPLIED TENDERS</a></li>
+          </ul>
+        </li>
 
 
         
