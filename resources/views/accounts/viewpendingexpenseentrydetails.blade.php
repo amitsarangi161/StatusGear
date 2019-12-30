@@ -101,7 +101,7 @@
 	@else
 	<tr class="bg-info">
 		<td><strong>FOR DATE</strong></td>
-		<td ><strong>{{$expenseentry->date}}</strong></td>
+		<td ><strong id="datenew">{{$expenseentry->date}}</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="openeditmodal('{{$expenseentry->id}}','{{$expenseentry->date}}');"><i class="fa fa-pencil"></i></button></td>
 		<td></td>
 		<td ></td>
 		
@@ -166,6 +166,8 @@
         <tr>
 	   	<td><strong>REMARKS:-</strong></td>
 	   	<td><strong>{{$expenseentry->remarks}}</strong></td>
+	   	<td><strong>created_at</strong></td>
+	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
 	   </tr>
 	 
 	   	<td colspan="4" style="text-align: center;">
@@ -570,7 +572,76 @@
     </div>
   </div>
 
+
+  <div id="editModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Date</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+        	<tr>
+        		<input type="hidden" id="chid">
+        		<td><strong>DATE</strong></td>
+        		<td><input type="text" id="changedate" class="datepicker form-control readonly"></td>
+        		<td>
+        			<button type="button" class="btn btn-success" onclick="ajaxchangedate();">CHANGE</button>
+        		</td>
+        	</tr>
+        	
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+
 <script type="text/javascript">
+
+	function ajaxchangedate(){
+
+		var chid=$("#chid").val();
+		var changedate=$("#changedate").val();
+
+         	 $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+            });
+             
+
+              $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxexpchangedate")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                      id:chid,
+                      date:changedate
+                     },
+
+               success:function(data) { 
+                      location.reload();
+
+               }
+           });
+	}
+
+	function openeditmodal(id,date)
+	{
+		 //alert(id+date);
+         $("#changedate").val(date);
+		 $("#chid").val(id);
+		 $("#editModal").modal('show');
+		 
+	}
 
 	 function cancelexpense()
 	 {   

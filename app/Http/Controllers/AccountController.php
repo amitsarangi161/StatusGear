@@ -2170,7 +2170,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
                        ->where('expenseentries.status','=','CANCELLED')
                       ->groupBy('expenseentries.id');
-
+           $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
+              $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
                     return DataTables::of($expenseentries)
                 ->addColumn('idbtn', function($expenseentries){
                          return '<a href="/viewpendingexpenseentrydetails/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';
@@ -2212,6 +2213,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                     })
 
                 ->rawColumns(['idbtn','sta','dates','images','view','pro'])
+                ->with(compact('sumamt','sumapproveamt'))
                 ->make(true);
 
      }
@@ -2257,7 +2259,8 @@ public function approvedebitvoucheradmin(Request $request,$id)
                                ->orWhere('expenseentries.status', '=','PARTIALLY APPROVED');
                          })
                       ->groupBy('expenseentries.id');
-
+              $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
+              $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
                return DataTables::of($expenseentries)
                 ->addColumn('idbtn', function($expenseentries){
                          return '<a href="/viewpendingexpenseentrydetails/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';
@@ -2302,6 +2305,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                     })
 
                 ->rawColumns(['idbtn','sta','dates','images','view','pro'])
+                ->with(compact('sumamt','sumapproveamt'))
                 ->make(true);
 
 
@@ -3835,6 +3839,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
                       ->groupBy('expenseentries.id');
 
+
+         $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
+              $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
           return DataTables::of($expenseentries)
 
                 ->addColumn('idbtn', function($expenseentries){
@@ -3884,6 +3891,7 @@ public function approvedebitvoucheradmin(Request $request,$id)
                          return '<p class="b" title="'.$expenseentries->projectname.'">'.$expenseentries->projectname.'</p>';
                     })
                 ->rawColumns(['idbtn','sta','dates','images','view','delete','pro'])
+                ->with(compact('sumamt','sumapproveamt'))
                 ->make(true);
      }
      public function viewallexpenseentry()

@@ -13,7 +13,7 @@
 }
 </style>
 <div style="overflow-x:auto;">
-<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+<table class="table table-responsive table-hover table-bordered table-striped datatablescroll">
 	<thead>
 		<tr class="bg-navy" style="font-size: 10px;">
 			<th>ID</th>
@@ -94,6 +94,28 @@
 		</tr>
     @endforeach
 	</tbody>
+  <tfoot>
+    <tr style="background-color: gray">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>TOTAL</strong></td>
+      <td style="text-align: right;">{{$provider::moneyFormatIndia($expenseentries->sum('amount'))}}</td> 
+      <td style="text-align: right;">{{$provider::moneyFormatIndia($expenseentries->sum('approvalamount'))}}</td>
+      
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
 	
 </table>
 </div>

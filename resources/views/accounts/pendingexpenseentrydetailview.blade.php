@@ -92,6 +92,28 @@
 		</tr>
     @endforeach
 	</tbody>
+    <tfoot>
+    <tr style="background-color: gray">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><strong>TOTAL</strong></td>
+      <td style="text-align: right;">{{$provider::moneyFormatIndia($expenseentries->sum('amount'))}}</td> 
+      <td style="text-align: right;">{{$provider::moneyFormatIndia($expenseentries->sum('approvalamount'))}}</td>
+      
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
 	
 </table>
 </div>

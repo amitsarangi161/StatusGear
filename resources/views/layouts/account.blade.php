@@ -949,7 +949,7 @@ var jqf = $.noConflict();
  $('.datatablescroll').DataTable({
 
      "order": [[ 0, "desc" ]],
-     "scrollY": 500,
+     "scrollY": 450,
      "scrollX": true,
      "iDisplayLength": 25
   });

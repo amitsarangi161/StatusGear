@@ -169,6 +169,10 @@
 	   	<td><strong>{{$expenseentry->hodname}}</strong></td>
 
 	   </tr>
+	   <tr>
+	   	<td><strong>created_at</strong></td>
+	   	<td><strong>{{$expenseentry->created_at}}</strong></td>
+	   </tr>
 	 
 	   	<td colspan="4" style="text-align: center;">
 	   		 <ul class="pagination">

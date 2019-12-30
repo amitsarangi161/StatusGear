@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/ajaxexpchangedate','AjaxController@ajaxexpchangedate');
 Route::get('/testimage','HomeController@testimage');
 Route::post('/registerrequest','HomeController@registerrequest');
 Route::post('/account/kit','AjaxController@accountkitverify');

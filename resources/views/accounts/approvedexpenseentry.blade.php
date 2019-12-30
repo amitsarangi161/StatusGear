@@ -41,6 +41,19 @@
 	<tbody>
    
 	</tbody>
+  <tfoot>
+    <tr style="background-color: gray;">
+      <td colspan="7"></td>
+      <td><strong>TOTAL</strong></td>
+      <td id="sumamt" style="text-align: right;"></td>
+      <td id="sumapproveamt" style="text-align: right;"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
 	
 </table>
 </div>
@@ -80,7 +93,14 @@
             {data: 'images',name: 'images'},
             {data: 'view',name: 'view'},
 
-        ]
+        ],
+
+        drawCallback: function( settings ) {
+                                 
+        console.log(settings.json);
+        $("#sumamt").text(settings.json.sumamt);
+        $("#sumapproveamt").text(settings.json.sumapproveamt);
+      }
 
 
     });

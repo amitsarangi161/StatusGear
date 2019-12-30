@@ -28,6 +28,16 @@ class AjaxController extends Controller
 { 
 
 
+  public function ajaxexpchangedate(Request $request)
+  {
+        $expense=expenseentry::find($request->id);
+        $expense->date=$request->date;
+        $expense->save();
+
+        return $expense->date;
+  }
+
+
   public function ajaxsearchtenderno(Request $request){
     if($request->value!='')
     {
