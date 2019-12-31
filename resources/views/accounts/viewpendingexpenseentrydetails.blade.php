@@ -101,7 +101,12 @@
 	@else
 	<tr class="bg-info">
 		<td><strong>FOR DATE</strong></td>
-		<td ><strong id="datenew">{{$expenseentry->date}}</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary" onclick="openeditmodal('{{$expenseentry->id}}','{{$expenseentry->date}}');"><i class="fa fa-pencil"></i></button></td>
+		<td ><strong id="datenew">{{$expenseentry->date}}</strong>&nbsp;&nbsp;
+			@if(Auth::user()->usertype=='MASTER ADMIN')
+			<button type="button" class="btn btn-primary" onclick="openeditmodal('{{$expenseentry->id}}','{{$expenseentry->date}}');"><i class="fa fa-pencil"></i></button>
+			@endif
+
+		</td>
 		<td></td>
 		<td ></td>
 		
@@ -603,6 +608,7 @@
   </div>
 
 <script type="text/javascript">
+	
 
 	function ajaxchangedate(){
 

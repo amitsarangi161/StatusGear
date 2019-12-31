@@ -52,6 +52,7 @@ public function ajaxchangetenderstatus(Request $request)
 {
     $tender=Tender::find($request->id);
     $tender->status=$request->status;
+    $tender->notappliednotes=$request->description;
     $tender->save();
 
     return response()->json($tender);

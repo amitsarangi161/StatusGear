@@ -41,7 +41,8 @@
 
 	<td>PROJECT COST<span style="color: red"> *</span></td>
 	<td>
-		<input type="text" name="cost"  class="form-control" required="">
+		<input type="text" name="cost" id="cost"  class="form-control" required="">
+		<p style="color: red;">Don't Put comma or letter</p>
 	</td>
 
 </tr>
@@ -256,6 +257,40 @@
   
 
 <script type="text/javascript">
+
+	$("#cost").on("keypress",function(e){
+  console.log("Entered Key is " + e.key);
+  switch (e.key)
+     {
+         case "1":
+         case "2":
+         case "3":
+         case "4":
+         case "5":
+         case "6":
+         case "7":
+         case "8":
+         case "9":
+         case "0":
+         case "Backspace":
+             return true;
+             break;
+
+         case ".":
+             if ($(this).val().indexOf(".") == -1) //Checking if it already contains decimal. You can Remove this condition if you do not want to include decimals in your input box.
+             {
+                 return true;
+             }
+             else
+             {
+                 return false;
+             }
+             break;
+
+         default:
+             return false;
+     }
+});
 	
 	function changeclientname()
 	{

@@ -468,13 +468,21 @@
 		
 		</tr>
 
-			<tr>
+	<tr>
 		<td><strong>RATE TO BE QUOTED?</strong></td>
 		<td colspan="3">
 			<input type="text" name="ratetobequoted" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}" disabled="">
 		</td>
 		
-		</tr>
+	</tr>
+
+		<tr>
+		<td><strong>Why Tender is Not Applied?</strong></td>
+		<td colspan="3" style="background-color: cyan">
+			<textarea class="form-control" readonly="">{{$tender->notappliednotes}}</textarea>
+		</td>
+		
+	</tr>
 
 
 

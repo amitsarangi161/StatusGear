@@ -37,7 +37,7 @@
 
 	<td>PROJECT COST<span style="color: red"> *</span></td>
 	<td>
-		<input type="text" name="cost" value="{{$project->cost}}"  class="form-control" required="">
+		<input type="text" name="cost" id="cost" value="{{$project->cost}}"  class="form-control" required="">
 	</td>
 
 </tr>
