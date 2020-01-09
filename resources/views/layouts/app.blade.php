@@ -939,7 +939,7 @@ $(".datepicker5").datepicker({
        minDate: -2,
        maxDate: new Date()
       
-       }).datepicker("setDate", "0");
+       });
 
 $(".attfromdate").datepicker({
    dateFormat: 'yy-mm-dd',

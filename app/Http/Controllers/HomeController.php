@@ -746,7 +746,7 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
    public function viewallbillsacc(Request $request)
     {
 
-            $bills=billheader::where('userid',Auth::id());
+            $bills=billheader::where('id','>','0');
              if($request->has('company') && $request->has('status'))
              {
                   if ($request->company!='') {
@@ -970,7 +970,7 @@ $searchcount=0;
   $str= carbon::parse($request['fromdate']." 00:00:00");
   $end= carbon::parse($request['todate']." 23:59:59"); 
 
-      $expenseentries->whereRaw("expenseentries.fromdate >= ? AND expenseentries.todate <= ?",array($str, $end));
+      $expenseentries->whereRaw("expenseentries.created_at >= ? AND expenseentries.created_at <= ?",array($str, $end));
        //return $str .'-----'.$end;
         $searchcount=$searchcount+1;
   }

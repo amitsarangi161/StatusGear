@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
+
 Route::get('/viewnotappliedtender/{id}','TenderController@viewnotappliedtender');
 Route::get('/notapplied/approvedbutnotappliedtenders','TenderController@approvedbutnotappliedtenders');
 Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');
@@ -338,7 +339,7 @@ Route::get('/userwallet/viewwallet','HomeController@viewwallet');
 Route::post('/changependingstatustocanceledmgr/{id}','AccountController@changependingstatustocanceledmgr');
 
 
-
+Route::get('/ledger/ledger','AccountController@ledger');
 Route::post('/changependingstatustocanceledhod/{id}','AccountController@changependingstatustocanceledhod');
 Route::post('/hodchangependingstatustocanceled/{id}','AccountController@hodchangependingstatustocanceled');
 

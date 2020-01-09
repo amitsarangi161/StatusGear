@@ -284,6 +284,21 @@
 
           </ul>
         </li>
+
+  <li class="{{ Request::is('ledger*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+ <span>Ledger</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              
+            </span>
+          </a>
+          <ul class="treeview-menu">
+           <li class="{{ Request::is('ledger/ledger') ? 'active' : '' }}"><a href="/ledger/ledger"><i class="fa fa-circle-o text-aqua"></i>Ledger</a></li>
+
+          </ul>
+        </li>
         
         <li class="{{ Request::is('accbills*') ? 'active' : '' }} treeview">
           <a href="#">

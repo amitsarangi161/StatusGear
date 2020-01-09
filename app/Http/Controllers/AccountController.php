@@ -54,6 +54,104 @@ class AccountController extends Controller
 {  
 
 
+  public function ledger(Request $request)
+  {
+        $users=User::all();
+        $projects=project::all();
+        $customarr=array();
+        if ($request->has('user') && $request->has('project')) {
+
+              $requisitionpayments=requisitionpayment::select('requisitionpayments.*','users.name','projects.projectname')
+             ->leftJoin('requisitionheaders','requisitionpayments.rid','=','requisitionheaders.id')
+             ->leftJoin('users','requisitionheaders.employeeid','=','users.id')
+             ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+             ->where('requisitionpayments.paymenttype','!=','WALLET');
+               if ($request->get('user')!='') {
+              $requisitionpayments=$requisitionpayments
+                    ->where('requisitionheaders.employeeid',$request->get('user'));
+                 }
+              if ($request->get('project')!='') {
+                $requisitionpayments=$requisitionpayments->where('requisitionheaders.projectid',$request->get('project'));
+                
+              }
+
+             $requisitionpayments=$requisitionpayments->orderBy('requisitionpayments.dateofpayment')
+             ->get();
+            
+           
+            for ($i=0; $i < count($requisitionpayments); $i++) { 
+                $stdt=$requisitionpayments[$i]->dateofpayment;
+                $c=$i+1;
+                if ($c==count($requisitionpayments)) {
+                    $endt=$requisitionpayments[$i]->dateofpayment;
+
+                }
+                else
+                {
+                   $endt=$requisitionpayments[$c]->dateofpayment;
+
+                }
+
+                if ($stdt==$endt && $c!=count($requisitionpayments)) {
+                    $expenseentries=array();
+                }
+                else
+                {
+                            $expenseentries=expenseentry::select('expenseentries.*','expenseheads.expenseheadname','particulars.particularname','projects.projectname','users.name')
+                         ->leftJoin('users','expenseentries.employeeid','=','users.id')
+                         ->leftJoin('projects','expenseentries.projectid','=','projects.id')
+                         ->leftJoin('expenseheads','expenseentries.expenseheadid','=','expenseheads.id')
+                         ->leftJoin('particulars','expenseentries.particularid','=','particulars.id')
+                         ->where('expenseentries.towallet','=','NO')
+                         ->where('expenseentries.status','!=','CANCELLED');
+                         if ($request->get('project')!='') {
+                             $expenseentries=$expenseentries
+                        ->where('expenseentries.projectid',$request->get('project'));
+                         } 
+                         if ($request->get('user')!='') {
+                             $expenseentries=$expenseentries
+                        ->where('expenseentries.employeeid',$request->get('user'));
+                         }
+
+
+                        if ($c==count($requisitionpayments)) {
+                            $expenseentries=$expenseentries
+                        ->where('expenseentries.created_at','>=',$stdt.' 00:00:00');
+                         
+                          }
+                          else
+                          {
+                           $expenseentries=$expenseentries
+                        ->where('expenseentries.created_at','>=',$stdt.' 00:00:00')
+                         ->where('expenseentries.created_at','<',$endt.' 00:00:00');
+                          }
+                         $expenseentries=$expenseentries
+
+                         
+                         ->orderBy('expenseentries.created_at')
+                         ->get(); 
+                }
+                
+                 
+                 
+                  $creatarr=array('payment'=>$requisitionpayments[$i],'expenses'=>$expenseentries,'stdt'=>$stdt,'endt'=>$endt);
+
+                    $customarr[]=$creatarr;
+                
+            }
+            
+            
+        }
+        else
+        {
+             $requisitionpayments='';
+        }
+        $bal=0;
+        //return compact('customarr','users','requisitionpayments','bal');
+        
+        return view('accounts.ledger',compact('customarr','users','requisitionpayments','bal','projects'));
+  }
+
   public function pendinghodexpenseentry()
   {
             $expenseentries=expenseentry::select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname','u4.name as hodname')

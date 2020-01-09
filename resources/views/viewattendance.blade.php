@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <table  class="table">
   <tr class="bg-blue">
     <td class="text-center">VIEW ATTENDANCE</td>
