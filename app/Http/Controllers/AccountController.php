@@ -53,7 +53,84 @@ use Excel;
 class AccountController extends Controller
 {  
 
+  public function creditorledger(Request $request)
+  {
+       $allarray=array();
+      $clients=billheader::select('clientname')->where('status','!=','REJECTED')->groupBy('clientname')->get();
+      if($request->has('client') && $request->get('client')=='ALL')
+       {
+      $bills=billheader::where('status','APPROVED')->get();
 
+      foreach ($bills as $key => $value) {
+          $crvoucher=crvoucherheader::where('billid',$value->id)->first();
+          $custarr=array('bill'=>$value,'crvoucher'=>$crvoucher);
+
+          $allarray[]=$custarr;
+      }
+      //return $allarray;
+
+    }
+
+      
+      return view('accounts.creditorledger',compact('clients','allarray'));
+  }
+
+   public function debitorledger(Request $request)
+   {
+       $debitvouchers=array();
+       $alldebitvoucherarr=array();
+       $vendors=vendor::all();
+
+        if ($request->has('vendor')) {
+
+          if ($request->get('vendor')=='ALL') {
+
+                $vendors=vendor::all();
+
+                foreach ($vendors as $key => $vendor) {
+                   $allvouchers=debitvoucherheader::where('status','!=','CANCELLED')
+                   ->where('vendorid',$vendor->id)
+                   ->get();
+                   $tobepaidamt=$allvouchers->sum('approvalamount');
+                   $ids=debitvoucherheader::select('id')
+                   ->where('status','!=','CANCELLED')
+                   ->where('vendorid',$vendor->id)
+                   ->get();
+                   $paid=debitvoucherpayment::where('paymentstatus','PAID')
+                        ->whereIn('did',$ids)
+                        ->get();
+                   $paidamt=$paid->sum('amount');
+                   $bal=$tobepaidamt-$paidamt;
+
+                   $custarr=array('vendorname'=>$vendor->vendorname,'cr'=>$tobepaidamt,'dr'=>$paidamt,'bal'=>$bal);
+                 $alldebitvoucherarr[]=$custarr;
+                }
+                
+           
+          }
+          else
+          {
+
+          $debitvoucherheaders=debitvoucherheader::where('vendorid',$request->vendor)
+          ->where('status','!=','CANCELLED')
+          ->get();
+          foreach ($debitvoucherheaders as $key => $value) {
+             $drvoucherpayments=debitvoucherpayment::where('did',$value->id)
+                               ->where('paymentstatus','PAID')
+                               ->get();
+             $customarray=array('header'=>$value,'payments'=>$drvoucherpayments);
+
+             $debitvouchers[]=$customarray;
+          }
+
+            }
+
+          
+        }
+
+        //return $debitvouchers;
+       return view('accounts.debitorledger',compact('vendors','debitvouchers','alldebitvoucherarr'));
+   }
   public function ledger(Request $request)
   {
         $users=User::all();
@@ -3924,8 +4001,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
           
       return view('accounts.walletpaidexpenseentry',compact('expenseentries'));
      }
-  public function getaccountexpenseentrylist()
+  public function getaccountexpenseentrylist(Request $request)
      {
+
         $expenseentries=DB::table('expenseentries')->select('expenseentries.*','u1.name as for','u2.name as by','projects.projectname','clients.clientname','expenseheads.expenseheadname','particulars.particularname','vendors.vendorname','u3.name as approvedbyname')
                       ->leftJoin('users as u1','expenseentries.employeeid','=','u1.id')
                       ->leftJoin('users as u2','expenseentries.userid','=','u2.id')
@@ -3941,6 +4019,17 @@ public function approvedebitvoucheradmin(Request $request,$id)
          $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
               $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
           return DataTables::of($expenseentries)
+               ->filter(function ($expenseentries) use ($request) {
+                if ($request->has('name') && $request->get('name')!='') 
+                {
+                    $expenseentries->where('employeeid', $request->get('name'));
+                }
+                if ($request->has('expensehead') && $request->get('expensehead')!='') 
+                {
+                    $expenseentries->where('expenseentries.expenseheadid', $request->get('expensehead'));
+                }
+
+            })
 
                 ->addColumn('idbtn', function($expenseentries){
                          return '<a href="/viewexpenseentrydetails/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';
@@ -4005,7 +4094,9 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
                       ->groupBy('expenseentries.id')
                       ->get();
-      return view('accounts.viewallexpenseentry',compact('expenseentries'));
+      $users=User::all();
+      $expenseheads=expensehead::all();
+      return view('accounts.viewallexpenseentry',compact('expenseentries','users','expenseheads'));
      }
      public function saveexpenseentry(Request $request)
      {
@@ -4299,3 +4390,64 @@ public function approvedebitvoucheradmin(Request $request,$id)
          return view('accounts.managevendors',compact('vendors'));
     }
 }
+
+/*public function projectpaymenyttest()
+{
+  $allarray=array();
+      $clients=billheader::select('clientname')->where('status','!=','REJECTED')->groupBy('clientname')->get();
+       if($request->has('client') && $request->get('client')!='')
+       {
+           $projects=billheader::select('id','nameofthework','total','clientname')
+                     ->where('nameofthework','!=','')
+                     ->where('status','!=','REJECTED')
+                     ->groupBy('nameofthework','clientname')
+                     ->get();
+            foreach ($projects as $key => $value) {
+
+             
+      
+              $claimedamount=billheader::where('nameofthework',$value->nameofthework)
+                 ->where('status','!=','REJECTED')
+                 ->sum('claimedvalue');
+
+              $creditedamount=crvoucherheader::where('nameofthework',$value->nameofthework)
+                ->where('clientname',$value->clientname)
+              ->sum('creditedamt');
+
+              $totaldeduction=crvoucherheader::where('nameofthework',$value->nameofthework)
+              ->where('clientname',$value->clientname)
+              ->sum('totaldeduction');
+              $totalbankcharges=crvoucherheader::where('nameofthework',$value->nameofthework)
+              ->where('clientname',$value->clientname)
+
+              ->sum('deductioncrg');
+
+              $totalcgst=crvoucherheader::where('nameofthework',$value->nameofthework)
+              ->where('clientname',$value->clientname)
+              ->sum('cgstvalue');
+              $totalsgst=crvoucherheader::where('nameofthework',$value->nameofthework)
+              ->where('clientname',$value->clientname)
+              ->sum('sgstvalue');
+               $totaligst=crvoucherheader::where('nameofthework',$value->nameofthework)
+               ->where('clientname',$value->clientname)
+              ->sum('igstvalue');
+            
+         
+              
+              $custarr=array('clientname'=>$value->clientname,'nameofthework'=>$value->nameofthework,'workvalue'=>$value->total,'claimedamount'=>$claimedamount,'creditedamount'=> $creditedamount,'totaldeduction'=>$totaldeduction,'totalbankcharges'=>$totalbankcharges,'totalcgst'=>$totalcgst,'totalsgst'=>$totalsgst,'totaligst'=>$totaligst);
+
+              $allarray[]=$custarr;
+             
+              
+
+             
+            }
+            
+           
+       }
+
+
+      
+      //return $allarray;
+}
+*/

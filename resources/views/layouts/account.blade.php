@@ -296,6 +296,9 @@
           </a>
           <ul class="treeview-menu">
            <li class="{{ Request::is('ledger/ledger') ? 'active' : '' }}"><a href="/ledger/ledger"><i class="fa fa-circle-o text-aqua"></i>Ledger</a></li>
+           <li class="{{ Request::is('ledger/debitorledger') ? 'active' : '' }}"><a href="/ledger/debitorledger"><i class="fa fa-circle-o text-aqua"></i>DR Ledger</a></li>
+
+           <li class="{{ Request::is('ledger/creditorledger') ? 'active' : '' }}"><a href="/ledger/creditorledger"><i class="fa fa-circle-o text-aqua"></i>CR Ledger</a></li>
 
           </ul>
         </li>
@@ -312,12 +315,12 @@
           <ul class="treeview-menu">
             <li class="{{ Request::is('accbills/createbill') ? 'active' : '' }}"><a href="/accbills/createbill"><i class="fa fa-circle-o text-red"></i>CREATE A BILL</a></li>
 
-             @if(Auth::user()->usertype=='MASTER ADMIN')
+             
               
              <li class="{{ Request::is('accbills/viewpendingbills') ? 'active' : '' }}"><a href="/accbills/viewpendingbills"><i class="fa fa-circle-o text-red"></i>VIEW PENDING BILL</a></li>
               <li class="{{ Request::is('accbills/viewapprovedbills') ? 'active' : '' }}"><a href="/accbills/viewapprovedbills"><i class="fa fa-circle-o text-red"></i>VIEW APPROVED BILL</a></li>
                 <li class="{{ Request::is('accbills/viewrejectbills') ? 'active' : '' }}"><a href="/accbills/viewrejectbills"><i class="fa fa-circle-o text-red"></i>VIEW REJECT BILL</a></li>
-            @endif
+           
             
 
             <li class="{{ Request::is('accbills/viewallbills') ? 'active' : '' }}"><a href="/accbills/viewallbills"><i class="fa fa-circle-o text-red"></i>VIEW ALL BILL</a></li>
@@ -871,7 +874,6 @@ if (event.persisted) {
         dom: 'Bfrtip',
         "order": [[ 0, "desc" ]],
         "iDisplayLength": 10,
-
         buttons: [
             {
                 extend: 'pdfHtml5',
@@ -968,6 +970,34 @@ var jqf = $.noConflict();
      "scrollX": true,
      "iDisplayLength": 25
   });
+ $('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 25,
+        "scrollY": 450,
+        "scrollX": true,
+
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
+
+       ],
+            });
 
  
 </script>

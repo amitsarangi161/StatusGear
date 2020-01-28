@@ -20,7 +20,7 @@
 
 <table class="table">
   <tr class="bg-yellow">
-    <td colspan="6" class="text-center">FILTER</td>
+    <td colspan="8" class="text-center">FILTER</td>
   </tr>
   <tr>
     <td><strong>Select a Company</strong></td>
@@ -39,6 +39,16 @@
         <option value="PENDING" {{ (Request::get('status')=="PENDING") ? 'selected' : '' }}>PENDING</option>
         <option value="APPROVED" {{ (Request::get('status')=="APPROVED") ? 'selected' : '' }}>APPROVED</option>
         <option value="REJECTED" {{ (Request::get('status')=="REJECTED") ? 'selected' : '' }}>REJECTED</option>
+        
+      </select>
+    </td>
+    <td><strong>Select a Financial Year</strong></td>
+    <td>
+      <select class="form-control" name="year" id="year">
+        <option value="" >Select a Year</option>
+        <option value="2018-19" {{ (Request::get('year')=="2018-19") ? 'selected' : '' }}>2018-19</option>
+        <option value="2019-20" {{ (Request::get('year')=="2019-20") ? 'selected' : '' }}>2019-20</option>
+        <option value="2020-20" {{ (Request::get('year')=="2020-21") ? 'selected' : '' }}>2020-21</option>
         
       </select>
     </td>
@@ -61,6 +71,10 @@
         <td>COMPANY</td>
         <td>WORK NAME</td>
         <td>TOTAL AMOUNT</td>
+        <td>CLAIMED AMOUNT</td>
+        <td>CGST</td>
+        <td>SGST</td>
+        <td>IGST</td>
         <td>TOTAL PAYABLE</td>
         <td>ADVANCE RECIVED</td>
         <td>NET PAYABLE</td>
@@ -81,6 +95,10 @@
         <td>{{$bill->company}}</td>
         <td><p class="b" title="{{$bill->nameofthework}}">{{$bill->nameofthework}}</p></td>
         <td>{{ $provider::moneyFormatIndia($bill->total)}}</td>
+        <td>{{ $provider::moneyFormatIndia($bill->claimedvalue)}}</td>
+        <td>{{ $provider::moneyFormatIndia($bill->cgstvalue)}}</td>
+        <td>{{ $provider::moneyFormatIndia($bill->sgstvalue)}}</td>
+        <td>{{ $provider::moneyFormatIndia($bill->igstvalue)}}</td>
         <td>{{ $provider::moneyFormatIndia($bill->totalpayable)}}</td>
         <td>{{ $provider::moneyFormatIndia($bill->advancepayment)}}</td>
         <td>{{ $provider::moneyFormatIndia($bill->netpayable)}}</td>
@@ -101,6 +119,31 @@
        </tr>
         @endforeach
     </tbody>
+    <tfoot>
+      <tr class="bg-gray">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="font-weight: bold;">TOTAL</td>
+        <td style="font-weight: bold;">{{$provider::moneyFormatIndia($bills->sum('total'))}}</td>
+        <td style="font-weight: bold;">CLAIMED:-{{$provider::moneyFormatIndia( $bills->sum('claimedvalue'))}}</td>
+
+        <td style="font-weight: bold;">CGST:-{{$provider::moneyFormatIndia( $bills->sum('cgstvalue'))}}</td>
+        <td style="font-weight: bold;">SGST:-{{$provider::moneyFormatIndia( $bills->sum('sgstvalue'))}}</td>
+        <td style="font-weight: bold;">IGST:-{{$provider::moneyFormatIndia( $bills->sum('igstvalue'))}}</td>
+
+        <td style="font-weight: bold;">{{$provider::moneyFormatIndia($bills->sum('totalpayable'))}}</td>
+        <td style="font-weight: bold;">{{$provider::moneyFormatIndia($bills->sum('advancepayment'))}}</td>
+        <td style="font-weight: bold;">{{$provider::moneyFormatIndia($bills->sum('netpayable'))}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      
+    </tfoot>
     
 </table>
 </div>
@@ -144,8 +187,9 @@ function filter()
   {
     var company=$("#company").val();
     var status=$("#status").val();
-    if (company!='' || status!='') {
-         location.href='?company='+company+'& status='+status;
+    var year=$("#year").val();
+    if (company!='' || status!=''|| year!='') {
+         location.href='?company='+company+'& status='+status+'& year='+year;
 
     }
     else

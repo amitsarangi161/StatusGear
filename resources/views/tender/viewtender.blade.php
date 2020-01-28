@@ -44,7 +44,16 @@
 
 	<td><strong>TENDER PRIORITY *</strong></td>
 	<td>
-		<input type="text" disabled="" class="form-control" value="{{$tender->tenderpriority}}">
+		<form action="/changepriorityadmin/{{$tender->id}}" method="post">
+			{{csrf_field()}}
+		<select class="form-control select2" name="tenderpriority" required="">
+			<option value="HIGH" {{ ( $tender->tenderpriority == 'HIGH') ? 'selected' : '' }}>HIGH</option>
+			<option value="MEDIUM" {{ ( $tender->tenderpriority == 'MEDIUM') ? 'selected' : '' }}>MEDIUM</option>
+			<option value="LOW" {{ ( $tender->tenderpriority == 'LOW') ? 'selected' : '' }}>LOW</option>
+			
+		</select>
+         <button type="submit" class="btn btn-success">Change</button>
+       </form>
 	</td>
 
 </tr>
@@ -93,12 +102,19 @@
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$provider::changedatetimeformat($tender->prebidmeetingdate)}}" disabled=""></td>
+
 	<td><strong>RECOMENDED FOR</strong></td>
-		<td>
+	<form action="/changerecomendtender/{{$tender->id}}" method="post">
+		{{csrf_field()}}
+	<td>
 			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+              @if(Auth::user()->usertype=='MASTER ADMIN')
+			<button type="submit" class="btn btn-success">Change</button>
+			@endif
 	</td>
+	</form>
 	
 </tr>
 	

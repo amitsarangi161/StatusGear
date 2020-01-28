@@ -52,9 +52,11 @@
 	</form>
 	
 </table>
+<button type="button" class="btn btn-success" id="print">Print</button>
 
 @if($requisitionpayments)
-<p style="text-align:center;">CASH BOOK</p>
+<div id="printTable">
+<p style="text-align:center;">LEDGER</p>
 
 <table width="100%">
 <tbody><tr style="border-bottom:1px solid;text-align: center;background: #383b3e;color: #fff;line-height: 2em;">
@@ -68,25 +70,25 @@
 </tbody>
 </table>
 
-
+<div class="table-responsive">
 <table  width="100%">
 
 <tbody>
 
 <tr style="background: #c0c0c0;height: 2.5em;font-size: 1em;border-bottom: 1px black solid; font-weight: bold;">
-<td style="width: 10%; text-align:left;">
+<td style="width: 10%; text-align:left;font-weight: bold;">
 DATE</td>
-<td style="width: 40%; text-align:left;">
+<td style="width: 40%; text-align:left;font-weight: bold;">
 PROJECT</td>
-<td style="width: 10%; text-align:left;">
+<td style="width: 10%; text-align:left;font-weight: bold;">
 PAYMENT TYPE</td>
-<td style="width: 10%; text-align:left;">
+<td style="width: 10%; text-align:left;font-weight: bold;">
 EXP HEAD</td>
-<td style="width: 10%; text-align:right;">
+<td style="width: 10%; text-align:right;font-weight: bold;">
 CREDIT</td>
-<td style="width: 10%; text-align:right;">
+<td style="width: 10%; text-align:right;font-weight: bold;">
 DEBIT</td>
-<td style="width: 10%; text-align:right;">
+<td style="width: 10%; text-align:right;font-weight: bold;">
 BALANCE</td>
 </tr>
 
@@ -103,18 +105,18 @@ BALANCE</td>
 @endphp
 <tr style="line-height: 2em;font-weight: bold;" class="noexcel">
 <tr>
-	<td style="width: 10%; text-align:left;">{{$arr['payment']['dateofpayment']}}</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">{{$arr['payment']['dateofpayment']}}</td>
 
 	@if($arr['payment']['projectname']!='')
-	<td style="width: 40%; text-align:left;"><p class="b" title="{{$arr['payment']['projectname']}}">{{$arr['payment']['projectname']}}</p></td>
+	<td style="width: 40%; text-align:left;font-weight: bold;"><p class="b" title="{{$arr['payment']['projectname']}}">{{$arr['payment']['projectname']}}</p></td>
 	@else
-    <td style="width: 40%; text-align:left;">OTHERS</td>
+    <td style="width: 40%; text-align:left;font-weight: bold;">OTHERS</td>
 	@endif
-	<td style="width: 10%; text-align:left;">{{$arr['payment']['paymenttype']}}</td>
-	<td style="width: 10%; text-align:left;"></td>
-	<td style="width: 10%; text-align:right;">{{$arr['payment']['amount']}}</td>
-	<td style="width: 10%; text-align:right;">0</td>
-	<td style="width: 10%; text-align:right;">{{$start}}</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">{{$arr['payment']['paymenttype']}}</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;"></td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$arr['payment']['amount']}}</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">0</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$start}}</td>
 </tr>
 <tr style="font-weight: bold;border-top: 1px dashed;background: #e8e8e8;line-height: 3em;" class="noexcels">
  @foreach($arr['expenses'] as $exp)
@@ -124,17 +126,17 @@ BALANCE</td>
   $totalexp+=$exp->approvalamount;
 @endphp
 <tr style="background-color: #ffb3b3;">
-	<td style="width: 10%; text-align:left;">{{$exp->created_at}}</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">{{$exp->created_at}}</td>
 	@if($exp->projectname!='')
-	<td style="width: 40%; text-align:left;"><p class="b" title="{{$exp->projectname}}">{{$exp->projectname}}</p></td>
+	<td style="width: 40%; text-align:left;font-weight: bold;"><p class="b" title="{{$exp->projectname}}">{{$exp->projectname}}</p></td>
 	@else
-     <td style="width: 40%; text-align:left;">OTHERS</td>
+     <td style="width: 40%; text-align:left;font-weight: bold;">OTHERS</td>
 	@endif
-	<td style="width: 10%; text-align:left;">NULL</td>
-	<td style="width: 10%; text-align:left;">{{$exp->expenseheadname}}</td>
-	<td style="width: 10%; text-align:right;">0</td>
-	<td style="width: 10%; text-align:right;">{{$exp->approvalamount}}</td>
-	<td style="width: 10%; text-align:right;">{{$getexp}}</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">NULL</td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">{{$exp->expenseheadname}}</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">0</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$exp->approvalamount}}</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$getexp}}</td>
 </tr>
 @php
    $abc=$getexp;
@@ -155,13 +157,13 @@ BALANCE</td>
 <tfoot>
 
 <tr style="background-color: red;">
-	<td style="width: 10%; text-align:left;"></td>
-    <td style="width: 40%; text-align:left;"></td>
-	<td style="width: 10%; text-align:left;"></td>
-	<td style="width: 10%; text-align:left;">TOTAL</td>
-	<td style="width: 10%; text-align:right;">{{$totalpaid}}</td>
-	<td style="width: 10%; text-align:right;">{{$totalexp}}</td>
-	<td style="width: 10%; text-align:right;"></td>
+	<td style="width: 10%; text-align:left;font-weight: bold;"></td>
+    <td style="width: 40%; text-align:left;font-weight: bold;"></td>
+	<td style="width: 10%; text-align:left;font-weight: bold;"></td>
+	<td style="width: 10%; text-align:left;font-weight: bold;">TOTAL</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$totalpaid}}</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$totalexp}}</td>
+	<td style="width: 10%; text-align:right;font-weight: bold;">{{$start}}</td>
 </tr>
 
 
@@ -169,11 +171,26 @@ BALANCE</td>
 </tfoot>
 
 </table>
+</div>
 
-
+</div>
 @endif
 
 
+<script type="text/javascript">
+	function printData()
+{
+   var divToPrint=document.getElementById("printTable");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
+
+$('#print').on('click',function(){
+printData();
+})
+</script>
 
 
 

@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
 
 <table  class="table">
   <tr class="bg-blue">
@@ -8,15 +12,17 @@
   </tr>
 </table>
 <table class="table">
+  <form action="/attendance/viewattendance" method="get">
   <tr>
     <td><strong>Select a Date</strong></td>
-    <td><input type="text" name="date" id="date" class="form-control datepicker1"></td>
-    <td><button type="button" class="btn btn-primary" onclick="showdetails()">SHOW</button></td>
+    <td><input type="text" name="date" id="date" class="form-control datepicker" value="{{Request::get('date')}}" autocomplete="off"></td>
+    <td><button type="submit" class="btn btn-primary" onclick="showdetails()">SHOW</button></td>
   </tr>
+  </form>
   
 </table>
 
-<table class="table table-responsive table-hover table-bordered table-striped datatable6">
+<table class="table table-responsive table-hover table-bordered table-striped datatable1">
   <thead>
   <tr class="bg-navy">
     <th><strong>USER ID</strong></th>
@@ -25,101 +31,24 @@
     <th><strong>VIEW</strong></th>
   </tr>
   </thead>
-  <tbody id="empattendance">
-
-    
+  <tbody>
+     @foreach($all as $a)
+       <tr>
+          <td>{{$a['uid']}}</td>
+          <td>{{$a['uname']}}</td>
+          @if($a['present']=='PRESENT')
+          <td><label class="label label-success">{{$a['present']}}</label></td>
+          @else
+          <td><label class="label label-danger">{{$a['present']}}</label></td>
+          @endif
+          <td><a href="/showuserlocation/{{$a['uid']}}/{{$dt}}" class="btn btn-success">VIEW</a></td>
+       </tr>
+     @endforeach
   </tbody>
 
+  
 </table>
-<script type="text/javascript">
-  function showdetails()
-  {
-    var date=$("#date").val();
-      if(date!='')
-      {
 
-         $.ajaxSetup({
-    
-            headers:{
-                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
-            }
-            });
-             
 
-              $.ajax({
-               type:'POST',
-              
-               url:'{{url("/showattendance")}}',
-              
-               data: {
-                     "_token": "{{ csrf_token() }}",
-                      date: date
-                      
-                     },
-
-               success:function(data) { 
-                   
-                 
- 
-
-   
-                $("#empattendance").empty();
-                   $.each(data,function(key,value){
-                    if(value.present=='PRESENT')
-                    {
-                      var p='<span class="label label-success">'+value.present+'</span>';
-                    }
-                    else
-                    {
-                       var p='<span class="label label-danger">'+value.present+'</span>';
-                    }
-                    var x='<tr><td>'+value.uid+'</td><td>'+value.uname+'</td><td>'+p+'</td><td><button type="button" id="'+value.uid+'"  class="btn btn-info" onclick="viewuserlocation(this.id);">VIEW</button></td></tr>';
-                    $("#empattendance").append(x);
-
-                   });
-                   
-
-       $('.datatable6').DataTable({
-        dom: 'Bfrtip',
-        "order": [[ 0, "desc" ]],
-        "iDisplayLength": 150,
-         "bDestroy": true,
-        buttons: [
-            {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                footer:true,
-                pageSize: 'A4',
-                title: 'REPORT',            },
-            {
-                extend: 'excelHtml5',
-                footer:true,
-                title: 'REPORT'
-            },
-            {
-                extend: 'print',
-                
-                footer:true,
-                title: 'REPORT'
-            }
-
-       ],
-            });
-                          
-               }
-           });
-          }
-          else
-          {
-            alert("please select a date first");
-          }
-  }
-
-  function viewuserlocation(uid)
-  {
-     var date=$("#date").val();
-     window.open('/showuserlocation/'+uid+'/'+date, '_blank');
-  }
-</script>
 
 @endsection

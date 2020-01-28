@@ -14,6 +14,39 @@
 
 }
 </style>
+
+<table  class="table table-responsive table-hover table-bordered table-striped">
+  <form method="POST" id="search-form" class="form-inline" role="form">
+  <tr>
+    <td width="10%"><strong>Select a Users</strong></td>
+    <td width="30%">
+
+      <select class="form-control select2" name="user" id="name">
+        <option value="">Select a User</option>
+        @foreach($users as $user)
+        <option value="{{$user->id}}" {{ ( $user->id == Request::get('user')) ? 'selected' : '' }}>{{$user->name}}</option>
+        @endforeach
+        
+      </select>
+    </td>
+    <td width="10%"><strong>Select a Expense Head</strong></td>
+    <td width="30%">
+
+      <select class="form-control select2" name="expensehead" id="expensehead">
+        <option value="">Select a Expense Head</option>
+        @foreach($expenseheads as $expensehead)
+        <option value="{{$expensehead->id}}" {{ ( $expensehead->id == Request::get('expensehead')) ? 'selected' : '' }}>{{$expensehead->expenseheadname}}</option>
+        @endforeach
+        
+      </select>
+    </td>
+   
+  
+    <td width="10%"><button type="submit" class="btn btn-info">FETCH</button></td>
+  </tr>
+  </form>
+  
+</table>
 <div style="overflow-x:auto;">
 <table class="table table-responsive table-hover table-bordered table-striped yajratable">
 	<thead>
@@ -71,8 +104,16 @@
 
         processing: true,
         serverSide: true,
-        ajax: "{{ route('getaccountexpenseentrylist') }}",
+        ajax: {
+            url: '{{ url("getaccountexpenseentrylist")  }}',
+            data: function (d) {
+                d.name = $('#name').val();
+                d.expensehead = $('#expensehead').val();
+               
+            }
+        },
         order: [[ 0, "desc" ]],
+
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -111,9 +152,16 @@
     var json = table.ajax.json();
     console.log(json.data);
 } );
-
+  $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+       
+       table.draw(true);
+       
+    });
     
   });
+
+  
 
 
   </script>

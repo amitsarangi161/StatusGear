@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
 @inject('provider', 'App\Http\Controllers\AccountController')
+<style type="text/css">
+    .b {
+    white-space: nowrap; 
+    width: 100px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+   
+}
+</style>
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">PROJECT WISE PAYMENT REPORT</td>
@@ -10,7 +19,7 @@
 </table>
 
 <div class="table-responsive">
-	<table class="table table-responsive table-hover table-bordered table-striped datatable1">
+	<table class="table table-responsive table-hover table-bordered table-striped datatablescroll">
 		<thead>
 		<tr class="bg-navy">
 			<td>PROJECT ID</td>
@@ -32,7 +41,7 @@
 		@foreach($projectwisepaymentreports as $projectwisepaymentreport)
            <tr>
            	<td>{{$projectwisepaymentreport['projectid']}}</td>
-           	<td>{{$projectwisepaymentreport['projectname']}}</td>
+           	<td><p class="b" title="{{$projectwisepaymentreport['projectname']}}">{{$projectwisepaymentreport['projectname']}}</p></td>
            	<td>{{$projectwisepaymentreport['clientname']}}</td>
 
            	<td style="text-align: right;">{{$provider::moneyFormatIndia($sumamount[]=$projectwisepaymentreport['workordervalue'])}}</td>

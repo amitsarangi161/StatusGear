@@ -1,5 +1,14 @@
 @extends('layouts.app')
 @section('content')
+<style type="text/css">
+	    .b {
+    white-space: nowrap; 
+    width: 120px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+   
+}
+</style>
 <table class="table">
 	<tr class="bg-navy">
 		<td class="text-center">ASSIGNED TENDER</td>
@@ -28,7 +37,7 @@
 		@foreach($tenders as $tender)
 		   <tr>
 		   	<td>{{$tender->id}}</td>
-		   	<td>{{$tender->nameofthework}}</td>
+		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
 		   	<td>{{$tender->clientname}}</td>
 		   	<td>{{$tender->source}}</td>
 		   	<td>{{$tender->workvalue}}</td>

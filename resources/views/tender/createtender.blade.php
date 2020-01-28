@@ -49,16 +49,16 @@
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="text" name="workvalue" class="form-control" placeholder="Enter Work Value" required="" autocomplete="off"></td>
+	<td><input type="text" name="workvalue" class="form-control" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
-	<td><input type="text" name="nitpublicationdate" class="form-control datepicker readonly" required="" autocomplete="off"></td>
+	<td><input type="text" name="nitpublicationdate" class="form-control datepicker1 readonly" required="" autocomplete="off"></td>
 	
 </tr>
 <tr>
 	<td><strong>SOURCE *</strong></td>
-	<td><input type="text" name="source" class="form-control" placeholder="Enter Source Name" required=""></td>
+	<td><input type="text" name="source" class="form-control" placeholder="Enter Source Name" value="NA" required=""></td>
 
 	<td><strong>TENDER PRIORITY *</strong></td>
 	<td>
@@ -83,7 +83,7 @@
 			<option value="SURVEY AND GEOTECH">SURVEY AND GEOTECH</option>
 			<option value="PMC">PMC</option>
 			<option value="AE">AE</option>
-			<option value="OTHERS">OTHERS</option>
+			<option value="OTHERS" selected="">OTHERS</option>
 			
 		</select>
 	</td>
@@ -92,7 +92,7 @@
 	
 </tr>
 <tr>
-	<td><strong>TENDER VALIDITY IN DAYS *(Ex.20)</strong></td>
+	<td><strong>TENDER VALIDITY IN DAYS(Ex.20)</strong></td>
 	<td><input type="text" name="tendervalidityindays" id="tendervalidityindays" class="form-control chngdate"></td>
 
 	<td><strong>LAST DATE OF TENDER VALIDITY</strong></td>
@@ -110,28 +110,28 @@
 <tr>
 	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
 	<td>
-		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" required=""></textarea>
+		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" required="">NOT MENTIONED</textarea>
         
 	</td>
-	<td><strong>CORRIGENDUM FILE *</strong></td>
+	<td><strong>CORRIGENDUM FILE</strong></td>
 	<td><input type="file" name="corrigendumfile[]" multiple class="form-control"></td>
 </tr>
 <tr>
-	<td><strong>DOCUMENT DOWNLOAD/SALE START DATE *</strong></td>
+	<td><strong>DOCUMENT DOWNLOAD/SALE START DATE</strong></td>
 	<td><input type="text" name="salestartdate" class="form-control datetimepicker1" ></td>
-	<td><strong>DOCUMENT DOWNLOAD/SALE END DATE *</strong></td>
+	<td><strong>DOCUMENT DOWNLOAD/SALE END DATE</strong></td>
 	<td><input type="text" name="saleenddate" class="form-control datetimepicker1" ></td>
 	
 </tr>
 <tr>
-	<td><strong>BID SUBMISSION START DATE *</strong></td>
+	<td><strong>BID SUBMISSION START DATE</strong></td>
 	<td><input type="text" name="bidstartdate" class="form-control datetimepicker1" ></td>
-	<td><strong>BID SUBMISSION END DATE *</strong></td>
+	<td><strong>BID SUBMISSION END DATE</strong></td>
 	<td><input type="text" name="bidenddate" class="form-control datetimepicker1" ></td>
 	
 </tr>
 <tr>
-	<td><strong>PRE-BID MEETING START DATE*</strong></td>
+	<td><strong>PRE-BID MEETING START DATE</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control datetimepicker1" ></td>
 
 	<td><strong>RECOMENDED FOR</strong></td>
@@ -157,16 +157,16 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>EMD AMOUNT</strong></td> 
-		<td><input type="text" name="emdamount" id="emdamount" class="form-control convert" placeholder="Enter Emd Amount" autocomplete="off"  required=""></td>
+		<td><input type="text" name="emdamount" id="emdamount" class="form-control convert" placeholder="Enter Emd Amount" autocomplete="off"></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
 			<textarea class="form-control" id="amountinword" name="amountinword" readonly=""></textarea>
 		</td>
 	</tr>
 	<tr>
-		<td><strong>EMD in the form of *</strong></td>
+		<td><strong>EMD in the form of</strong></td>
 		<td>
-			<select class="form-control select2" name="emdinformof" required="">
+			<select class="form-control select2" name="emdinformof">
 				<option value="">--Choose a Type--</option>
 				<option value="DD">DD</option>
 				<option value="BG">BG</option>
@@ -177,7 +177,7 @@
 			
 		    </select>
 	</td>
-	<td><strong>EMD Payable To*</strong></td>
+	<td><strong>EMD Payable To</strong></td>
 	<td>
 		<textarea name="emdpayableto" class="form-control"></textarea>
 	</td>
@@ -198,16 +198,16 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>TENDER AMOUNT</strong></td> 
-		<td><input type="text" name="tenderamount" id="tenderamount" class="form-control convert1" autocomplete="off" placeholder="Enter Tender Amount"  required=""></td>
+		<td><input type="text" name="tenderamount" id="tenderamount" class="form-control convert1" autocomplete="off" placeholder="Enter Tender Amount"  ></td>
 		<td><strong>Amount in Word</strong></td>
 		<td>
 			<textarea class="form-control" id="tenderamountinword" name="tenderamountinword" readonly=""></textarea>
 		</td>
 	</tr>
 	<tr>
-		<td><strong>TENDER COST in the form of *</strong></td>
+		<td><strong>TENDER COST in the form of </strong></td>
 		<td>
-			<select class="form-control select2" name="tendercostinformof" required="">
+			<select class="form-control select2" name="tendercostinformof">
 				<option value="">--Choose a Type--</option>
 				<option value="DD">DD</option>
 				<option value="BG">BG</option>
@@ -218,7 +218,7 @@
 			
 		    </select>
 	</td>
-	<td><strong>TENDER FEE Payable To*</strong></td>
+	<td><strong>TENDER FEE Payable To</strong></td>
 	<td>
 		<textarea name="tenderfeepayableto" class="form-control"></textarea>
 	</td>
@@ -243,7 +243,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><strong>Registration Amount in the form of *</strong></td>
+		<td><strong>Registration Amount in the form of</strong></td>
 		<td>
 			<select class="form-control select2" name="registrationamountinformof">
 				<option value="">--Choose a Type--</option>
@@ -256,7 +256,7 @@
 			
 		    </select>
 	</td>
-	<td><strong>Registration FEE Payable To*</strong></td>
+	<td><strong>Registration FEE Payable To</strong></td>
 	<td>
 		<textarea name="registrationamountpayableto" class="form-control"></textarea>
 	</td>

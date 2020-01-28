@@ -19,6 +19,23 @@ use DB;
 class TenderController extends Controller
 { 
 
+public function changepriorityadmin(Request $request,$id)
+{
+    $tender=Tender::find($id);
+    $tender->tenderpriority=$request->tenderpriority;
+    $tender->save();
+
+    return back();
+}
+public function changerecomendtender(Request $request,$id)
+{
+    $tender=Tender::find($id);
+    $tender->recomended=$request->recomended;
+    $tender->save();
+
+    return back();
+}
+
 public function viewnotappliedtender($id)
 {
     $tender=Tender::find($id);

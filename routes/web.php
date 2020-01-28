@@ -73,6 +73,9 @@ Route::get('/tendercom/tenderlistforcommitee','TenderController@tenderlistforcom
 Route::get('/viewtendertendercomitee/{id}','TenderController@viewtendertendercomitee');
 Route::post('/tenderelligible/{id}','TenderController@tenderelligible');
 Route::post('/tendernotelligible/{id}','TenderController@tendernotelligible');
+Route::post('/changerecomendtender/{id}','TenderController@changerecomendtender');
+Route::post('/changepriorityadmin/{id}','TenderController@changepriorityadmin');
+
 Route::post('/assignedusertotender/{id}','TenderController@assignedusertotender');
 Route::get('/deleteuserfromtender/{uid}/{tid}','TenderController@deleteuserfromtender');
 Route::get('/mytenders/assignedtenders','TenderController@assignedtenders');
@@ -340,6 +343,8 @@ Route::post('/changependingstatustocanceledmgr/{id}','AccountController@changepe
 
 
 Route::get('/ledger/ledger','AccountController@ledger');
+Route::get('/ledger/debitorledger','AccountController@debitorledger');
+Route::get('/ledger/creditorledger','AccountController@creditorledger');
 Route::post('/changependingstatustocanceledhod/{id}','AccountController@changependingstatustocanceledhod');
 Route::post('/hodchangependingstatustocanceled/{id}','AccountController@hodchangependingstatustocanceled');
 
@@ -517,6 +522,7 @@ Route::post('/ajaxchangesuggestionstatus','AjaxController@ajaxchangesuggestionst
 Route::get('/documents/adddocuments','HrController@adddocuments');
 Route::post('/savedocument','HrController@savedocument');
 Route::delete('/deletedocument/{id}','HrController@deletedocument');
+Route::post('/changeuserstatus','HomeController@changeuserstatus');
 
 /*5-9-19*/
 

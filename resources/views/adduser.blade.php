@@ -101,6 +101,7 @@
             <th>USER TYPE</th>
             <th>ASSIGNED ACTIVITY</th>
             <th>DESIGNATION</th>
+            <th>ACTIVE</th>
             <th>EDIT</th>
             <!-- <th>DELETE</th> -->
         </tr>
@@ -117,6 +118,11 @@
              <td>{{$user->usertype}}</td>
              <td>{{$user->activityname}}</td>
              <td>{{$user->designation}}</td>
+             @if($user->active=='1')
+              <td><span class="label label-success" ondblclick="callmodals('{{$user->id}}')">ACTIVE</span></td>
+             @else
+               <td><span class="label label-danger" ondblclick="callmodals('{{$user->id}}')">INACTIVE</span></td>
+             @endif
              <td><button onclick="edituser('{{$user->id}}','{{$user->name}}','{{$user->email}}','{{$user->mobile}}','{{$user->pass}}','{{$user->usertype}}','{{$user->activityassigned}}','{{$user->designation}}','{{$user->username}}')" class="btn btn-info">EDIT</button></td>
              <!-- <td>
                 @if($user->usertype!='MASTER ADMIN')
@@ -223,7 +229,56 @@
 
   </div>
 </div>
+
+
+<div class="modal fade" id="activemodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Change Status</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+              <form action="/changeuserstatus" method="post">
+                {{csrf_field()}}
+                <input type="hidden" name="chid" id="chid">
+                 <tr>
+                   <td>Select a Status</td>
+                   <td>
+                     <select name="status" class="form-control" required="">
+                       <option value="">Select a Status</option>
+                       <option value="1">ACTIVE</option>
+                       <option value="0">INACTIVE</option>
+                       
+                     </select>
+                   </td>
+                   <td>
+                     <button class="btn btn-primary" type="submit">CHANGE</button>
+                   </td>
+                 </tr>
+                
+              </form>
+              
+            </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <script type="text/javascript">
+
+   function callmodals(id)
+   {
+       $("#chid").val(id);
+       $("#activemodal").modal('show');
+
+   }
 
     function generatepassword()
     {

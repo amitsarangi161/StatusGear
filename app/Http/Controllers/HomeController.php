@@ -63,9 +63,18 @@ use DataTables;
 class HomeController extends Controller
 {
 
+     public function changeuserstatus(Request $request)
+     {
+         $user=User::find($request->chid);
+         $user->active=$request->status;
+         $user->save();
+
+         return back();
+     }
+
      public function attendancereport(Request $request)
      {
-         $users=User::all();
+         $users=User::where('active','1')->get();
          if ($request->has('user') && $request->has('fromdate') && $request->has('todate')) {
         $name=User::FindOrFail($request->user)->name;
 
@@ -728,7 +737,7 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
           {
            $bills=billheader::where('userid',Auth::id());
           }
-            if($request->has('company') && $request->has('status'))
+            if($request->has('company') && $request->has('status') && $request->has('year'))
              {
                   if ($request->company!='') {
                      $bills=$bills->where('company',$request->company);
@@ -737,17 +746,22 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
                   {
                        $bills=$bills->where('status',$request->status);
                   }
+                  if($request->year!='')
+                  {
+                       $bills=$bills->where('invyear',$request->year);
+                  }
+
              }
           $bills=$bills->get();
       
-
+     
        return view('viewallbills',compact('bills'));
     }
    public function viewallbillsacc(Request $request)
     {
 
             $bills=billheader::where('id','>','0');
-             if($request->has('company') && $request->has('status'))
+             if($request->has('company') && $request->has('status') && $request->has('year'))
              {
                   if ($request->company!='') {
                      $bills=$bills->where('company',$request->company);
@@ -755,6 +769,10 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
                   if($request->status!='')
                   {
                        $bills=$bills->where('status',$request->status);
+                  }
+                    if($request->year!='')
+                  {
+                       $bills=$bills->where('invyear',$request->year);
                   }
              }
           $bills=$bills->get();
@@ -933,9 +951,52 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
 
           return response()->json($all);
     }
-    public function viewattendance()
+    public function viewattendance(Request $request)
     {
-         return view('viewattendance');
+
+         $all=array();
+         if ($request->has('date')) {
+             if (Auth::user()->usertype=='MASTER ADMIN') {
+             $users=User::where('active','1')->get();
+         }
+         else
+         {
+             $auth=Auth::id();
+                 $myusers=userunderhod::select('userunderhods.userid')->where('hodid',$auth)->get();
+             $users=User::whereIn('id',$myusers)
+                       ->where('active','1')
+                       ->get();
+         }
+          
+           
+          foreach ($users as $key => $user) {
+              $uid=$user->id;
+              $uname=$user->name;
+             
+                $p=attendance::where('userid',$uid)
+                 ->where('created_at', '>=',$request->date.' 00:00:00')
+                 ->where('created_at', '<=',$request->date.' 23:59:59')
+                 ->get();
+                 
+                 
+              
+             
+              
+              if(count($p)>0)
+              {
+                $present='PRESENT';
+              }
+              else
+              {
+                 $present='ABSENT';
+              }
+              $a=array('uid'=>$uid,'uname'=>$uname,'present'=>$present);
+              $all[]=$a;
+          }
+           
+         }
+         $dt=$request->date;
+         return view('viewattendance',compact('all','dt'));
     }
 
     public function paidamounts()
@@ -1986,6 +2047,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                         ->where('expenseheadid',$request->expenseheadid)
                         ->where('projectid',$request->projectid)
                         ->where('date',$request->date)
+                        ->where('status','!=','CANCELLED')
                         ->count();
                if($checkprvs>0 && $request->towallet=='NO')
                {

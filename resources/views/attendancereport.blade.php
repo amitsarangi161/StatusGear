@@ -12,9 +12,9 @@
 	<form action="/attendance/attendancereport" method="get">
 	<tr>
 		<td><strong>FROM DATE</strong></td>
-		<td><input type="text" class="attfromdate form-control readonly" placeholder="Enter From Date" name="fromdate" value="{{ Request::get('fromdate') }}" required=""></td>
+		<td><input type="text" class="attfromdate form-control readonly" placeholder="Enter From Date" name="fromdate" value="{{ Request::get('fromdate') }}" required="" autocomplete="off"></td>
 		<td><strong>TO DATE</strong></td>
-		<td><input type="text" class="atttodate form-control readonly" placeholder="Enter To Date" name="todate" value="{{ Request::get('todate') }}" required=""></td>
+		<td><input type="text" class="atttodate form-control readonly" placeholder="Enter To Date" name="todate" value="{{ Request::get('todate') }}" required="" autocomplete="off"></td>
 		<td><strong>Select a User</strong></td>
 		<td>
 			<select class="form-control select2" name="user" required="">

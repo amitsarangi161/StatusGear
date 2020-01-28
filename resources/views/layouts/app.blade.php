@@ -858,8 +858,8 @@ $(document).ready(function(){
             });
       $('.datatable2').DataTable({
         dom: 'Bfrtip',
-        "order": [[ 0, "asc" ]],
-        "iDisplayLength": 25,
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 10,
         buttons: [
             {
                 extend: 'pdfHtml5',
@@ -983,7 +983,34 @@ var jqf = $.noConflict();
      "scrollX": true,
      "iDisplayLength": 25
   });
+$('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 25,
+        "scrollY": 450,
+        "scrollX": true,
 
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
+
+       ],
+            });
 
 </script>
 
