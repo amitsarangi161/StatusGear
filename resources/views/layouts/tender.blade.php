@@ -234,7 +234,7 @@
              <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
 
 
-     <li class="{{ Request::is('tm/associatespartner') ? 'active' : '' }}"><a href="/tm/associatespartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATES PARTNER</a></li>
+     <li class="{{ Request::is('tm/associatepartner') ? 'active' : '' }}"><a href="/tm/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
      
                <!--       <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
           </ul>

@@ -10,6 +10,7 @@ use App\assignedtenderuser;
 use Auth;
 use App\tenderdocument;
 use App\corrigendumfile;
+use App\Associatepartner;
 
 use DataTables;
 use DB;
@@ -19,9 +20,51 @@ use DB;
 class TenderController extends Controller
 { 
 
-public function associatespartner()
+public function associatepartner()
 {
-    return view('tender.associatespartner');
+    $associatepartners=Associatepartner::get();
+    return view('tender.associatespartner',compact('associatepartners'));
+}
+public function updateassociatepartner(Request $request)
+            {
+               $updateassociate =Associatepartner::find($request->apid);
+               $updateassociate->associatepartnername=$request->associatepartnername;
+               $updateassociate->officeaddress=$request->officeaddress;
+               $updateassociate->contact1=$request->contact1;
+               $updateassociate->contact2=$request->contact2;
+               $updateassociate->officecontact=$request->officecontact;
+               $updateassociate->email=$request->email;
+               $updateassociate->gstn=$request->gstn;
+               $updateassociate->panno=$request->panno;
+               $updateassociate->city=$request->city;
+               $updateassociate->dist=$request->dist;
+               $updateassociate->state=$request->state;
+               $updateassociate->country=$request->country;
+               $updateassociate->additionalinfo=$request->additionalinfo;
+               $updateassociate->save();
+                Session::flash('message','Associatepartner Updated Successfully');
+                return back();
+            }
+public function saveassociatepartner(Request $request)
+{
+     $associatepartner=new Associatepartner();
+     $associatepartner->associatepartnername=$request->associatepartnername;
+     $associatepartner->officeaddress=$request->officeaddress;
+     $associatepartner->contact1=$request->contact1;
+     $associatepartner->contact2=$request->contact2;
+     $associatepartner->officecontact=$request->officecontact;
+     $associatepartner->email=$request->email;
+     $associatepartner->gstn=$request->gstn;
+     $associatepartner->panno=$request->panno;
+     $associatepartner->city=$request->city;
+     $associatepartner->dist=$request->dist;
+     $associatepartner->state=$request->state;
+     $associatepartner->country=$request->country;
+     $associatepartner->additionalinfo=$request->additionalinfo;
+     $associatepartner->save();
+     Session::flash('message','Save successfully');
+     return back();
+  
 }
 public function changepriorityadmin(Request $request,$id)
 {
