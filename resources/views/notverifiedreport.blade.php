@@ -40,7 +40,7 @@
            <td><p class="b" title="{{$projectreport->projectname}}">{{$projectreport->projectname}}</p></td>
            <td>{{$projectreport->activityname}}</td>
            <td>{{$projectreport->subject}}</td>
-           <td>{!! $projectreport->description !!}</td>
+           <td><div class="b pop" data-toggle="popover" data-html="true" data-content="{!! $projectreport->description !!}">{!! $projectreport->description !!}</div></td>
            <td>{{$projectreport->name}}</td>
            <td>{{$projectreport->author}}</td>
            <td>{{$projectreport->acceptedby}}</td>
@@ -58,6 +58,13 @@
 </div>
 </div>
 </div>
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'right',
+        trigger : 'hover'
+    });
+});
+</script>
 
 @endsection

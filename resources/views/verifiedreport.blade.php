@@ -40,7 +40,7 @@
            <td><p class="b" title="{{$projectreport->projectname}}">{{$projectreport->projectname}}</p></td>
            <td>{{$projectreport->activityname}}</td>
            <td>{{$projectreport->subject}}</td>
-           <td>{!! $projectreport->description !!}</td>
+          <td><div class="b" data-toggle="popover" data-html="true" data-content="{!! $projectreport->description !!}">{!! $projectreport->description !!}</div></td>
            <td>{{$projectreport->name}}</td>
            <td>{{$projectreport->author}}</td>
            <td>{{$projectreport->acceptedby}}</td>
@@ -50,6 +50,7 @@
             <td><span class="label label-danger">{{$projectreport->status}}</span></td>
             @endif
             <td><a href="/viewverifiedreport/{{$projectreport->id}}" class="btn btn-primary">VIEW</a></td>
+
          </tr>
 
         @endforeach
@@ -59,5 +60,12 @@
 </div>
 </div>
 
-
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover({
+        placement : 'bottom',
+        trigger : 'hover'
+    });
+});
+</script>
 @endsection

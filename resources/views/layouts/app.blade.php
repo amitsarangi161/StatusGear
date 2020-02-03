@@ -971,9 +971,17 @@ var jqf = $.noConflict();
     jqf('#result').html('<button class="btn btn-success" type="submit" disabled >RESET NOW</button>');
 });
   $('.datatable').DataTable({
+       drawCallback: function () {
+        
+              $('[data-toggle="popover"]').popover({
+        placement : 'right',
+        trigger : 'hover'
+    }); 
+            },
 
      "order": [[ 0, "desc" ]],
-     "iDisplayLength": 25
+     "iDisplayLength": 25,
+
   });
   
   $('.datatablescroll').DataTable({
