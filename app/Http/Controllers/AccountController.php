@@ -555,7 +555,12 @@ class AccountController extends Controller
        {
            $fullinvno=$request->company.$billyear1.$invno;
        }*/
+      $chk=crvoucherheader::where('billid',$id)->count();
 
+      if($chk>0)
+      {
+          return back();
+      }
 
       $billheader=billheader::find($id);
       $crvoucherheader=new crvoucherheader();

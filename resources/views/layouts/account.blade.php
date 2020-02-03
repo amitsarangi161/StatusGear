@@ -296,9 +296,9 @@
           </a>
           <ul class="treeview-menu">
            <li class="{{ Request::is('ledger/ledger') ? 'active' : '' }}"><a href="/ledger/ledger"><i class="fa fa-circle-o text-aqua"></i>Ledger</a></li>
-           <li class="{{ Request::is('ledger/debitorledger') ? 'active' : '' }}"><a href="/ledger/debitorledger"><i class="fa fa-circle-o text-aqua"></i>DR Ledger</a></li>
+           <li class="{{ Request::is('ledger/debitorledger') ? 'active' : '' }}"><a href="/ledger/debitorledger"><i class="fa fa-circle-o text-aqua"></i>CR Ledger</a></li>
 
-           <li class="{{ Request::is('ledger/creditorledger') ? 'active' : '' }}"><a href="/ledger/creditorledger"><i class="fa fa-circle-o text-aqua"></i>CR Ledger</a></li>
+           <li class="{{ Request::is('ledger/creditorledger') ? 'active' : '' }}"><a href="/ledger/creditorledger"><i class="fa fa-circle-o text-aqua"></i>DR Ledger</a></li>
 
           </ul>
         </li>
