@@ -19,6 +19,10 @@ use DB;
 class TenderController extends Controller
 { 
 
+public function associatespartner()
+{
+    return view('tender.associatespartner');
+}
 public function changepriorityadmin(Request $request,$id)
 {
     $tender=Tender::find($id);

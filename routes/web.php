@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
-
+Route::get('/tm/associatespartner','TenderController@associatespartner');
 Route::get('/viewnotappliedtender/{id}','TenderController@viewnotappliedtender');
 Route::get('/notapplied/approvedbutnotappliedtenders','TenderController@approvedbutnotappliedtenders');
 Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');

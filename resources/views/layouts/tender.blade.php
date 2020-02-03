@@ -233,8 +233,10 @@
              <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS</a></li>
              <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS</a></li>
 
-        <!--      <li class="{{ Request::is('tm/appliedtenders') ? 'active' : '' }}"><a href="/tm/appliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPLIED TENDERS</a></li>
-             <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
+
+     <li class="{{ Request::is('tm/associatespartner') ? 'active' : '' }}"><a href="/tm/associatespartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATES PARTNER</a></li>
+     
+               <!--       <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
           </ul>
         </li>
         @endif
