@@ -781,6 +781,7 @@ public function viewalltenders()
               
 
                 $tender=new tender();
+                $tender->author=Auth::id();
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;
