@@ -414,6 +414,9 @@ public function viewalltenders()
        public function viewtenderuser($id)
        {
            $tender=tender::find($id);
+           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+           $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+
            return view('viewtenderuser',compact('tender'));
        }
 
@@ -790,6 +793,7 @@ public function viewalltenders()
               
 
                 $tender=new tender();
+                $tender->author=Auth::id();
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;

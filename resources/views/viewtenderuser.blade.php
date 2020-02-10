@@ -186,7 +186,62 @@
 	
 </table>
 
+<h1 style="text-align: center;font-weight: bold;">TENDER FILES</h1>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<thead>
+	<tr class="bg-navy">
+		<td>ID</td>
+		<td>FILE NAME</td>
+		<td>FILE</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach($tenderdocuments as $tenderdocument)
+		<tr>
+           <td>{{$tenderdocument->id}}</td>
+           <td>{{$tenderdocument->file}}</td>
+           
+           <td>  <a href="{{asset('img/tender/'.$tenderdocument->file)}}" target="_blank">
+            Click to View
+        </a>
+        <a href="{{asset('img/tender/'.$tenderdocument->file)}}" class="btn btn-primary btn-sm" download>
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+        </a></td>
+        
+        </tr>
+		@endforeach
+		
+	</tbody>
+</table>
 
+<h1 style="text-align: center;font-weight: bold;">CORRIGENDUM FILE</h1>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<thead>
+	<tr class="bg-navy">
+		<td>ID</td>
+		<td>FILE NAME</td>
+		<td>FILE</td>
+	</tr>
+	</thead>
+	<tbody>
+		@foreach($corrigendumfiles as $corrigendumfile)
+		<tr>
+           <td>{{$corrigendumfile->id}}</td>
+           <td>{{$corrigendumfile->file}}</td>
+           
+           <td>  <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" target="_blank">
+            Click to View
+        </a>
+        <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" class="btn btn-primary btn-sm" download>
+               <span class="glyphicon glyphicon-download-alt"></span> Download
+        </a></td>
+ 
+        </tr>
+		@endforeach
+		
+	</tbody>
+</table>
 
 
 
