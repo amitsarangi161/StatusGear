@@ -408,7 +408,7 @@ public function viewalltenders()
            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
 
-           return view('viewtenderuser',compact('tender'));
+           return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles'));
        }
 
        public function assignedtenders()

@@ -70,15 +70,8 @@
 	<td><input type="text" class="form-control readonly" name="rfpavailabledate" disabled="" value="{{$tender->rfpavailabledate}}"></td>
 	<td><strong>RFP DOCUMENT *</strong></td>
 
-	<td>
-
-      <a href="{{asset('img/tender/'.$tender->rfpdocument)}}" target="_blank">
-            Click to View
-        </a>
-        <a href="{{asset('img/tender/'.$tender->rfpdocument)}}" class="btn btn-primary btn-sm" download>
-               <span class="glyphicon glyphicon-download-alt"></span> Download
-        </a>
-	</td>
+	<td></td>
+	<td></td>
 	
 </tr>
 
@@ -89,17 +82,9 @@
 		<textarea name="refpageofrfp" class="form-control" disabled="">{{$tender->refpageofrfp}}</textarea>
 
 	</td>
-	<td><strong>CORRIGENDUM FILE *</strong></td>
-	<td>
-        <a href="{{asset('img/tender/'.$tender->corrigendumfile)}}" target="_blank">
-            Click to View
-        </a>
-        <a href="{{asset('img/tender/'.$tender->corrigendumfile)}}" class="btn btn-primary btn-sm" download>
-               <span class="glyphicon glyphicon-download-alt"></span> Download
-        </a>
+	<td></td>
+	<td></td>
 
-
-	 </td>
 
 </tr>
 <tr>
