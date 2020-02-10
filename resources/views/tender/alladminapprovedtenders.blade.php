@@ -31,6 +31,7 @@
 			<td>RFP AVAILABLE DATE</td>
 			<td>CREATED AT</td>
 			<td>STATUS</td>
+      <td>AUTHOR</td>
 			<td>VIEW</td>
 			
 		</tr>
@@ -56,6 +57,7 @@
 		   			<option value="NOT APPLIED">NOT APPLIED</option>
 		   		</select>
 		   	</td>
+        <td>{{$tender->name}}</td>
 		   	<td><a href="/viewadminapprovedtender/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   	
 		   </tr>

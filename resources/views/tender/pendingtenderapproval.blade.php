@@ -28,9 +28,9 @@
 			<td>NIT PUBLICATION DATE</td>
 			<td>LAST DATE OF SUB.</td>
 			<td>RFP AVAILABLE DATE</td>
-			
 			<td>CREATED AT</td>
 			<td>STATUS</td>
+			<td>AUTHOR</td>
 			<td>VIEW</td>
 			
 		</tr>
@@ -49,6 +49,7 @@
 		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
 		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td><span class="label label-success">{{$tender->status}}</span></td>
+		   	<td>{{$tender->name}}</td>
 		  
 		   	<td><a href="/viewtendertendercomiteeapproval/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   	

@@ -67,6 +67,7 @@ table {
             <td>RFP AVAILABLE DATE</td>
             <td>CREATED AT</td>
             <td>STATUS</td>
+            <td>AUTHOR</td>
             <td>VIEW</td>
             <td>EDIT</td>
         </tr>
@@ -107,6 +108,7 @@ table {
             {data: 'rfpavailabledate', name:'rfpavailabledate'},
             {name: 'created_at',data: 'created_at'},
             {data: 'sta', name: 'sta'},
+            {data: 'name', name: 'users.name'},
             {data: 'view', name: 'view'},
             {data: 'edit', name: 'edit'},
             
