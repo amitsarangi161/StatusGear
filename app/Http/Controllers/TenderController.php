@@ -96,11 +96,16 @@ public function changerecomendtender(Request $request,$id)
 
 public function viewnotappliedtender($id)
 {
+
+   $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
     $tender=Tender::find($id);
     $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
 
-    return view('tender.viewnotappliedtender',compact('tender','tenderdocuments','corrigendumfiles'));
+    return view('tender.viewnotappliedtender',compact('tender','tenderdocuments','corrigendumfiles','users'));
 }
 
 public function approvedbutnotappliedtenders()
@@ -112,10 +117,14 @@ public function approvedbutnotappliedtenders()
 public function viewappliedtenders($id)
 {
     $tender=Tender::find($id);
+    $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
     $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
 
-    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles'));
+    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users'));
 } 
 public function appliedtenders()
 {

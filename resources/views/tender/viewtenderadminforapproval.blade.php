@@ -6,6 +6,16 @@ padding: 4px;
 width: 25%;
 text-align: center;
 }
+.wrkbg{
+	background-color: #FBAB7E;
+background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
+
+}
+.extremist{
+background-color: #FBAB7E;
+background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
+
+}
 </style>
 <table class="table">
 	<tr class="bg-navy">
@@ -840,6 +850,7 @@ text-align: center;
                	     	}
                	     	else{
                	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
+               	     		$("#notworkable").addClass("wrkbg");
                	     	}
 
                	     	if(data.comment.thirdpartyapproval == 'YES'){
@@ -883,6 +894,7 @@ text-align: center;
                	     	if(data.comment.areaaffectedbyextremist == 'YES'){
                	     		
                	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-green" >'+data.comment.areaaffectedbyextremist+'</span>');
+               	     		$("#extremist").addClass("extremist");
                	     	}
                	     	else if(data.comment.areaaffectedbyextremist == "NO"){
                	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-red" >'+data.comment.areaaffectedbyextremist+'</span>');
