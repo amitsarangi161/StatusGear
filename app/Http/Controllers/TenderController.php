@@ -143,9 +143,13 @@ public function viewalltenders()
   public function viewadminapprovedtender($id)
   {
         $tender=tender::find($id);
-          $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
-           $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-          return view('tender.viewadminapprovedtender',compact('tender','tenderdocuments','corrigendumfiles'));
+        $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+        $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+        $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+          return view('tender.viewadminapprovedtender',compact('tender','tenderdocuments','corrigendumfiles','users'));
   }
 
 
@@ -191,10 +195,14 @@ public function viewalltenders()
 
     public function viewtenderadminforapproval($id)
     {
+       $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
        $tender=tender::find($id);
           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-          return view('tender.viewtenderadminforapproval',compact('tender','tenderdocuments','corrigendumfiles'));
+          return view('tender.viewtenderadminforapproval',compact('tender','tenderdocuments','corrigendumfiles','users'));
     }
     public function admintenderapproval()
     {
