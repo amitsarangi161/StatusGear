@@ -155,7 +155,12 @@ public function viewalltenders()
 
    public function adminapprovedtenders()
    {
-         $tenders=DB::table('tenders')->where('status','ADMIN APPROVED')->get();
+         $tenders=DB::table('tenders')
+                ->select('tenders.*','users.name')
+                ->leftJoin('users','tenders.author','=','users.id')
+                ->where('status','ADMIN APPROVED')
+                ->get();
+         //return $tenders;
 
          return view('tender.alladminapprovedtenders',compact('tenders'));
    }
@@ -207,6 +212,8 @@ public function viewalltenders()
     public function admintenderapproval()
     {
           $tenders=DB::table('tenders')
+                 ->select('tenders.*','users.name')
+                 ->leftJoin('users','tenders.author','=','users.id')
                  ->where('status','COMMITEE APPROVED')
                  ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
                  ->get();
@@ -274,7 +281,10 @@ public function viewalltenders()
      public function approvedcommiteetender()
      {
 
-         $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')->get();
+         $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')
+                  ->select('tenders.*','users.name')
+                  ->leftJoin('users','tenders.author','=','users.id')
+                  ->get();
 
          return view('tender.approvedcommiteetender',compact('tenders'));
      }
@@ -297,7 +307,9 @@ public function viewalltenders()
       public function pendingtenderapproval()
       {
            $tenders=DB::table('tenders')->where('status','PENDING COMMITEE APPROVAL')
-                    ->get();
+                  ->select('tenders.*','users.name')
+                  ->leftJoin('users','tenders.author','=','users.id')
+                  ->get();
            return view('tender.pendingtenderapproval',compact('tenders'));
       }
 
@@ -485,6 +497,8 @@ public function viewalltenders()
         public function tenderlistforcommitee()
         {
           $tenders=DB::table('tenders')->where('status','ELLIGIBLE')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
           ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
           ->get();
         
@@ -619,13 +633,20 @@ public function viewalltenders()
 
        public function tenderlist()
        {
-              $tenders=tender::all();
+              $tenders=tender::select('tenders.*','users.name as author')
+                      ->leftJoin('users','tenders.author','=','users.id')
+                      ->get();
+              //return $tenders;
+
               return view('tender.tenderlist',compact('tenders'));
        }
 
        public function gettenderlist()
        {
-          $tenders=DB::table('tenders')->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+          $tenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
           
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {
@@ -701,7 +722,10 @@ public function viewalltenders()
                  ->make(true);
        }public function getviewalltenderlist()
        {
-          $tenders=DB::table('tenders');
+          $tenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id');
+
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {
                         $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
