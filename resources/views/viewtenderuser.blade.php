@@ -327,7 +327,7 @@
 		<td>
 			<input type="radio" name="paymentscheduleclear" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="paymentscheduleclear" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentscheduleclear" value="CANTSAY" checked="">Can't Say 
+			
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
@@ -340,7 +340,7 @@
 		<td>
 			<input type="radio" name="penalityclause" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="penalityclause" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="penalityclause" value="CANTSAY" checked="">Can't Say 
+			 
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
@@ -354,7 +354,7 @@
 		<td>
 			<input type="radio" name="wehaveexpertise" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="wehaveexpertise" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="wehaveexpertise" value="CANTSAY" checked="">Can't Say 
+			
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
@@ -368,7 +368,6 @@
 		<td>
 			<input type="radio" name="contractualambiguty" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="contractualambiguty" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="contractualambiguty" value="CANTSAY" checked="">Can't Say 
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
@@ -383,7 +382,7 @@
 		<td>
 			<input type="radio" name="extensivefieldinvestigation" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="extensivefieldinvestigation" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="extensivefieldinvestigation" value="CANTSAY" checked="">Can't Say 
+			
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
@@ -397,7 +396,7 @@
 		<td>
 			<input type="radio" name="requiredexperienceoffirm" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="requiredexperienceoffirm" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="requiredexperienceoffirm" value="CANTSAY" checked="">Can't Say 
+			
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>

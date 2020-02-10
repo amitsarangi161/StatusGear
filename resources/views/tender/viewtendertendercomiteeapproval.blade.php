@@ -1,6 +1,12 @@
 @extends('layouts.tender')
 @section('content')
-
+<style type="text/css">
+.rbox{
+padding: 4px;
+width: 25%;
+text-align: center;
+}
+</style>
 <table class="table">
 	<tr class="bg-navy">
 		<td class="text-center">TENDER COMMITEE APPROVAL</td>
@@ -520,6 +526,8 @@
 		
 	</tr>
 </table>
+
+<!--santosh-->
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">SITE APPRECIATION</td>
@@ -529,54 +537,43 @@
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>SITE VISIT REQUIRED? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="sitevisitrequired1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="sitevisitrequired1" value="NO"> NO
-		</td>
-	
+		<td id="sitevisitrequired1"></td>
 		<td><strong>If Yes who will Visit?</strong></td>
 		<td>
-			<textarea class="form-control" id="sitevisitdescription1" name="sitevisitdescription"></textarea>
+			<textarea class="form-control" id="sitevisitdescription1" name="sitevisitdescription" readonly></textarea>
 		</td>
 	</tr>
 	<tr>
 		<td><strong>WORKABLE SITE? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="workablesite1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="workablesite1" value="NO"> NO
+		<td id="workablesite1">
+			
 		</td>
 	
 		<td><strong>Any Safety Concern?</strong></td>
 		<td>
-			<textarea class="form-control" id="safetyconcern1" name="safetyconcern1"></textarea>
+			<textarea readonly class="form-control" id="safetyconcern1" name="safetyconcern1"></textarea>
 		</td>
 	</tr>
 	<tr>
 		<td><strong>Third party Approval Required? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="thirdpartyapproval1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyapproval1" value="NO"> NO
+		<td id="thirdpartyapproval1">
+			
 		</td>
 	
 		<td><strong>If Yes write Details</strong></td>
 		<td>
-			<textarea class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
+			<textarea readonly class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
 		</td>
 	</tr>
 		<tr>
 		<td><strong>Payment System?</strong></td>
-		<td>
-			<input type="radio" name="paymentsystem1" value="MONTHLY" {{ ( $tender->paymentsystem == 'MONTHLY') ? 'checked' : '' }}>MONTHLY &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem1" value="STAGE" {{ ( $tender->paymentsystem == 'STAGE') ? 'checked' : '' }}> STAGE
-			&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem1" value="PERCENTAGE WISE" {{ ( $tender->paymentsystem == 'PERCENTAGE WISE') ? 'checked' : '' }}>PERCENTAGE WISE
-
+		<td id="paymentsystem1">
 
 		</td>
 	
 		<td><strong>write in Details</strong></td>
 		<td>
-			<textarea class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+			<textarea readonly class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
 		</td>
 	</tr>
 
@@ -590,138 +587,107 @@
 <table class="table">
 	<tr>
 		<td><strong>IN HOUSE CAPACITY? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="inhousecapacity1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="inhousecapacity1" value="NO"> NO (ANY WORK TO BE OUT SOURCED?)
+		<td id="inhousecapacity1">
+			
 		</td>
 	
 	</tr>
 	<tr>
 		<td><strong>INVOLVEMENT REQUIREMENT OF ANY THIRD PARTY?</strong></td>
-		<td>
-			<input type="radio" name="thirdpartyinvolvement1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyinvolvement1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyinvolvement1" value="CANTSAY">Can't Say 
+		<td id="thirdpartyinvolvement1">
+
 		</td>
 	</tr>
 		<tr>
 		<td><strong>IS THE AREA AFFECTED BY ANY EXTREMIST ORGANIZATION?</strong></td>
-		<td>
-			<input type="radio" name="areaaffectedbyextremist1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="areaaffectedbyextremist1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="areaaffectedbyextremist1" value="CANTSAY">Can't Say 
+		<td id="areaaffectedbyextremist1">
+			
 		</td>
 	</tr>
 	<tr>
 		<td><strong>CAN THE KEY PERSON BE MANAGED?</strong></td>
-		<td>
-			<input type="radio" name="keypositionbemanaged1" value="YES" >YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="keypositionbemanaged1" value="NO" >NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="keypositionbemanaged1" value="CANTSAY">Can't Say 
+		<td id="keypositionbemanaged1">
+			
 		</td>
 	</tr>
 	<tr>
 		<td><strong>PROJECT DURATION ASSIGNED IS SUFFICIENT?</strong></td>
-		<td>
-			<input type="radio" name="projectdurationsufficient1" value="YES"  >YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="projectdurationsufficient1" value="NO" >NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="projectdurationsufficient1" value="CANTSAY">Can't Say 
+		<td id="projectdurationsufficient1">
+
 		</td>
 	</tr>
 	<tr>
 		<td><strong>LOCAL OFFICE TO BE SET UP?</strong></td>
-		<td>
-			<input type="radio" name="localofficesetup1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="localofficesetup1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="localofficesetup1" value="CANTSAY">Can't Say 
+		<td id="localofficesetup1">
+			
 		</td>
 	</tr>
-
-
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<tr>
 		<td><strong>PAYMENT SCHEDULE IS CLEAR?</strong></td>
-		<td>
-			<input type="radio" name="paymentscheduleclear1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentscheduleclear1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentscheduleclear1" value="CANTSAY">Can't Say 
-			
+		<td id="paymentscheduleclear1">
+						
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="paymentscheduleambiguty" id="paymentscheduleambiguty1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+			<textarea readonly name="paymentscheduleambiguty" id="paymentscheduleambiguty1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
 		</td>
 	</tr>
 	<tr>
 		<td><strong>IS THERE ANY PENALITY CLAUSE?</strong></td>
-		<td>
-			<input type="radio" name="penalityclause1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="penalityclause1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="penalityclause1" value="CANTSAY">Can't Say 
+		<td id="penalityclause1">
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="penalityclauseambiguty" id="penalityclauseambiguty1" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->penalityclauseambiguty}}</textarea>
+			<textarea readonly name="penalityclauseambiguty" id="penalityclauseambiguty1" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->penalityclauseambiguty}}</textarea>
 		</td>
 		
 	</tr>
 	<tr>
 		<td><strong>DO WE HAVE EXPERTISE IN NATURE OF WORK?</strong></td>
-		<td>
-			<input type="radio" name="wehaveexpertise1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="wehaveexpertise1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="wehaveexpertise1" value="CANTSAY">Can't Say 
-			
+		<td id="wehaveexpertise1">
+						
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="wehaveexpertisedescription" id="wehaveexpertisedescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+			<textarea readonly name="wehaveexpertisedescription" id="wehaveexpertisedescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
 		</td>
 		
 	</tr>
 	<tr>
 		<td><strong>ANY CONTRACTUAL AMBIGUTY?</strong></td>
-		<td>
-			<input type="radio" name="contractualambiguty1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="contractualambiguty1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="contractualambiguty1" value="CANTSAY">Can't Say 
+		<td id="contractualambiguty1">
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="contractualambigutydescription" id="contractualambigutydescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+			<textarea readonly name="contractualambigutydescription" id="contractualambigutydescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
 		</td>
 		
 	</tr>
 
 	<tr>
 		<td><strong>ANY EXTENSIVE FIELD INVESTICATION REQUIRED?</strong></td>
-		<td>
-			<input type="radio" name="extensivefieldinvestigation1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="extensivefieldinvestigation1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="extensivefieldinvestigation1" value="CANTSAY">Can't Say 
-			
+		<td id="extensivefieldinvestigation1">
+						
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="extensivefieldinvestigationdescription" id="extensivefieldinvestigationdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+			<textarea readonly name="extensivefieldinvestigationdescription" id="extensivefieldinvestigationdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
 		</td>
 		
 	</tr>
 		<tr>
 		<td><strong>MEETING THE REQUIRED EXPERIENSE OF FIRM?</strong></td>
-		<td>
-			<input type="radio" name="requiredexperienceoffirm1" value="YES">YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="requiredexperienceoffirm1" value="NO">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="requiredexperienceoffirm1" value="CANTSAY">Can't Say 
+		<td id="requiredexperienceoffirm1">
 			
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="requiredexperienceoffirmdescription" id="requiredexperienceoffirmdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+			<textarea readonly name="requiredexperienceoffirmdescription" id="requiredexperienceoffirmdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
 		</td>
 		
 		</tr>
@@ -729,22 +695,18 @@
 			<tr>
 		<td><strong>RECORD ANY OTHER REQUIREMENT?</strong></td>
 		<td colspan="3">
-			<textarea name="anyotherrequirement" id="anyotherrequirement1" class="form-control" placeholder="Describe"></textarea>
+			<textarea readonly name="anyotherrequirement" id="anyotherrequirement1" class="form-control" placeholder="Describe"></textarea>
 		</td>
 		
 		</tr>
 
 			<tr>
 		<td><strong>RATE TO BE QUOTED?</strong></td>
-		<td colspan="3">
-			<input type="text" name="ratetobequoted" id="ratetobequoted1" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}">
+		<td colspan="3" id="ratetobequoted1">
+			
 		</td>
 		
 		</tr>
-
-	
-
-
 </table>
 </div>
 
@@ -752,7 +714,10 @@
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();
-		if (selecteduser=='') {}
+		if (selecteduser=='') {
+			 $("#commenttable").hide();
+              $("#committeecommenttable").hide();
+		}
 		else if(selecteduser=='COMMITTEE') {
               $("#commenttable").hide();
               $("#committeecommenttable").show();
@@ -780,23 +745,170 @@
                success:function(data) { 
                	     if(data.comment)
                	     {
-               	     	$("input[name=sitevisitrequired1][value='"+data.comment.sitevisitrequired+"']").prop("checked",true);
-               	     	$("input[name=workablesite1][value='"+data.comment.workablesite+"']").prop("checked",true);
+               	     	
+               	     	if(data.comment.sitevisitrequired == 'YES'){
+               	     		
+               	     		$("#sitevisitrequired1").html('<span class="badge bg-green" >'+data.comment.sitevisitrequired+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#sitevisitrequired1").html('<span class="badge bg-red" >'+data.comment.sitevisitrequired+'</span>');
+               	     	}
 
-               	     	$("input[name=thirdpartyapproval1][value='"+data.comment.thirdpartyapproval+"']").prop("checked",true);
-               	     	$("input[name=paymentsystem1][value='"+data.comment.paymentsystem+"']").prop("checked",true);
-               	     	$("input[name=inhousecapacity1][value='"+data.comment.inhousecapacity+"']").prop("checked",true);
-               	     	$("input[name=thirdpartyinvolvement1][value='"+data.comment.thirdpartyinvolvement+"']").prop("checked",true);
-               	     	$("input[name=areaaffectedbyextremist1][value='"+data.comment.areaaffectedbyextremist+"']").prop("checked",true);
-               	     	$("input[name=keypositionbemanaged1][value='"+data.comment.keypositionbemanaged+"']").prop("checked",true);
-               	     	$("input[name=projectdurationsufficient1][value='"+data.comment.projectdurationsufficient+"']").prop("checked",true);
-               	     	$("input[name=localofficesetup1][value='"+data.comment.localofficesetup+"']").prop("checked",true);
-               	     	$("input[name=paymentscheduleclear1][value='"+data.comment.paymentscheduleclear+"']").prop("checked",true);
-               	     	$("input[name=penalityclause1][value='"+data.comment.penalityclause+"']").prop("checked",true);
-               	     	$("input[name=wehaveexpertise1][value='"+data.comment.wehaveexpertise+"']").prop("checked",true);
-               	     	$("input[name=contractualambiguty1][value='"+data.comment.contractualambiguty+"']").prop("checked",true);
-               	     	$("input[name=extensivefieldinvestigation1][value='"+data.comment.extensivefieldinvestigation+"']").prop("checked",true);
-               	     	$("input[name=requiredexperienceoffirm1][value='"+data.comment.requiredexperienceoffirm+"']").prop("checked",true);
+               	     	if(data.comment.workablesite == 'YES'){
+               	     		
+               	     		$("#workablesite1").html('<span class="badge bg-green" >'+data.comment.workablesite+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
+               	     	}
+
+               	     	if(data.comment.thirdpartyapproval == 'YES'){
+               	     		
+               	     		$("#thirdpartyapproval1").html('<span class="badge bg-green" >'+data.comment.thirdpartyapproval+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyapproval1").html('<span class="badge bg-red" >'+data.comment.thirdpartyapproval+'</span>');
+               	     	}
+
+               	     	if(data.comment.paymentsystem == 'MONTHLY'){
+               	     		
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+               	     	else if(data.comment.paymentsystem == "STAGE"){
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#paymentsystem1").html('<span class="badge bg-green" >'+data.comment.paymentsystem+'</span>');
+               	     	}
+
+               	     	if(data.comment.inhousecapacity == 'YES'){
+               	     		
+               	     		$("#inhousecapacity1").html('<span class="badge bg-green" >'+data.comment.inhousecapacity+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#inhousecapacity1").html('<span class="badge bg-red" >'+data.comment.inhousecapacity+'</span>');
+               	     	}
+
+               	     	if(data.comment.thirdpartyinvolvement == 'YES'){
+               	     		
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-green" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+               	     	else if(data.comment.thirdpartyinvolvement == "NO"){
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-red" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-yellow" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+
+               	     	if(data.comment.areaaffectedbyextremist == 'YES'){
+               	     		
+               	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-green" >'+data.comment.areaaffectedbyextremist+'</span>');
+               	     	}
+               	     	else if(data.comment.areaaffectedbyextremist == "NO"){
+               	     		$("#areaaffectedbyextremist1").html('<span class="badge bg-red" >'+data.comment.areaaffectedbyextremist+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#thirdpartyinvolvement1").html('<span class="badge bg-yellow" >'+data.comment.thirdpartyinvolvement+'</span>');
+               	     	}
+
+               	     	if(data.comment.keypositionbemanaged == 'YES'){
+               	     		
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-green" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+               	     	else if(data.comment.keypositionbemanaged == "NO"){
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-red" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#keypositionbemanaged1").html('<span class="badge bg-yellow" >'+data.comment.keypositionbemanaged+'</span>');
+               	     	}
+
+               	     	if(data.comment.projectdurationsufficient == 'YES'){
+               	     		
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-green" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+               	     	else if(data.comment.projectdurationsufficient == "NO"){
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-red" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#projectdurationsufficient1").html('<span class="badge bg-yellow" >'+data.comment.projectdurationsufficient+'</span>');
+               	     	}
+
+               	     	if(data.comment.localofficesetup == 'YES'){
+               	     		
+               	     		$("#localofficesetup1").html('<span class="badge bg-green" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+               	     	else if(data.comment.localofficesetup == "NO"){
+               	     		$("#localofficesetup1").html('<span class="badge bg-red" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#localofficesetup1").html('<span class="badge bg-yellow" >'+data.comment.localofficesetup+'</span>');
+               	     	}
+
+               	     	if(data.comment.paymentscheduleclear == 'YES'){
+               	     		
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-green" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+               	     	else if(data.comment.paymentscheduleclear == "NO"){
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-red" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#paymentscheduleclear1").html('<span class="badge bg-yellow" >'+data.comment.paymentscheduleclear+'</span>');
+               	     	}
+
+               	     	if(data.comment.penalityclause == 'YES'){
+               	     		
+               	     		$("#penalityclause1").html('<span class="badge bg-green" >'+data.comment.penalityclause+'</span>');
+               	     	}
+               	     	else if(data.comment.penalityclause == "NO"){
+               	     		$("#penalityclause1").html('<span class="badge bg-red" >'+data.comment.penalityclause+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#penalityclause1").html('<span class="badge bg-yellow" >'+data.comment.penalityclause+'</span>');
+               	     	}
+
+               	     	if(data.comment.wehaveexpertise == 'YES'){
+               	     		
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-green" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+               	     	else if(data.comment.wehaveexpertise == "NO"){
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-red" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#wehaveexpertise1").html('<span class="badge bg-yellow" >'+data.comment.wehaveexpertise+'</span>');
+               	     	}
+
+               	     	if(data.comment.contractualambiguty == 'YES'){
+               	     		
+               	     		$("#contractualambiguty1").html('<span class="badge bg-green" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+               	     	else if(data.comment.contractualambiguty == "NO"){
+               	     		$("#contractualambiguty1").html('<span class="badge bg-red" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#contractualambiguty1").html('<span class="badge bg-yellow" >'+data.comment.contractualambiguty+'</span>');
+               	     	}
+
+               	     	if(data.comment.extensivefieldinvestigation == 'YES'){
+               	     		
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-green" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+               	     	else if(data.comment.extensivefieldinvestigation == "NO"){
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-red" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#extensivefieldinvestigation1").html('<span class="badge bg-yellow" >'+data.comment.extensivefieldinvestigation+'</span>');
+               	     	}
+
+               	     	if(data.comment.requiredexperienceoffirm == 'YES'){
+               	     		
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-green" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
+               	     	else if(data.comment.requiredexperienceoffirm == "NO"){
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-red" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-yellow" >'+data.comment.requiredexperienceoffirm+'</span>');
+               	     	}
 
                	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
                	     	$("#safetyconcern1").val(data.comment.safetyconcern);
@@ -809,9 +921,13 @@
                	     	$("#extensivefieldinvestigationdescription1").val(data.comment.extensivefieldinvestigationdescription);
                	     	$("#requiredexperienceoffirmdescription1").val(data.comment.requiredexperienceoffirmdescription);
                	     	$("#anyotherrequirement1").val(data.comment.anyotherrequirement);
-               	     	$("#ratetobequoted1").val(data.comment.ratetobequoted);
+
+               	     	$("#ratetobequoted1").html(data.comment.ratetobequoted);
+               	     	$("#ratetobequoted1").html('<h4 class="small-box bg-blue rbox">'+'Rs. '+data.comment.ratetobequoted+'</h4>');
 
                	     	$("#commenttable").show();
+               	     	$("#committeecommenttable").hide();
+
                	     	$("#commentby").text('COMMENT OF '+data.user.name);
 
                	     }

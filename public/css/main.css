@@ -529,3 +529,9 @@ iframe {
     width: 100%;
   }
 }
+
+.rbox{
+padding: 4px;
+width: 25%;
+text-align: center;
+}
