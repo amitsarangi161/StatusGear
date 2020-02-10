@@ -110,7 +110,11 @@ public function viewnotappliedtender($id)
 
 public function approvedbutnotappliedtenders()
 {
-       $tenders=DB::table('tenders')->where('status','NOT APPLIED')->get();
+       $tenders=DB::table('tenders')
+              ->select('tenders.*','users.name')
+              ->leftJoin('users','tenders.author','=','users.id')
+              ->where('status','NOT APPLIED')
+              ->get();
    return view('tender.approvedbutnotappliedtenders',compact('tenders'));
 }
 
@@ -128,7 +132,11 @@ public function viewappliedtenders($id)
 } 
 public function appliedtenders()
 {
-    $tenders=DB::table('tenders')->where('status','APPLIED')->get();
+    $tenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('status','APPLIED')
+          ->get();
    return view('tender.appliedtenders',compact('tenders'));
 }
 

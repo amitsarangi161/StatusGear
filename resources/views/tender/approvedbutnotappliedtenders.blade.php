@@ -31,6 +31,7 @@
 			<td>RFP AVAILABLE DATE</td>
 			<td>CREATED AT</td>
 			<td>STATUS</td>
+			<td>AUTHOR</td>
 			<td>VIEW</td>
 			
 		</tr>
@@ -52,6 +53,7 @@
 		   	<td>
 		   		<span class="label label-danger">{{$tender->status}}</span>
 		   	</td>
+		   	<td>{{$tender->name}}</td>
 		   	<td><a href="/viewnotappliedtender/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   	
 		   </tr>
