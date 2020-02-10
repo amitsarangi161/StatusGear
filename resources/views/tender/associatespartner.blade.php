@@ -55,13 +55,15 @@
          <td><input type="text" name="country" class="form-control" placeholder="Enter Country Here" required=""></td>
         </tr>
         <tr>
-        	<td><strong>ADDITIONAL INFO</strong><span style="color: red"> *</span></td>
+        	<td><strong>ADDITIONAL INFO</strong></td>
         	<td><textarea name="additionalinfo" class="form-control" placeholder="Enter Addional Info"></textarea></td>
         </tr>
 
                 <tr>
             <td></td>
-             <td colspan="4"><input type="submit" value="Submit" class="btn btn-success" style="float: right ;"></td>
+             <td colspan="4">
+                <button type="submit" class="btn btn-success btn-lg" onclick="return confirm('Do You Want to Save This?')">Save</button>
+
 </tr>
 </table>
 

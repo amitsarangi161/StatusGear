@@ -42,7 +42,7 @@
 </table>
 
 @if($allarray)
- <table  width="100%" class="table table-responsive table-hover table-bordered table-striped datatablescroll">
+ <table  width="100%" class="table table-responsive table-hover table-bordered table-striped datatablescrollexport">
 <thead>
 <tr>
 <td style="text-align:left;font-weight: bold;">

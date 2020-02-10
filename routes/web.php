@@ -81,7 +81,7 @@ Route::post('/changepriorityadmin/{id}','TenderController@changepriorityadmin');
 Route::post('/assignedusertotender/{id}','TenderController@assignedusertotender');
 Route::get('/deleteuserfromtender/{uid}/{tid}','TenderController@deleteuserfromtender');
 Route::get('/mytenders/assignedtenders','TenderController@assignedtenders');
-
+Route::post('/ajaxfetchtendercomment','TenderController@ajaxfetchtendercomment');
 Route::get('/viewtenderuser/{id}','TenderController@viewtenderuser');
 Route::post('/fillformtendercommitee/{id}','TenderController@fillformtendercommitee');
 Route::post('/fillformuser/{id}','TenderController@fillformuser');

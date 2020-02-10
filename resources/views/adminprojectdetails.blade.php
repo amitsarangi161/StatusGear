@@ -38,6 +38,7 @@
               </ul>
 
               <a href="#" class="btn btn-primary btn-block"><b>{{$project->status}}</b></a>
+              <a href="/editproject/{{$project->id}}" target="_blank" class="btn btn-info btn-block"><b>EDIT</b></a>
             </div>
             <!-- /.box-body -->
           </div>

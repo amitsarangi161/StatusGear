@@ -11,14 +11,24 @@ use Auth;
 use App\tenderdocument;
 use App\corrigendumfile;
 use App\Associatepartner;
-
 use DataTables;
+use App\tendercommitteecomment;
 use DB;
 
 
 
 class TenderController extends Controller
 { 
+public function ajaxfetchtendercomment(Request $request)
+{
+
+     $user=User::find($request->user);
+    
+     $comment=tendercommitteecomment::where('tenderid',$request->tenderid)
+               ->where('userid',$request->user)
+               ->first();
+     return response()->json(compact('user','comment'));
+}
 
 public function associatepartner()
 {
@@ -78,6 +88,7 @@ public function changerecomendtender(Request $request,$id)
 {
     $tender=Tender::find($id);
     $tender->recomended=$request->recomended;
+    $tender->associatepartner=$request->associatepartner;
     $tender->save();
 
     return back();
@@ -266,7 +277,12 @@ public function viewalltenders()
           $tender=tender::find($id);
             $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-           return view('tender.viewtendertendercomiteeapproval',compact('tender','tenderdocuments','corrigendumfiles'));
+           $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+          
+           return view('tender.viewtendertendercomiteeapproval',compact('tender','tenderdocuments','corrigendumfiles','users'));
       }
 
 
@@ -318,38 +334,60 @@ public function viewalltenders()
 
        }public function fillformuser(Request $request,$id)
        {
+
+           //return $request->all();
+
+           $chk=tendercommitteecomment::where('userid',Auth::id())
+                ->where('tenderid',$id)
+                ->get();
+          if (count($chk)>0) {
+            return back();
+            
+          }
            
-           $tender=tender::find($id);
-           $tender->sitevisitrequired=$request->sitevisitrequired;
-           $tender->sitevisitdescription=$request->sitevisitdescription;
-           $tender->workablesite=$request->workablesite;
-           $tender->safetyconcern=$request->safetyconcern;
-           $tender->thirdpartyapprovaldetails=$request->thirdpartyapprovaldetails;
-           $tender->thirdpartyapproval=$request->thirdpartyapproval;
-           $tender->paymentsystem=$request->paymentsystem;
-           $tender->inhousecapacity=$request->inhousecapacity;
-           $tender->thirdpartyinvolvement=$request->thirdpartyinvolvement;
-           $tender->areaaffectedbyextremist=$request->areaaffectedbyextremist;
-           $tender->keypositionbemanaged=$request->keypositionbemanaged;
-           $tender->projectdurationsufficient=$request->projectdurationsufficient;
-           $tender->localofficesetup=$request->localofficesetup;
-           $tender->paymentscheduleclear=$request->paymentscheduleclear;
-           $tender->paymentscheduleambiguty=$request->paymentscheduleambiguty;
-           $tender->penalityclause=$request->penalityclause;
-           $tender->penalityclauseambiguty=$request->penalityclauseambiguty;
-           $tender->wehaveexpertise=$request->wehaveexpertise;
-           $tender->wehaveexpertisedescription=$request->wehaveexpertisedescription;
-           $tender->contractualambiguty=$request->contractualambiguty;
-           $tender->contractualambigutydescription=$request->contractualambigutydescription;
-           $tender->extensivefieldinvestigation=$request->extensivefieldinvestigation;
-           $tender->extensivefieldinvestigationdescription=$request->extensivefieldinvestigationdescription;
-           $tender->requiredexperienceoffirm=$request->requiredexperienceoffirm;
-           $tender->requiredexperienceoffirmdescription=$request->requiredexperienceoffirmdescription;
-           $tender->anyotherrequirement=$request->anyotherrequirement;
-           $tender->ratetobequoted=$request->ratetobequoted;
-            $tender->paymentsystemdetails=$request->paymentsystemdetails;
-           $tender->status='PENDING COMMITEE APPROVAL';
-           $tender->save();
+           $tendercommitteecomment=new tendercommitteecomment();
+           $tendercommitteecomment->sitevisitrequired=$request->sitevisitrequired;
+           $tendercommitteecomment->tenderid=$id;
+           $tendercommitteecomment->userid=Auth::id();
+           $tendercommitteecomment->sitevisitdescription=$request->sitevisitdescription;
+           $tendercommitteecomment->workablesite=$request->workablesite;
+           $tendercommitteecomment->safetyconcern=$request->safetyconcern;
+           $tendercommitteecomment->thirdpartyapprovaldetails=$request->thirdpartyapprovaldetails;
+           $tendercommitteecomment->thirdpartyapproval=$request->thirdpartyapproval;
+           $tendercommitteecomment->paymentsystem=$request->paymentsystem;
+           $tendercommitteecomment->inhousecapacity=$request->inhousecapacity;
+           $tendercommitteecomment->thirdpartyinvolvement=$request->thirdpartyinvolvement;
+           $tendercommitteecomment->areaaffectedbyextremist=$request->areaaffectedbyextremist;
+           $tendercommitteecomment->keypositionbemanaged=$request->keypositionbemanaged;
+           $tendercommitteecomment->projectdurationsufficient=$request->projectdurationsufficient;
+           $tendercommitteecomment->localofficesetup=$request->localofficesetup;
+           $tendercommitteecomment->paymentscheduleclear=$request->paymentscheduleclear;
+           $tendercommitteecomment->paymentscheduleambiguty=$request->paymentscheduleambiguty;
+           $tendercommitteecomment->penalityclause=$request->penalityclause;
+           $tendercommitteecomment->penalityclauseambiguty=$request->penalityclauseambiguty;
+           $tendercommitteecomment->wehaveexpertise=$request->wehaveexpertise;
+           $tendercommitteecomment->wehaveexpertisedescription=$request->wehaveexpertisedescription;
+           $tendercommitteecomment->contractualambiguty=$request->contractualambiguty;
+           $tendercommitteecomment->contractualambigutydescription=$request->contractualambigutydescription;
+           $tendercommitteecomment->extensivefieldinvestigation=$request->extensivefieldinvestigation;
+           $tendercommitteecomment->extensivefieldinvestigationdescription=$request->extensivefieldinvestigationdescription;
+           $tendercommitteecomment->requiredexperienceoffirm=$request->requiredexperienceoffirm;
+           $tendercommitteecomment->requiredexperienceoffirmdescription=$request->requiredexperienceoffirmdescription;
+           $tendercommitteecomment->anyotherrequirement=$request->anyotherrequirement;
+           $tendercommitteecomment->ratetobequoted=$request->ratetobequoted;
+            $tendercommitteecomment->paymentsystemdetails=$request->paymentsystemdetails;
+           
+           $tendercommitteecomment->save();
+
+           $assignedtenderuser=assignedtenderuser::where('tenderid',$id)
+                              ->where('userid',Auth::id())
+                              ->first();
+            $assignedtenderuser->status='COMPLETED';
+            $assignedtenderuser->save();
+
+            $tender=tender::find($id);
+            $tender->status='PENDING COMMITEE APPROVAL';
+            $tender->save();
 
            return redirect('/mytenders/assignedtenders');
 
@@ -364,7 +402,11 @@ public function viewalltenders()
 
        public function assignedtenders()
        {
-            $mytenders=assignedtenderuser::select('tenderid')->where('userid',Auth::id())->get();
+            $mytenders=assignedtenderuser::select('tenderid')
+                        ->where('userid',Auth::id())
+                        ->where('status','PENDING')
+                        ->get();
+
 
             $tenders=tender::whereIn('id',$mytenders)->get();
 
@@ -380,6 +422,14 @@ public function viewalltenders()
 
        public function assignedusertotender(Request $request,$id)
        {
+
+             $chk=assignedtenderuser::where('tenderid',$id)
+                  ->where('userid',$request->user)
+                  ->get();
+              if (count($chk)>0) {
+                return back();
+                
+              }
              $assignedtenderuser=new assignedtenderuser();
              $assignedtenderuser->tenderid=$id;
              $assignedtenderuser->userid=$request->user;
@@ -555,8 +605,8 @@ public function viewalltenders()
            $tender=tender::find($id);
             $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-
-           return view('tender.viewtender',compact('tender','tenderdocuments','corrigendumfiles'));
+           $associatepartners=Associatepartner::get();
+           return view('tender.viewtender',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
        }
 
        public function tenderlist()

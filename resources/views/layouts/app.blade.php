@@ -629,7 +629,8 @@
  $findtender=\App\assignedtenderuser::select()
                 ->leftJoin('tenders','assignedtenderusers.id','=','tenders.id')
                 ->where('assignedtenderusers.userid',Auth::id())
-                 ->get();
+                ->where('assignedtenderusers.status','PENDING')
+                ->get();
 
 @endphp
 

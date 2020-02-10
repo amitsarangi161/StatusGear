@@ -84,7 +84,11 @@
 
 <tr>
 	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
-	<td><input type="number" name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" value="{{$tender->refpageofrfp}}" disabled=""></td>
+	<td>
+		
+		<textarea name="refpageofrfp" class="form-control" disabled="">{{$tender->refpageofrfp}}</textarea>
+
+	</td>
 	<td><strong>CORRIGENDUM FILE *</strong></td>
 	<td>
         <a href="{{asset('img/tender/'.$tender->corrigendumfile)}}" target="_blank">
@@ -184,7 +188,8 @@
 
 
 
-@if($tender->status=='ASSIGNED TO USER')
+
+
 
 <table class="table">
 	<tr class="bg-blue">
@@ -232,10 +237,10 @@
 		<tr>
 		<td><strong>Payment System?</strong></td>
 		<td>
-			<input type="radio" name="paymentsystem" value="YES" >MONTHLY &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem" value="NO" checked=""> STAGE
+			<input type="radio" name="paymentsystem" value="MONTHLY" >MONTHLY &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="paymentsystem" value="STAGE" checked=""> STAGE
 			&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem" value="YES" >PERCENTAGE WISE
+			<input type="radio" name="paymentsystem" value="PERCENTAGE WISE" >PERCENTAGE WISE
 
 
 		</td>
@@ -267,7 +272,7 @@
 		<td>
 			<input type="radio" name="thirdpartyinvolvement" value="YES" >YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="thirdpartyinvolvement" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyinvolvement" value="CANTSAY" >Can't Say 
+			
 		</td>
 	</tr>
 		<tr>
@@ -275,7 +280,7 @@
 		<td>
 			<input type="radio" name="areaaffectedbyextremist" value="YES" >YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="areaaffectedbyextremist" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="areaaffectedbyextremist" value="CANTSAY">Can't Say 
+			
 		</td>
 	</tr>
 	<tr>
@@ -283,7 +288,7 @@
 		<td>
 			<input type="radio" name="keypositionbemanaged" value="YES" >YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="keypositionbemanaged" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="keypositionbemanaged" value="CANTSAY" >Can't Say 
+			
 		</td>
 	</tr>
 	<tr>
@@ -291,7 +296,7 @@
 		<td>
 			<input type="radio" name="projectdurationsufficient" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="projectdurationsufficient" value="NO" >NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="projectdurationsufficient" value="CANTSAY">Can't Say 
+			
 		</td>
 	</tr>
 	<tr>
@@ -299,7 +304,7 @@
 		<td>
 			<input type="radio" name="localofficesetup" value="YES" >YES &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="localofficesetup" value="NO" checked="">NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="localofficesetup" value="CANTSAY" >Can't Say 
+			
 		</td>
 	</tr>
 
@@ -419,253 +424,12 @@
 		</tr>
 
 	<tr>
-		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit">SUBMIT</button></td>
+		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" onclick="return confirm('Do You want to submit this Form?')">SUBMIT</button></td>
 	</tr>
 
 
 </table>
 </form>
-
-@else
-
-<table class="table">
-	<tr class="bg-blue">
-		<td class="text-center">SITE APPRECIATION</td>
-		
-	</tr>
-</table>
-<table class="table table-responsive table-hover table-bordered table-striped">
-	<tr>
-		<td><strong>SITE VISIT REQUIRED? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="sitevisitrequired" value="YES" {{ ( $tender->sitevisitrequired == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="sitevisitrequired" value="NO" {{ ( $tender->sitevisitrequired == 'NO') ? 'checked' : '' }}> NO
-		</td>
-	
-		<td><strong>If Yes who will Visit?</strong></td>
-		<td>
-			<textarea class="form-control" name="sitevisitdescription" disabled="">{{$tender->sitevisitdescription}}</textarea>
-		</td>
-	</tr>
-	<tr>
-		<td><strong>WORKABLE SITE? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="workablesite" value="YES" {{ ( $tender->workablesite == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="workablesite" value="NO" {{ ( $tender->workablesite == 'NO') ? 'checked' : '' }}> NO
-		</td>
-	
-		<td><strong>Any Safety Concern?</strong></td>
-		<td>
-			<textarea class="form-control" name="safetyconcern" disabled="">{{$tender->safetyconcern}}</textarea>
-		</td>
-	</tr>
-	<tr>
-		<td><strong>Third party Approval Required? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="thirdpartyapproval" value="YES" {{ ( $tender->thirdpartyapproval == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyapproval" value="NO" {{ ( $tender->thirdpartyapproval == 'NO') ? 'checked' : '' }}> NO
-		</td>
-	
-		<td><strong>If Yes write Details</strong></td>
-		<td>
-			<textarea class="form-control" name="thirdpartyapprovaldetails" disabled="">{{$tender->thirdpartyapprovaldetails}}</textarea>
-		</td>
-	</tr>
-		<tr>
-		<td><strong>Payment System?</strong></td>
-		<td>
-			<input type="radio" name="paymentsystem" value="MONTHLY" {{ ( $tender->paymentsystem == 'MONTHLY') ? 'checked' : '' }}>MONTHLY &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem" value="STAGE" {{ ( $tender->paymentsystem == 'STAGE') ? 'checked' : '' }}> STAGE
-			&nbsp;&nbsp;
-			<input type="radio" name="paymentsystem" value="PERCENTAGE WISE" {{ ( $tender->paymentsystem == 'PERCENTAGE WISE') ? 'checked' : '' }}>PERCENTAGE WISE
-
-
-		</td>
-	
-		<td><strong>write in Details</strong></td>
-		<td>
-			<textarea class="form-control" name="paymentsystemdetails" disabled="">{{$tender->paymentsystemdetails}}</textarea>
-		</td>
-	</tr>
-
-</table>
-<table class="table">
-	<tr class="bg-blue">
-		<td class="text-center">OUT SOURCING</td>
-		
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<td><strong>IN HOUSE CAPACITY? (Y OR N)</strong></td>
-		<td>
-			<input type="radio" name="inhousecapacity" value="YES" {{ ( $tender->inhousecapacity == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="inhousecapacity" value="NO" {{ ( $tender->inhousecapacity == 'NO') ? 'checked' : '' }}> NO (ANY WORK TO BE OUT SOURCED?)
-		</td>
-	
-	</tr>
-	<tr>
-		<td><strong>INVOLVEMENT REQUIREMENT OF ANY THIRD PARTY?</strong></td>
-		<td>
-			<input type="radio" name="thirdpartyinvolvement" value="YES" {{ ( $tender->thirdpartyinvolvement == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyinvolvement" value="NO" {{ ( $tender->thirdpartyinvolvement == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="thirdpartyinvolvement" value="CANTSAY" {{ ( $tender->thirdpartyinvolvement == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-		</td>
-	</tr>
-		<tr>
-		<td><strong>IS THE AREA AFFECTED BY ANY EXTREMIST ORGANIZATION?</strong></td>
-		<td>
-			<input type="radio" name="areaaffectedbyextremist" value="YES" {{ ( $tender->areaaffectedbyextremist == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="areaaffectedbyextremist" value="NO" {{ ( $tender->areaaffectedbyextremist == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="areaaffectedbyextremist" value="CANTSAY" {{ ( $tender->areaaffectedbyextremist == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-		</td>
-	</tr>
-	<tr>
-		<td><strong>CAN THE KEY PERSON BE MANAGED?</strong></td>
-		<td>
-			<input type="radio" name="keypositionbemanaged" value="YES" {{ ( $tender->keypositionbemanaged == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="keypositionbemanaged" value="NO" {{ ( $tender->keypositionbemanaged == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="keypositionbemanaged" value="CANTSAY" {{ ( $tender->keypositionbemanaged == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-		</td>
-	</tr>
-	<tr>
-		<td><strong>PROJECT DURATION ASSIGNED IS SUFFICIENT?</strong></td>
-		<td>
-			<input type="radio" name="projectdurationsufficient" value="YES"  {{ ( $tender->projectdurationsufficient == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="projectdurationsufficient" value="NO" {{ ( $tender->projectdurationsufficient == 'NO') ? 'checked' : '' }} >NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="projectdurationsufficient" value="CANTSAY" {{ ( $tender->projectdurationsufficient == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-		</td>
-	</tr>
-	<tr>
-		<td><strong>LOCAL OFFICE TO BE SET UP?</strong></td>
-		<td>
-			<input type="radio" name="localofficesetup" value="YES" {{ ( $tender->localofficesetup == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="localofficesetup" value="NO" {{ ( $tender->localofficesetup == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="localofficesetup" value="CANTSAY" {{ ( $tender->localofficesetup == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-		</td>
-	</tr>
-
-		<tr>
-		<td><strong>RECOMENDED FOR</strong></td>
-		<td>
-			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
-		</td>
-	</tr>
-
-
-
-</table>
-
-<table class="table table-responsive table-hover table-bordered table-striped">
-	<tr>
-		<td><strong>PAYMENT SCHEDULE IS CLEAR?</strong></td>
-		<td>
-			<input type="radio" name="paymentscheduleclear" value="YES" {{ ( $tender->paymentscheduleclear == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentscheduleclear" value="NO" {{ ( $tender->paymentscheduleclear == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="paymentscheduleclear" value="CANTSAY" {{ ( $tender->paymentscheduleclear == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="paymentscheduleambiguty" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->paymentscheduleambiguty}}</textarea>
-		</td>
-	</tr>
-	<tr>
-		<td><strong>IS THERE ANY PENALITY CLAUSE?</strong></td>
-		<td>
-			<input type="radio" name="penalityclause" value="YES" {{ ( $tender->penalityclause == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="penalityclause" value="NO" {{ ( $tender->penalityclause == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="penalityclause" value="CANTSAY" {{ ( $tender->penalityclause == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="penalityclauseambiguty" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->penalityclauseambiguty}}</textarea>
-		</td>
-		
-	</tr>
-	<tr>
-		<td><strong>DO WE HAVE EXPERTISE IN NATURE OF WORK?</strong></td>
-		<td>
-			<input type="radio" name="wehaveexpertise" value="YES" {{ ( $tender->wehaveexpertise == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="wehaveexpertise" value="NO" {{ ( $tender->wehaveexpertise == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="wehaveexpertise" value="CANTSAY" {{ ( $tender->wehaveexpertise == 'CANTSAY') ? 'checked' : '' }} >Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="wehaveexpertisedescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->wehaveexpertisedescription}}</textarea>
-		</td>
-		
-	</tr>
-	<tr>
-		<td><strong>ANY CONTRACTUAL AMBIGUTY?</strong></td>
-		<td>
-			<input type="radio" name="contractualambiguty" value="YES" {{ ( $tender->contractualambiguty == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="contractualambiguty" value="NO" {{ ( $tender->contractualambiguty == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="contractualambiguty" value="CANTSAY"  {{ ( $tender->contractualambiguty == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="contractualambigutydescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->contractualambigutydescription}}</textarea>
-		</td>
-		
-	</tr>
-
-	<tr>
-		<td><strong>ANY EXTENSIVE FIELD INVESTICATION REQUIRED?</strong></td>
-		<td>
-			<input type="radio" name="extensivefieldinvestigation" value="YES" {{ ( $tender->extensivefieldinvestigation == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="extensivefieldinvestigation" value="NO" {{ ( $tender->extensivefieldinvestigation == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="extensivefieldinvestigation" value="CANTSAY" {{ ( $tender->extensivefieldinvestigation == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="extensivefieldinvestigationdescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->extensivefieldinvestigationdescription}}</textarea>
-		</td>
-		
-	</tr>
-		<tr>
-		<td><strong>MEETING THE REQUIRED EXPERIENSE OF FIRM?</strong></td>
-		<td>
-			<input type="radio" name="requiredexperienceoffirm" value="YES" {{ ( $tender->requiredexperienceoffirm == 'YES') ? 'checked' : '' }}>YES &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="requiredexperienceoffirm" value="NO" {{ ( $tender->requiredexperienceoffirm == 'NO') ? 'checked' : '' }}>NO &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="requiredexperienceoffirm" value="CANTSAY" {{ ( $tender->requiredexperienceoffirm == 'CANTSAY') ? 'checked' : '' }}>Can't Say 
-			
-		</td>
-		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
-		<td>
-			<textarea name="requiredexperienceoffirmdescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->requiredexperienceoffirmdescription}}</textarea>
-		</td>
-		
-		</tr>
-
-			<tr>
-		<td><strong>RECORD ANY OTHER REQUIREMENT?</strong></td>
-		<td colspan="3">
-			<textarea name="anyotherrequirement" class="form-control" placeholder="Describe" disabled="">{{$tender->anyotherrequirement}}</textarea>
-		</td>
-		
-		</tr>
-
-			<tr>
-		<td><strong>RATE TO BE QUOTED?</strong></td>
-		<td colspan="3">
-			<input type="text" name="ratetobequoted" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}" disabled="">
-		</td>
-		
-		</tr>
-
-
-
-
-</table>
-
-@endif
 
 
 @endsection

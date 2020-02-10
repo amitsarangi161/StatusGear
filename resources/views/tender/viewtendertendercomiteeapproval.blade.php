@@ -10,6 +10,7 @@
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
+	<input type="hidden" id="tenderid" value="{{$tender->id}}">
 	<td><strong>Name Of the Work *</strong></td>
 	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
 	<td><strong>Client Name *</strong></td>
@@ -250,6 +251,14 @@
 </table>
 <form action="/approvetenderbycommitee/{{$tender->id}}" method="POST">
 	{{csrf_field()}}
+<div id="committeecommenttable" style="display: none;">
+	<table class="table">
+	<tr class="bg-red">
+		<td class="text-center">COMMITTEE COMMENTS</td>
+		
+	</tr>
+</table>
+
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">SITE APPRECIATION</td>
@@ -472,17 +481,353 @@
 		
 		</tr>
 
+	
+
+
+</table>
+</div>
+<table class="table">
+	<tr class="bg-navy">
+		<td class="text-center">ASSIGNED USER COMMENTS</td>
+		
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<td><strong>Select a User</strong></td>
+		<td>
+			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
+				<option value="">Select User</option>
+				<option value="COMMITTEE">COMMITTEE</option>
+				@foreach($users as $user)
+				  <option value="{{$user->userid}}">{{$user->name}}</option>
+				@endforeach
+			</select>
+		</td>
+	</tr>
+</table>
+
+<table class="table">
 	<tr>
 		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit">APPROVE COMMITEE</button></td>
+	</tr>
+</table>
+</form>
+<div id="commenttable" style="display: none;">
+	<table class="table">
+	<tr class="bg-red">
+		<td class="text-center" id="commentby"></td>
+		
+	</tr>
+</table>
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center">SITE APPRECIATION</td>
+		
+	</tr>
+</table>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<tr>
+		<td><strong>SITE VISIT REQUIRED? (Y OR N)</strong></td>
+		<td>
+			<input type="radio" name="sitevisitrequired1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="sitevisitrequired1" value="NO"> NO
+		</td>
+	
+		<td><strong>If Yes who will Visit?</strong></td>
+		<td>
+			<textarea class="form-control" id="sitevisitdescription1" name="sitevisitdescription"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>WORKABLE SITE? (Y OR N)</strong></td>
+		<td>
+			<input type="radio" name="workablesite1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="workablesite1" value="NO"> NO
+		</td>
+	
+		<td><strong>Any Safety Concern?</strong></td>
+		<td>
+			<textarea class="form-control" id="safetyconcern1" name="safetyconcern1"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>Third party Approval Required? (Y OR N)</strong></td>
+		<td>
+			<input type="radio" name="thirdpartyapproval1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="thirdpartyapproval1" value="NO"> NO
+		</td>
+	
+		<td><strong>If Yes write Details</strong></td>
+		<td>
+			<textarea class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
+		</td>
+	</tr>
+		<tr>
+		<td><strong>Payment System?</strong></td>
+		<td>
+			<input type="radio" name="paymentsystem1" value="MONTHLY" {{ ( $tender->paymentsystem == 'MONTHLY') ? 'checked' : '' }}>MONTHLY &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="paymentsystem1" value="STAGE" {{ ( $tender->paymentsystem == 'STAGE') ? 'checked' : '' }}> STAGE
+			&nbsp;&nbsp;
+			<input type="radio" name="paymentsystem1" value="PERCENTAGE WISE" {{ ( $tender->paymentsystem == 'PERCENTAGE WISE') ? 'checked' : '' }}>PERCENTAGE WISE
+
+
+		</td>
+	
+		<td><strong>write in Details</strong></td>
+		<td>
+			<textarea class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+		</td>
+	</tr>
+
+</table>
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center">OUT SOURCING</td>
+		
+	</tr>
+</table>
+<table class="table">
+	<tr>
+		<td><strong>IN HOUSE CAPACITY? (Y OR N)</strong></td>
+		<td>
+			<input type="radio" name="inhousecapacity1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="inhousecapacity1" value="NO"> NO (ANY WORK TO BE OUT SOURCED?)
+		</td>
+	
+	</tr>
+	<tr>
+		<td><strong>INVOLVEMENT REQUIREMENT OF ANY THIRD PARTY?</strong></td>
+		<td>
+			<input type="radio" name="thirdpartyinvolvement1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="thirdpartyinvolvement1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="thirdpartyinvolvement1" value="CANTSAY">Can't Say 
+		</td>
+	</tr>
+		<tr>
+		<td><strong>IS THE AREA AFFECTED BY ANY EXTREMIST ORGANIZATION?</strong></td>
+		<td>
+			<input type="radio" name="areaaffectedbyextremist1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="areaaffectedbyextremist1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="areaaffectedbyextremist1" value="CANTSAY">Can't Say 
+		</td>
+	</tr>
+	<tr>
+		<td><strong>CAN THE KEY PERSON BE MANAGED?</strong></td>
+		<td>
+			<input type="radio" name="keypositionbemanaged1" value="YES" >YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="keypositionbemanaged1" value="NO" >NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="keypositionbemanaged1" value="CANTSAY">Can't Say 
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION ASSIGNED IS SUFFICIENT?</strong></td>
+		<td>
+			<input type="radio" name="projectdurationsufficient1" value="YES"  >YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="projectdurationsufficient1" value="NO" >NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="projectdurationsufficient1" value="CANTSAY">Can't Say 
+		</td>
+	</tr>
+	<tr>
+		<td><strong>LOCAL OFFICE TO BE SET UP?</strong></td>
+		<td>
+			<input type="radio" name="localofficesetup1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="localofficesetup1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="localofficesetup1" value="CANTSAY">Can't Say 
+		</td>
 	</tr>
 
 
 </table>
 
-</form>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<tr>
+		<td><strong>PAYMENT SCHEDULE IS CLEAR?</strong></td>
+		<td>
+			<input type="radio" name="paymentscheduleclear1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="paymentscheduleclear1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="paymentscheduleclear1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="paymentscheduleambiguty" id="paymentscheduleambiguty1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IS THERE ANY PENALITY CLAUSE?</strong></td>
+		<td>
+			<input type="radio" name="penalityclause1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="penalityclause1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="penalityclause1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="penalityclauseambiguty" id="penalityclauseambiguty1" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->penalityclauseambiguty}}</textarea>
+		</td>
+		
+	</tr>
+	<tr>
+		<td><strong>DO WE HAVE EXPERTISE IN NATURE OF WORK?</strong></td>
+		<td>
+			<input type="radio" name="wehaveexpertise1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="wehaveexpertise1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="wehaveexpertise1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="wehaveexpertisedescription" id="wehaveexpertisedescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+	<tr>
+		<td><strong>ANY CONTRACTUAL AMBIGUTY?</strong></td>
+		<td>
+			<input type="radio" name="contractualambiguty1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="contractualambiguty1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="contractualambiguty1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="contractualambigutydescription" id="contractualambigutydescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+
+	<tr>
+		<td><strong>ANY EXTENSIVE FIELD INVESTICATION REQUIRED?</strong></td>
+		<td>
+			<input type="radio" name="extensivefieldinvestigation1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="extensivefieldinvestigation1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="extensivefieldinvestigation1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="extensivefieldinvestigationdescription" id="extensivefieldinvestigationdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+	</tr>
+		<tr>
+		<td><strong>MEETING THE REQUIRED EXPERIENSE OF FIRM?</strong></td>
+		<td>
+			<input type="radio" name="requiredexperienceoffirm1" value="YES">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="requiredexperienceoffirm1" value="NO">NO &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="requiredexperienceoffirm1" value="CANTSAY">Can't Say 
+			
+		</td>
+		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
+		<td>
+			<textarea name="requiredexperienceoffirmdescription" id="requiredexperienceoffirmdescription1" class="form-control" placeholder="Describe The AMBIGUTY"></textarea>
+		</td>
+		
+		</tr>
+
+			<tr>
+		<td><strong>RECORD ANY OTHER REQUIREMENT?</strong></td>
+		<td colspan="3">
+			<textarea name="anyotherrequirement" id="anyotherrequirement1" class="form-control" placeholder="Describe"></textarea>
+		</td>
+		
+		</tr>
+
+			<tr>
+		<td><strong>RATE TO BE QUOTED?</strong></td>
+		<td colspan="3">
+			<input type="text" name="ratetobequoted" id="ratetobequoted1" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}">
+		</td>
+		
+		</tr>
+
+	
 
 
+</table>
+</div>
 
+<script type="text/javascript">
+	function fetchcomment(argument) {
+		var selecteduser=$("#selecteduser").val();
+		var tenderid=$("#tenderid").val();
+		if (selecteduser=='') {}
+		else if(selecteduser=='COMMITTEE') {
+              $("#commenttable").hide();
+              $("#committeecommenttable").show();
+
+		}
+		else
+		{
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxfetchtendercomment")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     user:selecteduser,
+                     tenderid:tenderid
+                     },
+
+               success:function(data) { 
+               	     if(data.comment)
+               	     {
+               	     	$("input[name=sitevisitrequired1][value='"+data.comment.sitevisitrequired+"']").prop("checked",true);
+               	     	$("input[name=workablesite1][value='"+data.comment.workablesite+"']").prop("checked",true);
+
+               	     	$("input[name=thirdpartyapproval1][value='"+data.comment.thirdpartyapproval+"']").prop("checked",true);
+               	     	$("input[name=paymentsystem1][value='"+data.comment.paymentsystem+"']").prop("checked",true);
+               	     	$("input[name=inhousecapacity1][value='"+data.comment.inhousecapacity+"']").prop("checked",true);
+               	     	$("input[name=thirdpartyinvolvement1][value='"+data.comment.thirdpartyinvolvement+"']").prop("checked",true);
+               	     	$("input[name=areaaffectedbyextremist1][value='"+data.comment.areaaffectedbyextremist+"']").prop("checked",true);
+               	     	$("input[name=keypositionbemanaged1][value='"+data.comment.keypositionbemanaged+"']").prop("checked",true);
+               	     	$("input[name=projectdurationsufficient1][value='"+data.comment.projectdurationsufficient+"']").prop("checked",true);
+               	     	$("input[name=localofficesetup1][value='"+data.comment.localofficesetup+"']").prop("checked",true);
+               	     	$("input[name=paymentscheduleclear1][value='"+data.comment.paymentscheduleclear+"']").prop("checked",true);
+               	     	$("input[name=penalityclause1][value='"+data.comment.penalityclause+"']").prop("checked",true);
+               	     	$("input[name=wehaveexpertise1][value='"+data.comment.wehaveexpertise+"']").prop("checked",true);
+               	     	$("input[name=contractualambiguty1][value='"+data.comment.contractualambiguty+"']").prop("checked",true);
+               	     	$("input[name=extensivefieldinvestigation1][value='"+data.comment.extensivefieldinvestigation+"']").prop("checked",true);
+               	     	$("input[name=requiredexperienceoffirm1][value='"+data.comment.requiredexperienceoffirm+"']").prop("checked",true);
+
+               	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
+               	     	$("#safetyconcern1").val(data.comment.safetyconcern);
+               	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
+               	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
+               	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
+               	     	$("#penalityclauseambiguty1").val(data.comment.penalityclauseambiguty);
+               	     	$("#wehaveexpertisedescription1").val(data.comment.wehaveexpertisedescription);
+               	     	$("#contractualambigutydescription1").val(data.comment.contractualambigutydescription);
+               	     	$("#extensivefieldinvestigationdescription1").val(data.comment.extensivefieldinvestigationdescription);
+               	     	$("#requiredexperienceoffirmdescription1").val(data.comment.requiredexperienceoffirmdescription);
+               	     	$("#anyotherrequirement1").val(data.comment.anyotherrequirement);
+               	     	$("#ratetobequoted1").val(data.comment.ratetobequoted);
+
+               	     	$("#commenttable").show();
+               	     	$("#commentby").text('COMMENT OF '+data.user.name);
+
+               	     }
+               	     else
+               	     {
+               	     	$("#commenttable").hide();
+               	     	
+               	     }
+                     
+               }
+               
+             });
+
+       }
+	}
+</script>
 
 
 

@@ -99,25 +99,60 @@
 	<td><input type="text" name="bidenddate" class="form-control" disabled="" value="{{$provider::changedatetimeformat($tender->bidenddate)}}"></td>
 	
 </tr>
+
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$provider::changedatetimeformat($tender->prebidmeetingdate)}}" disabled=""></td>
 
-	<td><strong>RECOMENDED FOR</strong></td>
+	
+	
+	<td></td>
+	<td></td>
+</tr>
+
+<tr>
 	<form action="/changerecomendtender/{{$tender->id}}" method="post">
 		{{csrf_field()}}
+	<td><strong>RECOMENDED FOR</strong></td>
+	
 	<td>
 			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
+
 			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
+
 			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
-              @if(Auth::user()->usertype=='MASTER ADMIN')
+
+
+
+           
+
+	</td>
+	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
+
+	<td>
+		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		      @php
+		        if($tender->recomended=='ASSOCIATION')
+		         $val="";
+		         else
+		         $val="disabled";
+		      @endphp
+            <select id="selected" class="form-control select2" name="associatepartner"  {{$val}} required="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}">{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+            </select>
+            @else
+             <td></td>
+            @endif
+			@if(Auth::user()->usertype=='MASTER ADMIN')
 			<button type="submit" class="btn btn-success">Change</button>
 			@endif
 	</td>
-	</form>
-	
+</form>
 </tr>
-	
+
 </table>
 
 <table class="table">
@@ -342,6 +377,15 @@
       $("#myModal").modal('show');
 		
 	}
+
+   $('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
 </script>
 
 @endsection
