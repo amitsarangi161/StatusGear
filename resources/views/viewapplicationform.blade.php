@@ -27,8 +27,6 @@
 			<th>STATUS</th>
 			<th>FROM-TO</th>
 			<th>VIEW</th>
-			<!-- <th>EDIT</th> -->
-			 <th>DELETE</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -66,44 +64,11 @@
 			  @else
 			    <td></td>
 			  @endif
-             <td><a href="/viewuserapplicationdetails/{{$requisition->id}}" class="btn btn-info">VIEW</a></td>
-			  @if($requisition->status=='PENDING MGR')
-			  <!--  <td><a href="/edituserrequisition/{{$requisition->id}}" class="btn btn-primary">EDIT</a></td> -->
-			  <td>
-			  	<form action="/deleterequisition/{{$requisition->id}}" method="POST">
-			  		{{csrf_field()}}
-			  		{{method_field('DELETE')}}
-			  		<button type="submit" class="btn btn-danger" onclick="return confirm('Do You Want This Requisition');">DELETE</button>
-
-			  		
-			  	</form>
-			  </td>
-			  @else
-              <!--  <td><button class="btn btn-primary" type="button" disabled="">EDIT</button></td> -->
-               <td><button class="btn btn-danger" type="button" disabled="">DELETE</button></td>
-               
-
-			  @endif
+             <td><a target="_balnk" href="/viewuserapplicationdetails/{{$requisition->id}}" class="btn btn-info">VIEW</a></td>
 
 		</tr>
 		@endforeach
 	</tbody>
-	<!-- <tfoot>
-		<tr class="bg-gray">
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td><strong>Rs.{{$requisitions->sum('totalamount')}}</strong></td>
-		<td><strong>Rs.{{$requisitions->sum('approvalamount')}}</strong></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	   </tr>
-	</tfoot> -->
 </table>
 
 </div>

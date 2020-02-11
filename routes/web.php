@@ -537,5 +537,6 @@ Route::get('/vouchers/completeddebitvoucher','AccountController@completeddebitvo
 Route::get('/vouchers/cancelleddebitvoucher','AccountController@cancelleddebitvoucher');
 
 Route::post('/changedrvoucherstatus/{id}','AccountController@changedrvoucherstatus');
+Route::get('/hodrequisition/previousapprovedreq','HomeController@previousapprovedreq');
 
 });
