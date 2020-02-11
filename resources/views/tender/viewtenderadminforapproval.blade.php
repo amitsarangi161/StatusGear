@@ -1015,7 +1015,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#anyotherrequirement1").val(data.comment.anyotherrequirement);
 
                	     	$("#ratetobequoted1").html(data.comment.ratetobequoted);
-               	     	$("#ratetobequoted1").html('<h4 class="small-box bg-blue rbox">'+'Rs. '+data.comment.ratetobequoted+'</h4>');
+               	     	$("#ratetobequoted1").html('<h4 class="small-box bg-blue rbox">'+data.comment.ratetobequoted+'</h4>');
 
                	     	$("#commenttable").show();
                	     	$("#committeecommenttable").hide();
