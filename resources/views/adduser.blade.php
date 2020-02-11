@@ -60,6 +60,8 @@
                   <option value="ACCOUNTS ENTRY">ACCOUNTS ENTRY</option>
                   <option value="CASHIER">CASHIER</option>
                   <option value="HR">HR</option>
+                  <option value="TENDER">TENDER</option>
+                  <option value="TENDER COMMITTEE">TENDER COMMITTEE</option>
               </select>
             </td>
           </tr>
@@ -206,6 +208,8 @@
                   <option value="ACCOUNTS ENTRY">ACCOUNTS ENTRY</option>
                   <option value="CASHIER">CASHIER</option>
                   <option value="HR">HR</option>
+                   <option value="TENDER">TENDER</option>
+                  <option value="TENDER COMMITTEE">TENDER COMMITTEE</option>
               </select>
             </td>
           </tr>
