@@ -383,8 +383,9 @@
 
             <span class="pull-right-container">
 
-              <i class="fa fa-angle-left pull-right"></i><span class="label label-warning pull-right">{{$countpendingexp+$counthodpendingexp}}</span>
-            </span>
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-warning pull-right">{{$countpendingexp+$counthodpendingexp}}</span>
+              </span>
 
           </a>
           <ul class="treeview-menu">
@@ -396,7 +397,7 @@
 
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$counthodpendingexp}}</span>
-                </span>
+              </span>
             </a></li>
             <li class="{{ Request::is('expense/pendingexpenseentry') ? 'active' : '' }}"><a href="/expense/pendingexpenseentry"><i class="fa fa-circle-o text-red"></i>PENDING EXPENSE ENTRY
 
