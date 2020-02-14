@@ -19,14 +19,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </style>
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">TENDER COMMITEE APPROVAL</td>
+		<td class="text-center">VIEW COMMITTEE REJECTED TENDER</td>
 		
 	</tr>
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
-	<input type="hidden" id="tenderid" value="{{$tender->id}}">
 	<td><strong>Name Of the Work *</strong></td>
 	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
 	<td><strong>Client Name *</strong></td>
@@ -107,7 +106,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$tender->prebidmeetingdate}}" disabled=""></td>
-		<td><strong>RECOMENDED FOR</strong></td>
+	<td><strong>RECOMENDED FOR</strong></td>
 		<td>
 			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
@@ -259,24 +258,37 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
         <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" class="btn btn-primary btn-sm" download>
                <span class="glyphicon glyphicon-download-alt"></span> Download
         </a></td>
+
  
         </tr>
 		@endforeach
 		
 	</tbody>
 </table>
-
-
-<form action="/approvetenderbycommitee/{{$tender->id}}" method="POST">
-	{{csrf_field()}}
 <table class="table">
-	<tr>
-		<td><strong>COMMITTEE COMENTS</strong></td>
-		<td>
-			<textarea class="form-control" name="committeecomment" placeholder="Write Your Comment Here"></textarea>
-		</td>
+	<tr style="background-color: #ec3333">
+		 <td><strong>DESCRIPTION FOR REJECT</strong></td>
+		 <td>
+		 	<textarea class="form-control" disabled="">{{$tender->committeerejectreason}}</textarea>
+		 </td>
 	</tr>
 	
+
+	
+</table>
+<table class="table">
+	<tr>
+		<td><strong>Select a User</strong></td>
+		<td>
+			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
+				<option value="">Select User</option>
+				<option value="COMMITTEE">COMMITTEE</option>
+				@foreach($users as $user)
+				  <option value="{{$user->userid}}">{{$user->name}}</option>
+				@endforeach
+			</select>
+		</td>
+	</tr>
 </table>
 <div id="committeecommenttable" style="display: none;">
 	<table class="table">
@@ -285,7 +297,6 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 	</tr>
 </table>
-
 <table class="table">
 	<tr class="bg-blue">
 		<td class="text-center">SITE APPRECIATION</td>
@@ -302,7 +313,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 		<td><strong>If Yes who will Visit?</strong></td>
 		<td>
-			<textarea class="form-control" name="sitevisitdescription">{{$tender->sitevisitdescription}}</textarea>
+			<textarea class="form-control" name="sitevisitdescription" disabled="">{{$tender->sitevisitdescription}}</textarea>
 		</td>
 	</tr>
 	<tr>
@@ -314,7 +325,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 		<td><strong>Any Safety Concern?</strong></td>
 		<td>
-			<textarea class="form-control" name="safetyconcern">{{$tender->safetyconcern}}</textarea>
+			<textarea class="form-control" name="safetyconcern" disabled="">{{$tender->safetyconcern}}</textarea>
 		</td>
 	</tr>
 	<tr>
@@ -326,7 +337,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 		<td><strong>If Yes write Details</strong></td>
 		<td>
-			<textarea class="form-control" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
+			<textarea class="form-control" name="thirdpartyapprovaldetails" disabled="">{{$tender->thirdpartyapprovaldetails}}</textarea>
 		</td>
 	</tr>
 		<tr>
@@ -342,7 +353,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 		<td><strong>write in Details</strong></td>
 		<td>
-			<textarea class="form-control" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+			<textarea class="form-control" name="paymentsystemdetails" disabled="">{{$tender->paymentsystemdetails}}</textarea>
 		</td>
 	</tr>
 
@@ -404,6 +415,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</tr>
 
 
+
+
+
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
@@ -417,7 +431,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="paymentscheduleambiguty" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->paymentscheduleambiguty}}</textarea>
+			<textarea name="paymentscheduleambiguty" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->paymentscheduleambiguty}}</textarea>
 		</td>
 	</tr>
 	<tr>
@@ -430,7 +444,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="penalityclauseambiguty" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->penalityclauseambiguty}}</textarea>
+			<textarea name="penalityclauseambiguty" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->penalityclauseambiguty}}</textarea>
 		</td>
 		
 	</tr>
@@ -444,7 +458,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="wehaveexpertisedescription" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->wehaveexpertisedescription}}</textarea>
+			<textarea name="wehaveexpertisedescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->wehaveexpertisedescription}}</textarea>
 		</td>
 		
 	</tr>
@@ -458,7 +472,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="contractualambigutydescription" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->contractualambigutydescription}}</textarea>
+			<textarea name="contractualambigutydescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->contractualambigutydescription}}</textarea>
 		</td>
 		
 	</tr>
@@ -473,7 +487,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="extensivefieldinvestigationdescription" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->extensivefieldinvestigationdescription}}</textarea>
+			<textarea name="extensivefieldinvestigationdescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->extensivefieldinvestigationdescription}}</textarea>
 		</td>
 		
 	</tr>
@@ -487,7 +501,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 		<td><strong>IF NO ,IS THERE ANY AMBIGUTY?</strong></td>
 		<td>
-			<textarea name="requiredexperienceoffirmdescription" class="form-control" placeholder="Describe The AMBIGUTY">{{$tender->requiredexperienceoffirmdescription}}</textarea>
+			<textarea name="requiredexperienceoffirmdescription" class="form-control" placeholder="Describe The AMBIGUTY" disabled="">{{$tender->requiredexperienceoffirmdescription}}</textarea>
 		</td>
 		
 		</tr>
@@ -495,52 +509,30 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<tr>
 		<td><strong>RECORD ANY OTHER REQUIREMENT?</strong></td>
 		<td colspan="3">
-			<textarea name="anyotherrequirement" class="form-control" placeholder="Describe">{{$tender->anyotherrequirement}}</textarea>
+			<textarea name="anyotherrequirement" class="form-control" placeholder="Describe" disabled="">{{$tender->anyotherrequirement}}</textarea>
 		</td>
 		
 		</tr>
 
-			<tr>
+	<tr>
 		<td><strong>RATE TO BE QUOTED?</strong></td>
 		<td colspan="3">
-			<input type="text" name="ratetobequoted" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}">
+			<input type="text" name="ratetobequoted" class="form-control" placeholder="Enter Rate to be QUOTED" value="{{$tender->ratetobequoted}}" disabled="">
 		</td>
 		
-		</tr>
+	</tr>
 
-	
-
-
+		<tr>
+		<td><strong>Why Tender is Not Applied?</strong></td>
+		<td colspan="3" style="background-color: cyan">
+			<textarea class="form-control" readonly="">{{$tender->notappliednotes}}</textarea>
+		</td>
+		
+	</tr>
 </table>
+
 </div>
-<table class="table">
-	<tr class="bg-navy">
-		<td class="text-center">ASSIGNED USER COMMENTS</td>
-		
-	</tr>
-</table>
-<table class="table">
-	<tr>
-		<td><strong>Select a User</strong></td>
-		<td>
-			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
-				<option value="">Select User</option>
-				<option value="COMMITTEE">COMMITTEE</option>
-				@foreach($users as $user)
-				  <option value="{{$user->userid}}">{{$user->name}}</option>
-				@endforeach
-			</select>
-		</td>
-	</tr>
-</table>
 
-<table class="table">
-	<tr>
-		<td colspan="4" style="text-align: left;"><button class="btn btn-danger btn-lg" type="button" onclick="rejecttender();">COMMITEE REJECT</button></td>
-		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit">APPROVE COMMITEE</button></td>
-	</tr>
-</table>
-</form>
 <div id="commenttable" style="display: none;">
 	<table class="table">
 	<tr class="bg-red">
@@ -565,15 +557,15 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<textarea class="form-control" id="sitevisitdescription1" name="sitevisitdescription" readonly></textarea>
 		</td>
 	</tr>
-	<tr>
+	<tr id="notworkable">
 		<td><strong>WORKABLE SITE? (Y OR N)</strong></td>
 		<td id="workablesite1">
 			
 		</td>
 	
-		<td><strong>Any Safety Concern?</strong></td>
+		<td><strong>Any Safety Concern ?</strong></td>
 		<td>
-			<textarea readonly class="form-control" id="safetyconcern1" name="safetyconcern1"></textarea>
+			<label  id="safetyconcern1" name="safetyconcern1"></label>
 		</td>
 	</tr>
 	<tr>
@@ -620,7 +612,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 		</td>
 	</tr>
-		<tr>
+		<tr id="extremist">
 		<td><strong>IS THE AREA AFFECTED BY ANY EXTREMIST ORGANIZATION?</strong></td>
 		<td id="areaaffectedbyextremist1">
 			
@@ -731,45 +723,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</tr>
 </table>
 </div>
-<div class="modal fade" id="rejectModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="text-align: center;color: red;font-weight: bold;">Reject Modal</h4>
-        </div>
-        <div class="modal-body">
-        	<form action="/committeereject/{{$tender->id}}" method="post">
-        		{{csrf_field()}}	
-           <table class="table">
-           	    <tr>
-           	    	<td><strong>Describe Reason</strong></td>
-           	    	<td><textarea name="committeerejectreason" class="form-control" required="" placeholder="Describe Cancelation Reason"></textarea></td>
-           	    </tr>
-           	    <tr>
-           	    	<td>
-           	    		<button class="btn btn-danger btn-lg" style="text-align: right;" type="submit" onclick="return confirm('Do You Want to reject this tender?')">REJECT</button>
-           	    	</td>
-           	    </tr>
-           	
-           </table>
-           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+<input type="hidden" id="tenderid" value="{{$tender->id}}">
 
-<script type="text/javascript">
-	function rejecttender()
-	{
-      $("#rejectModal").modal('show');
-	}
+
+
+<script>
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();
@@ -819,8 +777,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	}
                	     	else{
                	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
-               	     		$("#notworkable").addClass("wrkbg");
+               	     	$("#notworkable").addClass("wrkbg");
                	     	}
+
 
                	     	if(data.comment.thirdpartyapproval == 'YES'){
                	     		
@@ -972,7 +931,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	}
 
                	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
-               	     	$("#safetyconcern1").val(data.comment.safetyconcern);
+               	     	$("#safetyconcern1").html(data.comment.safetyconcern);
                	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
                	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
                	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
@@ -1005,6 +964,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
        }
 	}
 </script>
+
+
 
 
 

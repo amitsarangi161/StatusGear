@@ -360,6 +360,9 @@
         $notapplied=DB::table('tenders')
               ->where('status','NOT APPLIED')
               ->count();
+         $committeerejected=DB::table('tenders')
+              ->where('status','COMMITTEE REJECTED')
+              ->count();
          @endphp
         <li class="{{ Request::is('applied*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -379,6 +382,25 @@
             </a></li>
           </ul>
         </li>
+             <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>COMMITTEE REJECTED</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-danger pull-right">{{$committeerejected}}
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('comrejected/comitteerejectedtenders') ? 'active' : '' }}"><a href="/comrejected/comitteerejectedtenders"><i class="fa fa-circle-o text-aqua"></i>REJECTED TENDERS
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$committeerejected}}
+                  </span>
+              </span>
+
+            </a></li>
+          </ul>
+        </li>
 
          <li class="{{ Request::is('notapplied*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -392,7 +414,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a  href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>NOT APPLIED TENDERS
+            <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>NOT APPLIED TENDERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$notapplied}}</span>
               </span>

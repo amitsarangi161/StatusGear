@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
+Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender');
+Route::get('/comrejected/comitteerejectedtenders','TenderController@comitteerejectedtenders');
+Route::post('/committeereject/{tid}','TenderController@committeereject');
 Route::get('/tm/associatepartner','TenderController@associatepartner');
 Route::post('/saveassociatepartner','TenderController@saveassociatepartner');
 Route::post('/updateassociatepartner','TenderController@updateassociatepartner');
