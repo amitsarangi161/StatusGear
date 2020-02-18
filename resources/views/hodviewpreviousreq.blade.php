@@ -10,6 +10,14 @@
 }
 </style>
 
+<table class="table table-responsive table-hover table-bordered table-striped">
+  <thead>
+  <tr class="bg-primary">
+    <td class="text-center">PREVIOUS APPROVED REQUISITIONS</td>
+  </tr>
+  </thead>
+</table>
+
 <div class="table-responsive">
 	
 

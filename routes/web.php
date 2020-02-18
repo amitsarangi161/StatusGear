@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
+Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender');
+Route::get('/comrejected/comitteerejectedtenders','TenderController@comitteerejectedtenders');
+Route::post('/committeereject/{tid}','TenderController@committeereject');
 Route::get('/tm/associatepartner','TenderController@associatepartner');
 Route::post('/saveassociatepartner','TenderController@saveassociatepartner');
 Route::post('/updateassociatepartner','TenderController@updateassociatepartner');
@@ -537,5 +540,6 @@ Route::get('/vouchers/completeddebitvoucher','AccountController@completeddebitvo
 Route::get('/vouchers/cancelleddebitvoucher','AccountController@cancelleddebitvoucher');
 
 Route::post('/changedrvoucherstatus/{id}','AccountController@changedrvoucherstatus');
+Route::get('/hodrequisition/previousapprovedreq','HomeController@previousapprovedreq');
 
 });

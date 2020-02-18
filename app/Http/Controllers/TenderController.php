@@ -19,6 +19,38 @@ use DB;
 
 class TenderController extends Controller
 { 
+
+public function viewcommitteerejectedtender($id)
+{
+    $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+    $tender=Tender::find($id);
+    $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+    $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+
+    return view('tender.viewcommitteerejectedtender',compact('tender','tenderdocuments','corrigendumfiles','users'));
+}
+public function comitteerejectedtenders()
+{
+       $tenders=DB::table('tenders')
+              ->select('tenders.*','users.name')
+              ->leftJoin('users','tenders.author','=','users.id')
+              ->where('status','COMMITTEE REJECTED')
+              ->get();
+      return view('tender.comitteerejectedtenders',compact('tenders'));
+}
+
+public function committeereject(Request $request,$id)
+{
+     $tender=tender::find($id);
+     $tender->status='COMMITTEE REJECTED';
+     $tender->committeerejectreason=$request->committeerejectreason;
+     $tender->save();
+
+     return redirect('/tendercom/pendingtenderapproval');
+}
 public function ajaxfetchtendercomment(Request $request)
 {
 
@@ -241,6 +273,8 @@ public function viewalltenders()
     public function approvetenderbycommitee(Request $request,$id)
     {
           $tender=tender::find($id);
+
+           $tender->committeecomment=$request->committeecomment;
            $tender->sitevisitrequired=$request->sitevisitrequired;
            $tender->sitevisitdescription=$request->sitevisitdescription;
            $tender->workablesite=$request->workablesite;

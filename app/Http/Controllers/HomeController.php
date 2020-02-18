@@ -63,6 +63,20 @@ use DataTables;
 class HomeController extends Controller
 {
 
+     public function previousapprovedreq()
+     {
+         $requisitions=requisitionheader::select('requisitionheaders.*','u1.name as employee','u2.name as author','u3.name as approver','projects.projectname','userunderhods.hodid')
+                      ->leftJoin('users as u1','requisitionheaders.employeeid','=','u1.id')
+                      ->leftJoin('users as u2','requisitionheaders.userid','=','u2.id')
+                      ->leftJoin('users as u3','requisitionheaders.approvedby','=','u3.id')
+                      ->leftJoin('projects','requisitionheaders.projectid','=','projects.id')
+                      ->leftJoin('userunderhods','requisitionheaders.employeeid','=','userunderhods.userid')
+                      ->where('userunderhods.hodid',Auth::id())
+                      ->get();
+      
+      return view('hodviewpreviousreq',compact('requisitions'));
+     }
+
      public function changeuserstatus(Request $request)
      {
          $user=User::find($request->chid);
