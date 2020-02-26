@@ -734,6 +734,17 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
           <table class="table">
           	<input type="hidden" name="taid" id="taid">
           	<tr>
+          		<td><strong>Assign To Office</strong></td>
+          		<td>
+          			<select class="form-control" name="assignedoffice" required="">
+          				<option value="">Select a Office</option>
+          				@foreach($offices as $office)
+                         <option value="{{$office->id}}">{{$office->name}}</option>
+          				@endforeach
+          			</select>
+          		</td>
+          	</tr>
+          	<tr>
           		<td><strong>NOTES</strong></td>
           		<td><textarea name="notes" class="form-control"></textarea></td>
 

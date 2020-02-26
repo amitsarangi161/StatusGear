@@ -21,8 +21,8 @@
 		<tr>
 			<th>ID</th>
 			<th>SUBJECT</th>
-			<th>ATTACHMENT</th>
 			<th>DESCRIPTION</th>
+			<th>ATTACHMENT</th>
 			<th>STATUS</th>
 			<th>EDIT</th>
 			<th>ACTION</th>
@@ -33,7 +33,7 @@
               <tr>
               	<td><a href="/viewnotice/{{$notice->id}}" class="btn btn-info" target="_blank">{{$notice->id}}</a></td>
               	<td>{{$notice->subject}}</td>
-              	<td><p class="b" title="{{$notice->description}}">{{$notice->description}}</p></td>
+              	<td><p class="b" title="{!! $notice->description!!}">{{$notice->description}}</p></td>
               	<td> 
               		<a href="{{ asset('/img/notice/'.$notice->attachment )}}" target="_blank">
                     <img style="height:70px;width:95px;" alt="{{($notice->attachment!='')?$notice->attachment:'No attachment'}}" src="{{ asset('/img/notice/'.$notice->attachment )}}"></a>

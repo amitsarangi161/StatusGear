@@ -20,6 +20,75 @@ use DB;
 class TenderController extends Controller
 { 
 
+public function uploadposttenderdocuments(Request $request,$id)
+{
+      $tender=tender::find($id);
+      $rarefile = $request->file('tendercostdoc');    
+      if($rarefile!=''){
+      $raupload = public_path() .'/img/posttenderdoc/';
+      $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+      $success=$rarefile->move($raupload,$rarefilename);
+      $tender->tendercostdoc = $rarefilename;
+      }
+       $rarefile1 = $request->file('emd');    
+      if($rarefile1!=''){
+      $raupload1 = public_path() .'/img/posttenderdoc/';
+      $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+      $success1=$rarefile1->move($raupload1,$rarefilename1);
+      $tender->emd = $rarefilename1;
+      }
+
+       $rarefile2 = $request->file('technicalproposal');    
+      if($rarefile2!=''){
+      $raupload2 = public_path() .'/img/posttenderdoc/';
+      $rarefilename2=time().'.'.$rarefile2->getClientOriginalName();
+      $success2=$rarefile2->move($raupload2,$rarefilename2);
+      $tender->technicalproposal = $rarefilename2;
+      }
+        $rarefile3 = $request->file('financialproposal');    
+      if($rarefile3!=''){
+      $raupload3 = public_path() .'/img/posttenderdoc/';
+      $rarefilename3=time().'.'.$rarefile3->getClientOriginalName();
+      $success3=$rarefile3->move($raupload3,$rarefilename3);
+      $tender->financialproposal = $rarefilename3;
+      }
+    
+      $tender->save();
+
+
+      return back();
+
+
+
+
+
+}
+
+ public function viewassignedtenderoffice($id)
+ {
+     $tender=Tender::find($id);
+    $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+    $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+    $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+    $ofices=User::where('usertype','TENDER')->get();
+
+    return view('tender.viewassignedtenderoffice',compact('tender','tenderdocuments','corrigendumfiles','users'));
+ }
+
+public function assignedtendersoffice()
+{
+     $tenders=DB::table('tenders')
+                ->select('tenders.*','users.name')
+                ->leftJoin('users','tenders.author','=','users.id')
+                ->where('status','ADMIN APPROVED')
+                ->where('tenders.assignedoffice',Auth::id())
+                ->get();
+    return view('tender.assignedtendersoffice',compact('tenders'));
+}
+
 public function viewcommitteerejectedtender($id)
 {
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
@@ -159,8 +228,9 @@ public function viewappliedtenders($id)
                   ->get();
     $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+     $participants=Associatepartner::get();
 
-    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users'));
+    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants'));
 } 
 public function appliedtenders()
 {
@@ -196,9 +266,10 @@ public function viewalltenders()
                   ->where('tenderid',$id)
                   ->leftJoin('users','assignedtenderusers.userid','=','users.id')
                   ->get();
+        $associatepartners=Associatepartner::get();
         $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
         $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-          return view('tender.viewadminapprovedtender',compact('tender','tenderdocuments','corrigendumfiles','users'));
+          return view('tender.viewadminapprovedtender',compact('tender','tenderdocuments','corrigendumfiles','users','associatepartners'));
   }
 
 
@@ -232,6 +303,7 @@ public function viewalltenders()
     {
         $tender=tender::find($request->taid);
         $tender->status='ADMIN APPROVED';
+        $tender->assignedoffice=$request->assignedoffice;
         $tender->notes=$request->notes;
         $tender->save();
 
@@ -256,7 +328,8 @@ public function viewalltenders()
        $tender=tender::find($id);
           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-          return view('tender.viewtenderadminforapproval',compact('tender','tenderdocuments','corrigendumfiles','users'));
+       $offices=User::where('usertype','TENDER')->get();
+          return view('tender.viewtenderadminforapproval',compact('tender','tenderdocuments','corrigendumfiles','users','offices'));
     }
     public function admintenderapproval()
     {
@@ -447,6 +520,12 @@ public function viewalltenders()
            $tendercommitteecomment->anyotherrequirement=$request->anyotherrequirement;
            $tendercommitteecomment->ratetobequoted=$request->ratetobequoted;
             $tendercommitteecomment->paymentsystemdetails=$request->paymentsystemdetails;
+            
+            $tendercommitteecomment->durationtype=$request->durationtype;
+            $tendercommitteecomment->duration=$request->duration;
+            $tendercommitteecomment->durationsufficient=$request->durationsufficient;
+            $tendercommitteecomment->durationsufficientdescription=$request->durationsufficientdescription;
+            $tendercommitteecomment->associatepartner=$request->associatepartner;
            
            $tendercommitteecomment->save();
 
@@ -470,8 +549,8 @@ public function viewalltenders()
            $tender=tender::find($id);
            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-
-           return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles'));
+           $associatepartners=Associatepartner::get();
+           return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
        }
 
        public function assignedtenders()

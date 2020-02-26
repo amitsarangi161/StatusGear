@@ -274,7 +274,7 @@
 			<textarea class="form-control" name="thirdpartyapprovaldetails"></textarea>
 		</td>
 	</tr>
-		<tr>
+	<tr>
 		<td><strong>Payment System?</strong></td>
 		<td>
 			<input type="radio" name="paymentsystem" value="MONTHLY" >MONTHLY &nbsp;&nbsp;&nbsp;
@@ -288,6 +288,31 @@
 		<td><strong>write in Details</strong></td>
 		<td>
 			<textarea class="form-control" name="paymentsystemdetails"></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION IN(MONTH,DAYS,YEAR)</strong></td>
+		<td>
+			<select name="durationtype" class="form-control">
+				<option value="DAYS" selected="">DAYS</option>
+				<option value="MONTH">DAYS</option>
+				<option value="YEAR">YEAR</option>
+
+			</select>
+
+		</td>
+		<td><strong>Duration (IN Number Eg:120)</strong></td>
+		<td><input type="number" class="form-control" placeholder="Enter Duration in number" name="duration"></td>
+	</tr>
+	<tr>
+		<td><strong>IF DURATION IS SUFFICIENT ?</strong></td>
+		<td>
+			<input type="radio" name="durationsufficient" value="YES" checked="">YES &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="durationsufficient" value="NO" >NO &nbsp;&nbsp;&nbsp;
+		</td>
+		<td><strong>IF NO DESCRIBE</strong></td>
+		<td>
+			<textarea name="durationsufficientdescription" class="form-control" placeholder="If No Describe Here"></textarea>
 		</td>
 	</tr>
 
@@ -348,14 +373,26 @@
 		</td>
 	</tr>
 
-		<tr>
+	<tr>
 		<td><strong>RECOMENDED FOR</strong></td>
 		<td>
-			<input type="radio" name="recomended" value="SOLE" >SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" checked="">ASSOCIATION &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="SOLE" checked="">SOLE &nbsp;&nbsp;&nbsp;
+			<input type="radio" name="recomended" value="ASSOCIATION">ASSOCIATION &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="JV" >JV
 		</td>
 	</tr>
+	<tr>
+		<td><strong>SELECT ASSOCIATE PARTNER</strong></td>
+		<td>
+		   <select id="selected" class="form-control select2" name="associatepartner" disabled="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}" {{($tender->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+          </select>
+      </td>
+	</tr>
+
 
 
 
@@ -469,6 +506,15 @@
 
 </table>
 </form>
-
+<script type="text/javascript">
+	$('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
+</script>
 
 @endsection

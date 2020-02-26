@@ -69,7 +69,7 @@
 			<option value="NORMAL" {{ ( $project->priority == "NORMAL") ? 'selected' : '' }}>NORMAL</option>
 			<option value="HIGH" {{ ( $project->priority == "HIGH") ? 'selected' : '' }}>HIGH</option>
 			<option value="MEDIUM" {{ ( $project->priority == "MEDIUM") ? 'selected' : '' }}>MEDIUM</option>
-			<option value="LOW" {{ ( $project->priority == "MEDIUM") ? 'selected' : '' }}>LOW</option>
+			<option value="LOW" {{ ( $project->priority == "LOW") ? 'selected' : '' }}>LOW</option>
 
 			
 		</select>

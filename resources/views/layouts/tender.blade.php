@@ -2,7 +2,11 @@
 <html lang="{{ app()->getLocale() }}">
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-
+ @if(Auth::user()->usertype=='USER')
+<script type="text/javascript">
+    location.replace('/400');
+</script>
+@endif
     
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -199,7 +203,7 @@
 
 
 
-
+  
       <ul class="sidebar-menu">
         <li class="header"><strong class="text-center">TENDER NAVIGATION</strong></li>
       
@@ -241,11 +245,12 @@
 
             <li class="{{ Request::is('tm/createtender') ? 'active' : '' }}"><a href="/tm/createtender"><i class="fa fa-circle-o text-aqua"></i>CREATE TENDER</a></li>
 
-            <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
+             <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$ctlcount}}</span>
               </span>
-            </a></li>
+              </a>
+              </li>
 
 
              <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS
@@ -253,6 +258,9 @@
                   <span class="label label-success pull-right">{{$alltenders}}</span>
               </span>
              </a></li>
+
+             <li class="{{ Request::is('tm/assignedtendersoffice') ? 'active' : '' }}"><a href="/tm/assignedtendersoffice"><i class="fa fa-circle-o text-aqua"></i>ASSIGNED TENDERS TO APPLY</a></li>
+
              <li class="{{ Request::is('tm/adminapprovedtenders') ? 'active' : '' }}"><a href="/tm/adminapprovedtenders"><i class="fa fa-circle-o text-aqua"></i>ADMIN APPROVED TENDERS
                <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$adminapprovedtenders}}</span>

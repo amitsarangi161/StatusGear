@@ -267,7 +267,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </table>
 <table class="table">
 	<tr>
-		<td><strong>Select a User</strong></td>
+		<td><strong>Choose a User to see the comments</strong></td>
 		<td>
 			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
 				<option value="">Select User</option>
@@ -279,6 +279,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 	</tr>
 </table>
+
+
+
 
 <div id="committeecommenttable" style="display: none;">
 	<table class="table">
@@ -706,6 +709,126 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </table>
 </div>
 <input type="hidden" id="tenderid" value="{{$tender->id}}">
+
+<table class="table">
+	<tr class="bg-red">
+		<td class="text-center"><strong>TENDER POST DOCUMENT UPLOAD</strong></td>
+		
+	</tr>
+</table>
+<form action="/uploadposttenderdocuments/{{$tender->id}}" method="post" enctype="multipart/form-data">
+	{{csrf_field()}}
+<table class="table">
+	<tr>
+		<td><strong>TENDER COST DOC</strong></td>
+		<td><input type="file" name="tendercostdoc"></td>
+		<td>
+			@if($tender->tendercostdoc!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->tendercostdoc)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>EMD</strong></td>
+		<td><input type="file" name="emd"></td>
+		<td>
+			@if($tender->emd!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->emd)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+			
+		</td>
+	</tr>
+	<tr>
+		<td><strong>TECHNICAL PROPOSAL</strong></td>
+		<td><input type="file" name="technicalproposal"></td>
+		<td>
+			@if($tender->technicalproposal!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->technicalproposal)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>FINANCIAL PROPOSAL</strong></td>
+		<td><input type="file" name="financialproposal"></td>
+		<td>
+			@if($tender->financialproposal!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->financialproposal)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3"><button type="submit" class="btn btn-primary">Upload</button></td>
+	</tr>
+	
+</table>
+</form>
+<table class="table">
+	<tr class="bg-green">
+		<td class="text-center"><strong>LIST OF PARTICIPANTS & SCORE</strong></td>
+		
+	</tr>
+</table>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<thead>
+		<tr>
+			<td><strong>Participants</strong></td>
+			<td><strong>Technical Score</strong></td>
+			<td><strong>Financial Score</strong></td>
+            <td><strong>ACTION</strong></td>
+
+		</tr>
+	</thead>
+	<form action="/saveparticipants" method="post">
+		{{csrf_field()}}
+	
+	<tbody>
+		<tr>
+			<td>
+				<select class="form-control select2" id="participant">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<input type="text" id="techscore" placeholder="Technical Score" class="form-control">
+			</td>
+			<td>
+				<input type="text" id="financialscore" placeholder="Financial Score" class="form-control">
+			</td>
+			<td>
+				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
+			</td>
+		</tr>
+	</tbody>
+</form>s
+	
+	 
+</table>
+<table class="table">
+	<thead>
+
+		
+	</thead>
+	
+</table>
 
 
 
