@@ -106,14 +106,53 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$tender->prebidmeetingdate}}" disabled=""></td>
-	<td><strong>RECOMENDED FOR</strong></td>
-		<td>
-			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+	<td></td>
+    <td>
 	</td>
 	
 	
+</tr>
+<tr>
+	<form action="/changerecomendtender/{{$tender->id}}" method="post">
+		{{csrf_field()}}
+	<td><strong>RECOMENDED FOR</strong></td>
+	
+	<td>
+			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+
+
+
+           
+
+	</td>
+	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
+
+	<td>
+		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		      @php
+		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
+		         $val="";
+		         else
+		         $val="disabled";
+		      @endphp
+            <select id="selected" class="form-control select2" name="associatepartner"  {{$val}} required="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}" {{($tender->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+            </select>
+            @else
+             <td></td>
+            @endif
+			@if(Auth::user()->usertype=='MASTER ADMIN')
+			<button type="submit" class="btn btn-success">Change</button>
+			@endif
+	</td>
+</form>
 </tr>
 	
 </table>
@@ -710,6 +749,15 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 
 <script>
+
+	$('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();

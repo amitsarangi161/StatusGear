@@ -132,7 +132,7 @@
 	<td>
 		   @if(Auth::user()->usertype=='MASTER ADMIN')
 		      @php
-		        if($tender->recomended=='ASSOCIATION')
+		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
 		         $val="";
 		         else
 		         $val="disabled";
@@ -140,7 +140,7 @@
             <select id="selected" class="form-control select2" name="associatepartner"  {{$val}} required="">
             	<option value="">Select a Partner</option>
             	@foreach($associatepartners as $associatepartner)
-            	<option value="{{$associatepartner->id}}">{{$associatepartner->associatepartnername}}</option>
+            	<option value="{{$associatepartner->id}}" {{($tender->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
             	@endforeach
             </select>
             @else
@@ -379,7 +379,7 @@
 	}
 
    $('input[type=radio][name=recomended]').change(function() {
-    if (this.value == 'ASSOCIATION') {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
         $("#selected").attr( "disabled",false);
     }
     else{

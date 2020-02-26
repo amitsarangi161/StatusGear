@@ -2959,7 +2959,7 @@ return $message->sid;*/
          $projectactivity->save();
 
      }
-     Session::flash("Project Saved Successfully");
+     Session::flash("message","Project Saved Successfully");
 
      return back();
    }
