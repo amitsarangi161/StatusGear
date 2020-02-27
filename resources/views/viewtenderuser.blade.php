@@ -295,7 +295,7 @@
 		<td>
 			<select name="durationtype" class="form-control">
 				<option value="DAYS" selected="">DAYS</option>
-				<option value="MONTH">DAYS</option>
+				<option value="MONTH">MONTH</option>
 				<option value="YEAR">YEAR</option>
 
 			</select>
@@ -502,8 +502,6 @@
 	<tr>
 		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" onclick="return confirm('Do You want to submit this Form?')">SUBMIT</button></td>
 	</tr>
-
-
 </table>
 </form>
 <script type="text/javascript">

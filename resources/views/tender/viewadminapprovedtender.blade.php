@@ -599,7 +599,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<textarea readonly class="form-control" id="thirdpartyapprovaldetails1" name="thirdpartyapprovaldetails">{{$tender->thirdpartyapprovaldetails}}</textarea>
 		</td>
 	</tr>
-		<tr>
+	<tr>
 		<td><strong>Payment System?</strong></td>
 		<td id="paymentsystem1">
 
@@ -608,6 +608,27 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<td><strong>write in Details</strong></td>
 		<td>
 			<textarea readonly class="form-control" id="paymentsystemdetails1" name="paymentsystemdetails">{{$tender->paymentsystemdetails}}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>PROJECT DURATION IN(MONTH,DAYS,YEAR)</strong></td>
+		<td>
+			<span id="durationtype" class="badge bg-green"></span>
+
+		</td>
+		<td><strong>Duration (IN Number Eg:120)</strong></td>
+		<td>
+			<input type="text" readonly class="form-control"  id="duration">
+		</td>
+	</tr>
+	<tr>
+		<td><strong>IF DURATION IS SUFFICIENT ?</strong></td>
+		<td>
+			<span id="durationsufficient"></span>
+		</td>
+		<td><strong>IF NO DESCRIBE</strong></td>
+		<td>
+			<textarea readonly class="form-control" id="durationsufficientdescription"></textarea>
 		</td>
 	</tr>
 
@@ -655,6 +676,18 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<td id="localofficesetup1">
 			
 		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>RECOMENDED FOR</strong></td>
+		<td>
+			<span id="recomended"></span>
+		</td>
+	</tr>
+	<tr class="wrkbg">
+		<td><strong>SELECT ASSOCIATE PARTNER</strong></td>
+		<td>
+			<span id="associatepartner"></span>
+      </td>
 	</tr>
 </table>
 
@@ -807,9 +840,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	}
                	     	else{
                	     		$("#workablesite1").html('<span class="badge bg-red" >'+data.comment.workablesite+'</span>');
-               	     	$("#notworkable").addClass("wrkbg");
+               	     		$("#notworkable").addClass("wrkbg");
                	     	}
-
 
                	     	if(data.comment.thirdpartyapproval == 'YES'){
                	     		
@@ -893,6 +925,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#localofficesetup1").html('<span class="badge bg-yellow" >'+data.comment.localofficesetup+'</span>');
                	     	}
+               	     	
+               	     	$("#recomended").html('<span class="badge bg-green" >'+data.comment.recomended+'</span>');
+               	     	
+               	     	$("#associatepartner").html('<span class="badge bg-green" >'+data.comment.associatepartnername+'</span>');
+               	     	
 
                	     	if(data.comment.paymentscheduleclear == 'YES'){
                	     		
@@ -959,11 +996,19 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	else{
                	     		$("#requiredexperienceoffirm1").html('<span class="badge bg-yellow" >'+data.comment.requiredexperienceoffirm+'</span>');
                	     	}
+               	     	if(data.comment.durationsufficient == 'YES'){
+               	     		
+               	     		$("#durationsufficient").html('<span class="badge bg-green" >'+data.comment.durationsufficient+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#durationsufficient").html('<span class="badge bg-red" >'+data.comment.durationsufficient+'</span>');
+               	     	}
 
                	     	$("#sitevisitdescription1").val(data.comment.sitevisitdescription);
-               	     	$("#safetyconcern1").html(data.comment.safetyconcern);
+               	     	$("#safetyconcern1").val(data.comment.safetyconcern);
                	     	$("#thirdpartyapprovaldetails1").val(data.comment.thirdpartyapprovaldetails);
                	     	$("#paymentsystemdetails1").val(data.comment.paymentsystemdetails);
+               	     	$("#durationsufficientdescription").val(data.comment.durationsufficientdescription);
                	     	$("#paymentscheduleambiguty1").val(data.comment.paymentscheduleambiguty);
                	     	$("#penalityclauseambiguty1").val(data.comment.penalityclauseambiguty);
                	     	$("#wehaveexpertisedescription1").val(data.comment.wehaveexpertisedescription);
@@ -979,6 +1024,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#committeecommenttable").hide();
 
                	     	$("#commentby").text('COMMENT OF '+data.user.name);
+               	     	$("#durationtype").text(data.comment.durationtype);
+               	     	$("#duration").val(data.comment.duration);
 
                	     }
                	     else

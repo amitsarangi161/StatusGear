@@ -125,8 +125,12 @@ public function ajaxfetchtendercomment(Request $request)
 
      $user=User::find($request->user);
     
-     $comment=tendercommitteecomment::where('tenderid',$request->tenderid)
+     $comment=tendercommitteecomment::select('tendercommitteecomments.*','associatepartners.associatepartnername')
+
+              ->where('tenderid',$request->tenderid)
+
                ->where('userid',$request->user)
+               ->leftJoin('associatepartners','tendercommitteecomments.associatepartner','=','associatepartners.id')
                ->first();
      return response()->json(compact('user','comment'));
 }
@@ -396,9 +400,14 @@ public function viewalltenders()
     public function viewapprovedcommiteetender($id)
     {
           $tender=tender::find($id);
+          $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+          $associatepartners=Associatepartner::get();
           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
-           $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-          return view('tender.viewapprovedcommiteetender',compact('tender','tenderdocuments','corrigendumfiles'));
+          $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+          return view('tender.viewapprovedcommiteetender',compact('tender','tenderdocuments','corrigendumfiles','users','associatepartners'));
     }
 
 
@@ -484,6 +493,7 @@ public function viewalltenders()
            $chk=tendercommitteecomment::where('userid',Auth::id())
                 ->where('tenderid',$id)
                 ->get();
+            
           if (count($chk)>0) {
             return back();
             
@@ -526,7 +536,7 @@ public function viewalltenders()
             $tendercommitteecomment->durationsufficient=$request->durationsufficient;
             $tendercommitteecomment->durationsufficientdescription=$request->durationsufficientdescription;
             $tendercommitteecomment->associatepartner=$request->associatepartner;
-           
+            $tendercommitteecomment->recomended=$request->recomended;
            $tendercommitteecomment->save();
 
            $assignedtenderuser=assignedtenderuser::where('tenderid',$id)
@@ -615,7 +625,7 @@ public function viewalltenders()
         }
         public function viewtendertendercomitee($id)
         {
-            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
            $tender=tender::find($id);
             $users=User::all();
@@ -757,6 +767,10 @@ public function viewalltenders()
 
        public function viewtender($id)
        {
+/*           $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();*/
            $tender=tender::find($id);
             $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
