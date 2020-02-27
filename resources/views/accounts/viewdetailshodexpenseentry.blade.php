@@ -151,7 +151,8 @@
         <td> <strong>Can't Revert the Wallet Added Amount</strong></td> 
 		 @else
 		 <td>
-		 	<select id="approvepending" class="form-control" onchange="approve(this.value,'{{$expenseentry->id}}','{{$expenseentry->amount}}')">
+
+		 	<select id="approvepending" class="form-control" onchange="approve(this.value,'{{$expenseentry->id}}','{{$expenseentry->amount}}','')">
 		 		<option value="">select a type</option>
 		 		<option value="HOD PENDING" {{ ( $expenseentry->status == "HOD PENDING") ? 'selected' : '' }}>HOD PENDING</option>
 
@@ -587,14 +588,16 @@
 	 	   ajaxapprove(type,cid,0,remarks);
 
 	 }
-	function approve(type,id,amt) {
+	function approve(type,id,amt,remarks) {
+		
 		 if(type=='APPROVED')
 		 {
-		      ajaxapprove(type,id,amt,'remarks');
+		 	 
+		      ajaxapprove(type,id,amt,remarks);
 		 }
 		 else if(type=='PENDING')
 		 {
-		 	   ajaxapprove(type,id,0,'remarks');
+		 	   ajaxapprove(type,id,0,remarks);
 		 }
 		 else if(type=='PARTIALLY APPROVED')
 		 {
@@ -614,6 +617,7 @@
 
 	function ajaxapprove(type,id,amt,remarks)
 	{
+		
          	 $.ajaxSetup({
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
