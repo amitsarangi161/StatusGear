@@ -212,7 +212,7 @@ class AjaxController extends Controller
 
          $expenseentry=expenseentry::find($request->id);
          $expenseentry->status=$request->type;
-         $expenseentry->approvalamount=$request->amt;
+         $expenseentry->approvalamount=$expenseentry->amount;
          if($request->type!='CANCELLED')
          {
             
@@ -221,6 +221,7 @@ class AjaxController extends Controller
          else
          {
               $expenseentry->remarks=$request->remarks;
+              $expenseentry->approvalamount=$request->amt;
          }
          
          $expenseentry->save();
@@ -230,7 +231,7 @@ class AjaxController extends Controller
          {
              $wallet=new wallet();
              $wallet->employeeid=$employeeid;
-             $wallet->credit=$request->amt;
+             $wallet->credit=$expenseentry->amount;
              $wallet->debit='0';
              $wallet->rid=$request->id;
              $wallet->addedby=Auth::id();
