@@ -85,6 +85,7 @@ public function assignedtendersoffice()
                 ->leftJoin('users','tenders.author','=','users.id')
                 ->where('status','ADMIN APPROVED')
                 ->where('tenders.assignedoffice',Auth::id())
+                ->orderBy('lastdateofsubmisssion','desc')
                 ->get();
     return view('tender.assignedtendersoffice',compact('tenders'));
 }
@@ -107,6 +108,7 @@ public function comitteerejectedtenders()
               ->select('tenders.*','users.name')
               ->leftJoin('users','tenders.author','=','users.id')
               ->where('status','COMMITTEE REJECTED')
+              ->orderBy('lastdateofsubmisssion','desc')
               ->get();
       return view('tender.comitteerejectedtenders',compact('tenders'));
 }
@@ -137,7 +139,9 @@ public function ajaxfetchtendercomment(Request $request)
 
 public function associatepartner()
 {
-    $associatepartners=Associatepartner::get();
+    $associatepartners=Associatepartner::select('associatepartners.*','users.name')
+                      ->leftJoin('users','users.id','=','associatepartners.author')
+                      ->get();
     return view('tender.associatespartner',compact('associatepartners'));
 }
 public function updateassociatepartner(Request $request)
@@ -162,6 +166,7 @@ public function updateassociatepartner(Request $request)
             }
 public function saveassociatepartner(Request $request)
 {
+     $authid=Auth::id();
      $associatepartner=new Associatepartner();
      $associatepartner->associatepartnername=$request->associatepartnername;
      $associatepartner->officeaddress=$request->officeaddress;
@@ -176,6 +181,7 @@ public function saveassociatepartner(Request $request)
      $associatepartner->state=$request->state;
      $associatepartner->country=$request->country;
      $associatepartner->additionalinfo=$request->additionalinfo;
+     $associatepartner->author=$authid;
      $associatepartner->save();
      Session::flash('message','Save successfully');
      return back();
@@ -563,6 +569,54 @@ public function viewalltenders()
            return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
        }
 
+public function updateuserassociatepartner(Request $request){
+           $updateassociate =Associatepartner::find($request->apid);
+           $updateassociate->associatepartnername=$request->associatepartnername;
+           $updateassociate->officeaddress=$request->officeaddress;
+           $updateassociate->contact1=$request->contact1;
+           $updateassociate->contact2=$request->contact2;
+           $updateassociate->officecontact=$request->officecontact;
+           $updateassociate->email=$request->email;
+           $updateassociate->gstn=$request->gstn;
+           $updateassociate->panno=$request->panno;
+           $updateassociate->city=$request->city;
+           $updateassociate->dist=$request->dist;
+           $updateassociate->state=$request->state;
+           $updateassociate->country=$request->country;
+           $updateassociate->additionalinfo=$request->additionalinfo;
+           $updateassociate->save();
+            Session::flash('message','Associatepartner Updated Successfully');
+            return back();
+} 
+
+public function saveuserassociatepartner(Request $request){
+  $authid=Auth::id();
+     $associatepartner=new Associatepartner();
+     $associatepartner->associatepartnername=$request->associatepartnername;
+     $associatepartner->officeaddress=$request->officeaddress;
+     $associatepartner->contact1=$request->contact1;
+     $associatepartner->contact2=$request->contact2;
+     $associatepartner->officecontact=$request->officecontact;
+     $associatepartner->email=$request->email;
+     $associatepartner->gstn=$request->gstn;
+     $associatepartner->panno=$request->panno;
+     $associatepartner->city=$request->city;
+     $associatepartner->dist=$request->dist;
+     $associatepartner->state=$request->state;
+     $associatepartner->country=$request->country;
+     $associatepartner->additionalinfo=$request->additionalinfo;
+     $associatepartner->author=$authid;
+     $associatepartner->save();
+     Session::flash('message','Save successfully');
+     return back();
+}   
+
+public function userassociatepartner(){
+  $associatepartners=Associatepartner::select('associatepartners.*','users.name')
+                      ->leftJoin('users','users.id','=','associatepartners.author')
+                      ->get();
+    return view('associatespartner',compact('associatepartners'));
+}                
        public function assignedtenders()
        {
             $mytenders=assignedtenderuser::select('tenderid')
@@ -571,7 +625,9 @@ public function viewalltenders()
                         ->get();
 
 
-            $tenders=tender::whereIn('id',$mytenders)->get();
+            $tenders=tender::whereIn('id',$mytenders)
+                    ->orderBy('lastdateofsubmisssion', 'desc')
+                    ->get();
 
             return view('myassignedtender',compact('tenders'));
        }
@@ -793,7 +849,8 @@ public function viewalltenders()
           $tenders=DB::table('tenders')
           ->select('tenders.*','users.name')
           ->leftJoin('users','tenders.author','=','users.id')
-          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+          ->orderBy('lastdateofsubmisssion', 'desc');
           
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {
@@ -871,7 +928,8 @@ public function viewalltenders()
        {
           $tenders=DB::table('tenders')
           ->select('tenders.*','users.name')
-          ->leftJoin('users','tenders.author','=','users.id');
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->orderBy('lastdateofsubmisssion', 'desc');
 
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {

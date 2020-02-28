@@ -646,6 +646,7 @@
           </a>
           <ul class="treeview-menu">
              <li class="{{ Request::is('mytenders/assignedtenders') ? 'active' : '' }}"><a href="/mytenders/assignedtenders"><i class="fa fa-circle-o text-red"></i>ASSIGNED TENDERS</a></li>
+             <li class="{{ Request::is('mytenders/associatepartner') ? 'active' : '' }}"><a href="/mytenders/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
              
             
           </ul>

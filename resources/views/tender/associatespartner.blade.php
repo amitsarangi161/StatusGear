@@ -177,6 +177,7 @@
             <th>CITY</th>
             <th>STATE</th>
             <th>COUNTRY</th>
+            <th>Add By</th>
             <th>EDIT</th>
             <!-- <th>DELETE</th> -->
         </tr>
@@ -195,6 +196,7 @@
             <td>{{$associatepartner->city}}</td>
             <td>{{$associatepartner->state}}</td>
             <td>{{$associatepartner->country}}</td>
+            <td>{{$associatepartner->name}}</td>
             <td><button type="button" onclick="openeditmodal('{{$associatepartner->id}}','{{$associatepartner->associatepartnername}}','{{$associatepartner->officeaddress}}','{{$associatepartner->contact1}}','{{$associatepartner->contact2}}','{{$associatepartner->officecontact}}','{{$associatepartner->email}}','{{$associatepartner->gstn}}','{{$associatepartner->panno}}','{{$associatepartner->city}}','{{$associatepartner->dist}}','{{$associatepartner->state}}','{{$associatepartner->country}}','{{$associatepartner->additionalinfo}}');" class="btn btn-primary">EDIT</button></td>
 
             <!-- <td>
