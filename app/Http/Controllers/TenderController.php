@@ -20,6 +20,24 @@ use DB;
 class TenderController extends Controller
 { 
 
+public function pendinguserassigned()
+{
+      $tenderarr=array();
+      $tenders=tender::where('status','ASSIGNED TO USER')->get();
+      foreach ($tenders as $key => $tender) {
+          $tenderusers=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                      ->where('tenderid',$tender->id)
+                      ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                      ->get();
+          $tenderarr[]=compact('tender','tenderusers');
+      }
+
+      //return $tenderarr;
+
+      return view('tender.pendinguserassigned',compact('tenderarr'));
+
+}
+
 public function uploadposttenderdocuments(Request $request,$id)
 {
       $tender=tender::find($id);

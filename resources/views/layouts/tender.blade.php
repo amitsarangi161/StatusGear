@@ -290,8 +290,9 @@
                   ->select('tenders.*','users.name')
                   ->leftJoin('users','tenders.author','=','users.id')
                   ->count();
+        $userassigned=DB::table('tenders')->where('status','ASSIGNED TO USER')->count();
       @endphp
-      <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
+            <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>TENDER COMMITTEE</span>
             <span class="pull-right-container">
@@ -319,6 +320,27 @@
               </span>
 
             </a></li>
+
+          </ul>
+        </li>
+      <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>USER ASSIGNED</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-warning pull-right">{{$userassigned}}</span>
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('userassigned/pendinguserassigned') ? 'active' : '' }}"><a href="/userassigned/pendinguserassigned"><i class="fa fa-circle-o text-aqua"></i>PENDING USER ASSIGNED
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$userassigned}}</span>
+              </span>
+
+            </a></li>
+
+     
 
           </ul>
         </li>

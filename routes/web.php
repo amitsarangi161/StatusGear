@@ -56,6 +56,9 @@ Tender Routes
 */
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
 Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender');
+
+Route::get('/userassigned/pendinguserassigned','TenderController@pendinguserassigned');
+
 Route::get('/tm/assignedtendersoffice','TenderController@assignedtendersoffice');
 
 Route::get('/viewassignedtenderoffice/{id}','TenderController@viewassignedtenderoffice');

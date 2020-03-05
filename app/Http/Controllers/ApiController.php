@@ -151,7 +151,7 @@ class ApiController extends Controller
                         ->first();
 
 
-            if(count($user)>0)
+            if($user)
             {
                 $auth='YES';
             }
