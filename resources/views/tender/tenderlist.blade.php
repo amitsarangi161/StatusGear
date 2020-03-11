@@ -53,6 +53,26 @@ table {
         
     </tr>
 </table>
+ <form method="POST" id="search-form" class="form-inline" role="form">
+<table class="table">
+    <tr>
+        <td>Select A Status</td>
+        <td>
+            <select name="status" id="status" class="form-control select2" required="">
+            <option value="">Select A Status</option>
+            @foreach($statuses as $status)
+             <option value="{{$status->status}}">{{$status->status}}</option>
+
+             @endforeach   
+            </select>
+        </td>
+        <td>
+            <button type="submit" class="btn btn-primary">FILTER</button>
+        </td>
+    </tr>
+    
+</table>
+</form>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped yajratable">
     <thead>
@@ -83,19 +103,30 @@ table {
 <script type="text/javascript">
 
 
-
+ $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+       
+       table.draw(true);
+       
+    });
 
 
     
 
     var table = $('.yajratable').DataTable({
-        order: [[ 0, "desc" ]],
+        order: [[ 6, "asc" ]],
         processing: true, 
         serverSide: true,
         "scrollY": 450,
         "scrollX": true,
         "iDisplayLength": 25,
-        ajax: "{{ route('gettenderlist') }}",
+          ajax: {
+            url: '{{ url("gettenderlist")  }}',
+            data: function (d) {
+                d.status = $('#status').val();
+               
+            }
+        },
         columns: [
 
             {data: 'idbtn', name: 'id'},

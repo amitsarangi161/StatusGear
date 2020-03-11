@@ -477,7 +477,9 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
      
     }
       catch (\Exception $e){
-        
+
+        $arr=array('userid'=>$value->userid,'latitude'=>$value->latitude,'longitude'=>$value->longitude,'deviceid'=>$value->deviceid,'battery'=>$value->battery,'address'=>'','created_at'=>$value->created_at,'time'=>$value->time,'mode'=>$value->mode,'status'=>$value->status,'version'=>$value->version);
+          $addressarr[]=$arr;
     }
     }
   

@@ -857,20 +857,31 @@ public function userassociatepartner(){
               $tenders=tender::select('tenders.*','users.name as author')
                       ->leftJoin('users','tenders.author','=','users.id')
                       ->get();
-              //return $tenders;
+              $statuses=tender::select('tenders.status')->groupBy('tenders.status')->get();
 
-              return view('tender.tenderlist',compact('tenders'));
+              return view('tender.tenderlist',compact('tenders','statuses'));
        }
 
-       public function gettenderlist()
+       public function gettenderlist(Request $request)
        {
-          $tenders=DB::table('tenders')
+
+
+           $tenders=DB::table('tenders')
           ->select('tenders.*','users.name')
           ->leftJoin('users','tenders.author','=','users.id')
-          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
-          ->orderBy('lastdateofsubmisssion', 'desc');
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+        
+         
+          
           
           return DataTables::of($tenders)
+              ->filter(function ($tenders) use ($request) {
+                if ($request->has('status') && $request->get('status')!='') 
+                {
+                    $tenders->where('status', $request->get('status'));
+                }
+
+            })
                  ->setRowClass(function ($tenders) {
                         $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
                         $now = \Carbon\Carbon::now();
@@ -904,6 +915,7 @@ public function userassociatepartner(){
                                '<option value="PENDING">PENDING</option>'.
                                '<option value="ELLIGIBLE">ELLIGIBLE</option>'.
                                '<option value="NOT ELLIGIBLE">NOT ELLIGIBLE</option>'.
+                               '<option value="NOT INTERESTED">NOT INTERESTED</option>'.
                                '</select>';
 
 
@@ -946,8 +958,8 @@ public function userassociatepartner(){
        {
           $tenders=DB::table('tenders')
           ->select('tenders.*','users.name')
-          ->leftJoin('users','tenders.author','=','users.id')
-          ->orderBy('lastdateofsubmisssion', 'desc');
+          ->leftJoin('users','tenders.author','=','users.id');
+          
 
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {

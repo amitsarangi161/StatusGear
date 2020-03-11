@@ -290,7 +290,7 @@
                   ->select('tenders.*','users.name')
                   ->leftJoin('users','tenders.author','=','users.id')
                   ->count();
-        $userassigned=DB::table('tenders')->where('status','ASSIGNED TO USER')->count();
+       
       @endphp
             <li class="{{ Request::is('tendercom*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -323,27 +323,7 @@
 
           </ul>
         </li>
-      <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>USER ASSIGNED</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-              <span class="label label-warning pull-right">{{$userassigned}}</span>
-              </span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="{{ Request::is('userassigned/pendinguserassigned') ? 'active' : '' }}"><a href="/userassigned/pendinguserassigned"><i class="fa fa-circle-o text-aqua"></i>PENDING USER ASSIGNED
-             <span class="pull-right-container">
-                  <span class="label label-success pull-right">{{$userassigned}}</span>
-              </span>
-
-            </a></li>
-
-     
-
-          </ul>
-        </li>
+  
         @endif
       @if(Auth::user()->usertype=='MASTER ADMIN')
        @php
@@ -393,6 +373,7 @@
          $committeerejected=DB::table('tenders')
               ->where('status','COMMITTEE REJECTED')
               ->count();
+             $userassigned=DB::table('tenders')->where('status','ASSIGNED TO USER')->count();
          @endphp
         <li class="{{ Request::is('applied*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -412,7 +393,28 @@
             </a></li>
           </ul>
         </li>
-             <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
+            <li class="{{ Request::is('userassigned*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>USER ASSIGNED</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              <span class="label label-warning pull-right">{{$userassigned}}</span>
+              </span>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('userassigned/pendinguserassigned') ? 'active' : '' }}"><a href="/userassigned/pendinguserassigned"><i class="fa fa-circle-o text-aqua"></i>PENDING USER ASSIGNED
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$userassigned}}</span>
+              </span>
+
+            </a></li>
+
+     
+
+          </ul>
+        </li>
+      <li class="{{ Request::is('comrejected*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>COMMITTEE REJECTED</span>
             <span class="pull-right-container">
