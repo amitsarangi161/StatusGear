@@ -2064,6 +2064,7 @@ if($request->has('expenseheadname') && $request->expenseheadname!='')
                         ->where('projectid',$request->projectid)
                         ->where('date',$request->date)
                         ->where('status','!=','CANCELLED')
+                        ->where('towallet','!=','YES')
                         ->count();
                if($checkprvs>0 && $request->towallet=='NO')
                {

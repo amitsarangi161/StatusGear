@@ -14,12 +14,78 @@ use App\Associatepartner;
 use DataTables;
 use App\tendercommitteecomment;
 use DB;
+use App\tenderparticipant;
 
 
 
 class TenderController extends Controller
 { 
 
+public function removeparticipants(Request $request,$id)
+{
+       tenderparticipant::find($id)->delete();
+
+       return back();
+}
+
+
+public function savetenderparticipants(Request $request,$id)
+{
+     $chk=tenderparticipant::where('tenderid',$id)
+                           ->where('participant',$request->participant)
+                           ->get();
+     if(count($chk)==0)
+     {
+     $tenderparticipant=new tenderparticipant();
+     $tenderparticipant->tenderid=$id;
+     $tenderparticipant->participant=$request->participant;
+     $tenderparticipant->techscore=$request->techscore;
+     $tenderparticipant->financialscore=$request->financialscore;
+     $tenderparticipant->save();
+     }
+ 
+
+     return back();
+
+     return $request->all();
+}
+
+public function emddetailsupdate(Request $request,$id)
+{
+      $tender=tender::find($id); 
+      $tender->emdamt=$request->emdamt;
+      $tender->emdamtintheformsof=$request->emdamtintheformsof;
+      $tender->emdamtdate=$request->emdamtdate;
+      $rarefile1 = $request->file('emd');    
+      if($rarefile1!=''){
+      $raupload1 = public_path() .'/img/posttenderdoc/';
+      $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
+      $success1=$rarefile1->move($raupload1,$rarefilename1);
+      $tender->emd = $rarefilename1;
+      }
+      $tender->save();
+
+      return back();
+
+}
+
+public function tendercostdetailsupdate(Request $request,$id)
+{
+     $tender=tender::find($id);
+     $tender->tendercost=$request->tendercost;
+     $tender->tendercostintheformof=$request->tendercostintheformof;
+     $tender->tendercostdate=$request->tendercostdate;
+     $rarefile = $request->file('tendercostdoc');    
+      if($rarefile!=''){
+      $raupload = public_path() .'/img/posttenderdoc/';
+      $rarefilename=time().'.'.$rarefile->getClientOriginalName();
+      $success=$rarefile->move($raupload,$rarefilename);
+      $tender->tendercostdoc = $rarefilename;
+      }
+     $tender->save();
+
+     return back();
+}
 public function pendinguserassigned()
 {
       $tenderarr=array();
@@ -41,20 +107,7 @@ public function pendinguserassigned()
 public function uploadposttenderdocuments(Request $request,$id)
 {
       $tender=tender::find($id);
-      $rarefile = $request->file('tendercostdoc');    
-      if($rarefile!=''){
-      $raupload = public_path() .'/img/posttenderdoc/';
-      $rarefilename=time().'.'.$rarefile->getClientOriginalName();
-      $success=$rarefile->move($raupload,$rarefilename);
-      $tender->tendercostdoc = $rarefilename;
-      }
-       $rarefile1 = $request->file('emd');    
-      if($rarefile1!=''){
-      $raupload1 = public_path() .'/img/posttenderdoc/';
-      $rarefilename1=time().'.'.$rarefile1->getClientOriginalName();
-      $success1=$rarefile1->move($raupload1,$rarefilename1);
-      $tender->emd = $rarefilename1;
-      }
+  
 
        $rarefile2 = $request->file('technicalproposal');    
       if($rarefile2!=''){
@@ -249,6 +302,10 @@ public function approvedbutnotappliedtenders()
 
 public function viewappliedtenders($id)
 {
+
+    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername')
+      ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->get();
     $tender=Tender::find($id);
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
                   ->where('tenderid',$id)
@@ -258,7 +315,7 @@ public function viewappliedtenders($id)
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
      $participants=Associatepartner::get();
 
-    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants'));
+    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
 } 
 public function appliedtenders()
 {

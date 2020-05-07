@@ -711,18 +711,37 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <input type="hidden" id="tenderid" value="{{$tender->id}}">
 
 <table class="table">
-	<tr class="bg-red">
-		<td class="text-center"><strong>TENDER POST DOCUMENT UPLOAD</strong></td>
+	<tr class="bg-blue">
+		<td class="text-center"><strong>TENDER COST DOC</strong></td>
 		
 	</tr>
 </table>
-<form action="/uploadposttenderdocuments/{{$tender->id}}" method="post" enctype="multipart/form-data">
+<form action="/tendercostdetailupdate/{{$tender->id}}" method="post" enctype="multipart/form-data">
 	{{csrf_field()}}
 <table class="table">
 	<tr>
-		<td><strong>TENDER COST DOC</strong></td>
-		<td><input type="file" name="tendercostdoc"></td>
+		<td><strong>TENDER COST</strong></td>
+		<td><input type="text" class="form-control" placeholder="Enter Tender Cost" name="tendercost" value="{{$tender->tendercost}}">
+		</td>
+		<td><strong>IN THE FORM OF</strong></td>
 		<td>
+			<select name="tendercostintheformof" class="select2 form-control">
+				<option value="">Select a Option</option>
+				<option value="ONLINE" {{($tender->tendercostintheformof=="ONLINE")? 'selected' : ''}}>ONLINE</option>
+				<option value="BG" {{($tender->tendercostintheformof=="BG")? 'selected' : ''}}>BG</option>
+				<option value="DD" {{($tender->tendercostintheformof=="DD")? 'selected' : ''}}>DD</option>
+				<option value="FDR" {{($tender->tendercostintheformof=="FDR")? 'selected' : ''}}>FDR</option>
+				<option value="CASH" {{($tender->tendercostintheformof=="CASH")? 'selected' : ''}}>CASH</option>
+				
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>DATE</strong></td>
+		<td><input type="text" class="datepicker form-control readonly" name="tendercostdate" value="{{$tender->tendercostdate}}"></td>
+		<td><strong>TENDER COST DOCUMENT</strong></td>
+		<td>
+			<input type="file" name="tendercostdoc">
 			@if($tender->tendercostdoc!='')
             <a href="{{asset('img/posttenderdoc/'.$tender->tendercostdoc)}}" target="_blank">
             Click to View the document
@@ -733,9 +752,45 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 	</tr>
 	<tr>
-		<td><strong>EMD</strong></td>
-		<td><input type="file" name="emd"></td>
 		<td>
+		<button type="submit" class="btn btn-success">Save</button>
+	    </td>
+	</tr>
+	
+</table>
+</form>
+<table class="table">
+	<tr class="bg-navy">
+		<td class="text-center"><strong>EMD</strong></td>
+		
+	</tr>
+</table>
+<form action="/emddetailsupdate/{{$tender->id}}" method="post" enctype="multipart/form-data">
+	{{csrf_field()}}
+<table class="table">
+	<tr>
+		<td><strong>EMD COST</strong></td>
+		<td><input type="text" value="{{$tender->emdamt}}" class="form-control" placeholder="Enter EMD Cost" name="emdamt">
+		</td>
+		<td><strong>IN THE FORM OF</strong></td>
+		<td>
+			<select name="emdamtintheformsof" class="select2 form-control">
+				<option value="">Select a Option</option>
+				<option value="ONLINE" {{($tender->emdamtintheformsof=="ONLINE")? 'selected' : ''}}>ONLINE</option>
+				<option value="BG" {{($tender->emdamtintheformsof=="BG")? 'selected' : ''}}>BG</option>
+				<option value="DD" {{($tender->emdamtintheformsof=="DD")? 'selected' : ''}}>DD</option>
+				<option value="FDR" {{($tender->emdamtintheformsof=="FDR")? 'selected' : ''}}>FDR</option>
+				<option value="CASH" {{($tender->emdamtintheformsof=="CASH")? 'selected' : ''}}>CASH</option>
+				
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td><strong>DATE</strong></td>
+		<td><input type="text" class="datepicker form-control readonly" name="emdamtdate" value="{{$tender->emdamtdate}}"></td>
+		<td><strong>EMD DOCUMENT</strong></td>
+		<td>
+			<input type="file" name="emd">
 			@if($tender->emd!='')
             <a href="{{asset('img/posttenderdoc/'.$tender->emd)}}" target="_blank">
             Click to View the document
@@ -743,9 +798,28 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			@else
              <p style="color:red;">No doc Uploaded</p>
 			@endif
-			
 		</td>
 	</tr>
+	<tr>
+		<td>
+		<button type="submit" class="btn btn-success">Save</button>
+	    </td>
+	</tr>
+	
+</table>
+</form>
+
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center"><strong>TENDER POST DOCUMENT UPLOAD</strong></td>
+		
+	</tr>
+</table>
+
+<form action="/uploadposttenderdocuments/{{$tender->id}}" method="post" enctype="multipart/form-data">
+	{{csrf_field()}}
+<table class="table">
+
 	<tr>
 		<td><strong>TECHNICAL PROPOSAL</strong></td>
 		<td><input type="file" name="technicalproposal"></td>
@@ -786,7 +860,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </table>
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<thead>
-		<tr>
+		<tr class="bg-navy">
 			<td><strong>Participants</strong></td>
 			<td><strong>Technical Score</strong></td>
 			<td><strong>Financial Score</strong></td>
@@ -794,13 +868,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 		</tr>
 	</thead>
-	<form action="/saveparticipants" method="post">
+	<form action="/savetenderparticipants/{{$tender->id}}" method="post">
 		{{csrf_field()}}
 	
 	<tbody>
 		<tr>
 			<td>
-				<select class="form-control select2" id="participant">
+				<select class="form-control select2" id="participant" name="participant">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -808,10 +882,10 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 				</select>
 			</td>
 			<td>
-				<input type="text" id="techscore" placeholder="Technical Score" class="form-control">
+				<input type="text" id="techscore" name="techscore" placeholder="Technical Score" class="form-control">
 			</td>
 			<td>
-				<input type="text" id="financialscore" placeholder="Financial Score" class="form-control">
+				<input type="text" id="financialscore" name="financialscore" placeholder="Financial Score" class="form-control">
 			</td>
 			<td>
 				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
@@ -824,9 +898,33 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </table>
 <table class="table">
 	<thead>
+		<tr class="bg-gray">
+			<td>Participant</td>
+			<td>Technical Score</td>
+			<td>Financial Score</td>
+			<td>Remove</td>
+		</tr>
 
 		
 	</thead>
+	<tbody>
+		@foreach($tenderparticipants as $tenderparticipant)
+          <tr>
+          	<td>{{$tenderparticipant->associatepartnername}}</td>
+          	<td>{{$tenderparticipant->techscore}}</td>
+          	<td>{{$tenderparticipant->financialscore}}</td>
+          	<td>
+          		<form action="/removeparticipants/{{$tenderparticipant->id}}" method="post">
+          			{{method_field('DELETE')}}
+          			{{csrf_field()}}
+          			
+          			<button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Remove this Participant ?');">Delete</button>
+          		</form>
+          			
+          	</td>
+          </tr>
+		@endforeach
+	</tbody>
 	
 </table>
 

@@ -521,7 +521,7 @@
             <li class="{{ Request::is('uc/complainttoresolve') ? 'active' : '' }}"><a href="/uc/complainttoresolve"><i class="fa fa-circle-o text-red"></i>TO DO LIST</a></li>
 
                @if(Auth::user()->usertype=='MASTER ADMIN')
-              <li class="{{ Request::is('uc/viewallcomplaints') ? 'active' : '' }}"><a href="/uc/viewallcomplaints"><i class="fa fa-circle-o text-red"></i>VIEW ALL COMPLAINTS</a></li>
+              <li class="{{ Request::is('uc/viewallrequest') ? 'active' : '' }}"><a href="/uc/viewallrequest"><i class="fa fa-circle-o text-red"></i>VIEW ALL REQUESTs</a></li>
               @endif
           </ul>
 </li>

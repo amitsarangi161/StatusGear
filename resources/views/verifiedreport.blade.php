@@ -49,8 +49,9 @@
            <td><span class="label label-success">{{$projectreport->status}}</span></td>
             @else
             <td><span class="label label-danger">{{$projectreport->status}}</span></td>
-            <td>{{$projectreport->created_at}}</td>
+           
             @endif
+             <td>{{$projectreport->created_at}}</td>
             <td><a href="/viewverifiedreport/{{$projectreport->id}}" class="btn btn-primary">VIEW</a></td>
 
          </tr>
