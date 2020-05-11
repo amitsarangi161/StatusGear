@@ -15,11 +15,35 @@ use DataTables;
 use App\tendercommitteecomment;
 use DB;
 use App\tenderparticipant;
+use App\usertenderremark;
 
 
 
 class TenderController extends Controller
 { 
+public function ajaxsaveadmincommemnt(Request $request)
+{
+           $remark=new usertenderremark();
+           $remark->userid=$request->userid;
+           $remark->author=Auth::id();
+           $remark->tenderid=$request->tenderid;
+           $remark->remarks=$request->remarks;
+           $remark->save();
+
+    return response()->json($remark);
+}
+public function viewtenderpendinguser($id)
+{
+        $tender=tender::find($id);
+        $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+        $associatepartners=Associatepartner::get();
+        $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+        $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+          return view('tender.viewtenderpendinguser',compact('tender','tenderdocuments','corrigendumfiles','users','associatepartners'));
+}
 
 public function removeparticipants(Request $request,$id)
 {
@@ -195,7 +219,11 @@ public function committeereject(Request $request,$id)
 }
 public function ajaxfetchtendercomment(Request $request)
 {
-
+      $remarks=usertenderremark::select('usertenderremarks.*','users.name')
+            ->leftJoin('users','usertenderremarks.author','=','users.id')
+           ->where('tenderid',$request->tenderid)
+           ->where('userid',$request->user)
+           ->get();
      $user=User::find($request->user);
     
      $comment=tendercommitteecomment::select('tendercommitteecomments.*','associatepartners.associatepartnername')
@@ -205,7 +233,7 @@ public function ajaxfetchtendercomment(Request $request)
                ->where('userid',$request->user)
                ->leftJoin('associatepartners','tendercommitteecomments.associatepartner','=','associatepartners.id')
                ->first();
-     return response()->json(compact('user','comment'));
+     return response()->json(compact('user','comment','remarks'));
 }
 
 public function associatepartner()
@@ -576,11 +604,15 @@ public function viewalltenders()
                 ->get();
             
           if (count($chk)>0) {
-            return back();
+            $tendercommitteecomment=tendercommitteecomment::where('userid',Auth::id())
+                ->where('tenderid',$id)->first();
             
           }
+          else{
+             $tendercommitteecomment=new tendercommitteecomment();
+          }
            
-           $tendercommitteecomment=new tendercommitteecomment();
+          
            $tendercommitteecomment->sitevisitrequired=$request->sitevisitrequired;
            $tendercommitteecomment->tenderid=$id;
            $tendercommitteecomment->userid=Auth::id();
@@ -620,15 +652,25 @@ public function viewalltenders()
             $tendercommitteecomment->recomended=$request->recomended;
            $tendercommitteecomment->save();
 
+           $remark=new usertenderremark();
+           $remark->userid=Auth::id();
+           $remark->author=Auth::id();
+           $remark->tenderid=$id;
+           $remark->remarks=$request->remarks;
+           $remark->save();
+           if ($request->has('submit') && $request->get('submit')=='SUBMIT') {
            $assignedtenderuser=assignedtenderuser::where('tenderid',$id)
                               ->where('userid',Auth::id())
                               ->first();
+
             $assignedtenderuser->status='COMPLETED';
             $assignedtenderuser->save();
 
             $tender=tender::find($id);
             $tender->status='PENDING COMMITEE APPROVAL';
             $tender->save();
+              }
+           
 
            return redirect('/mytenders/assignedtenders');
 
@@ -641,7 +683,17 @@ public function viewalltenders()
            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
            $associatepartners=Associatepartner::get();
-           return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
+
+           $tendercomment=tendercommitteecomment::where('tenderid',$id)->where('userid',Auth::id())->first();
+
+           $usertenderremarks=usertenderremark::select('usertenderremarks.*','users.name')
+            ->leftJoin('users','usertenderremarks.author','=','users.id')
+           ->where('tenderid',$id)
+           ->where('userid',Auth::id())
+           ->get();
+           
+           //return $usertenderremarks;
+           return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners','tendercomment','usertenderremarks'));
        }
 
 public function updateuserassociatepartner(Request $request){

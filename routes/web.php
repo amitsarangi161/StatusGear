@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
-
+Route::get('/viewtenderpendinguser/{id}','TenderController@viewtenderpendinguser');
 Route::post('/savetenderparticipants/{id}','TenderController@savetenderparticipants');
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
 Route::post('/tendercostdetailupdate/{id}','TenderController@tendercostdetailsupdate');
@@ -100,6 +100,7 @@ Route::get('/mytenders/associatepartner','TenderController@userassociatepartner'
 Route::post('/saveuserassociatepartner','TenderController@saveuserassociatepartner');
 Route::post('/updateuserassociatepartner','TenderController@updateuserassociatepartner');
 Route::post('/ajaxfetchtendercomment','TenderController@ajaxfetchtendercomment');
+Route::post('/ajaxsaveadmincommemnt','TenderController@ajaxsaveadmincommemnt');
 Route::get('/viewtenderuser/{id}','TenderController@viewtenderuser');
 Route::post('/fillformtendercommitee/{id}','TenderController@fillformtendercommitee');
 Route::post('/fillformuser/{id}','TenderController@fillformuser');
