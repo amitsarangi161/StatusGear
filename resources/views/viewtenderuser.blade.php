@@ -737,7 +737,7 @@
 	  </tr>
 	<tr>
 		<td colspan="3" style="text-align: right;"><button class="btn btn-primary btn-lg" type="submit" name="SAVE" value="SAVE" onclick="return confirm('Do You want to save this Form?')">SAVE</button></td>
-		<td  style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" name="SUBMIT" value="SUBMIT" onclick="return confirm('Do You want to submit this Form?')">SUBMIT</button></td>
+		<td  style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" name="submit" value="SUBMIT" onclick="return confirm('Do You want to submit this Form?')">SUBMIT</button></td>
 	</tr>
 </table>
 </form>

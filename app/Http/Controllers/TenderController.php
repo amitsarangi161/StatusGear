@@ -670,6 +670,15 @@ public function viewalltenders()
             $tender->status='PENDING COMMITEE APPROVAL';
             $tender->save();
               }
+              else
+              {
+                 $assignedtenderuser=assignedtenderuser::where('tenderid',$id)
+                              ->where('userid',Auth::id())
+                              ->first();
+
+            $assignedtenderuser->status='SAVED';
+            $assignedtenderuser->save();
+              }
            
 
            return redirect('/mytenders/assignedtenders');
@@ -748,7 +757,10 @@ public function userassociatepartner(){
        {
             $mytenders=assignedtenderuser::select('tenderid')
                         ->where('userid',Auth::id())
-                        ->where('status','PENDING')
+                          ->where(function ($query) {
+                  $query->where('assignedtenderusers.status','PENDING')
+                  ->orWhere('assignedtenderusers.status','SAVED');
+                      })
                         ->get();
 
 
