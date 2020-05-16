@@ -319,6 +319,7 @@ public function changepriorityadmin(Request $request,$id)
 }
 public function changerecomendtender(Request $request,$id)
 {
+  //return $request->all();
     $tender=Tender::find($id);
     $tender->recomended=$request->recomended;
     $tender->associatepartner=$request->associatepartner;
@@ -675,6 +676,7 @@ public function viewalltenders()
             $tendercommitteecomment->durationsufficientdescription=$request->durationsufficientdescription;
             $tendercommitteecomment->associatepartner=$request->associatepartner;
             $tendercommitteecomment->recomended=$request->recomended;
+            $tendercommitteecomment->participation=$request->participation;
            $tendercommitteecomment->save();
 
            $remark=new usertenderremark();

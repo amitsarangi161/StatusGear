@@ -107,7 +107,43 @@
 	
 	
 </tr>
+<tr>
+
+	<td><strong>RECOMENDED FOR</strong></td>
 	
+	<td>
+			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
+
+
+
+           
+
+	</td>
+	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
+
+	<td>
+		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		      @php
+		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
+		         $val="";
+		         else
+		         $val="disabled";
+		      @endphp
+            <select id="selected" class="form-control select2" name="associatepartner"  {{$val}} required="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}" {{($tender->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+            </select>
+            @else
+             <td></td>
+            @endif
+	</td>
+</tr>
 </table>
 
 <table class="table">
@@ -734,6 +770,16 @@
 	  		@endforeach
 	  		</ol>
 	  	</td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Will we participate in this tender?</strong></td>
+		<td>
+			<select name="participation" class="form-control" required="">
+				<option value="">Select A Option</option>
+				<option value="YES">YES</option>
+				<option value="NO">NO</option>
+			</select>
+		</td>
 	  </tr>
 	<tr>
 		<td colspan="3" style="text-align: right;"><button class="btn btn-primary btn-lg" type="submit" name="SAVE" value="SAVE" onclick="return confirm('Do You want to save this Form?')">SAVE</button></td>

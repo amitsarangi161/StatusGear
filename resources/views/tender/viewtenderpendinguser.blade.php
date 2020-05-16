@@ -689,6 +689,12 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<span id="associatepartner"></span>
       </td>
 	</tr>
+	<tr>
+	<td><strong>WILL WE PARTICIPATE IN THIS TENDER ?</strong></td>
+	<td id="participation">
+		
+	</td>
+</tr>
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
@@ -879,7 +885,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                success:function(data) { 
                	     if(data.comment)
                	     {
-               	     	
+               	     if(data.comment.participation == 'YES'){
+               	     		
+               	     		$("#participation").html('<span class="badge bg-green" >'+data.comment.participation+'</span>');
+               	     	}
+               	     	else{
+               	     		$("#participation").html('<span class="badge bg-red" >'+data.comment.participation+'</span>');
+               	     	}	
                	     	if(data.comment.sitevisitrequired == 'YES'){
                	     		
                	     		$("#sitevisitrequired1").html('<span class="badge bg-green" >'+data.comment.sitevisitrequired+'</span>');
