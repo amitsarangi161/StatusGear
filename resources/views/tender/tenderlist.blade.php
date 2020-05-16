@@ -11,33 +11,33 @@
 }
 
 @-webkit-keyframes blink {
-    50% {
+    100% {
         background: rgba(255, 0, 0, 0.5);
     }
 }
 @-moz-keyframes blink {
-    50% {
+    100% {
         background: rgba(255, 0, 0, 0.5);
     }
 }
 @keyframes blink {
-    50% {
+    100% {
         background: rgba(255, 0, 0, 0.5);
     }
 }
 .blink {
     -webkit-animation-direction: normal;
-    -webkit-animation-duration: 5s;
+    -webkit-animation-duration: 30s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-name: blink;
     -webkit-animation-timing-function: linear;
     -moz-animation-direction: normal;
-    -moz-animation-duration: 5s;
+    -moz-animation-duration: 30s;
     -moz-animation-iteration-count: infinite;
     -moz-animation-name: blink;
     -moz-animation-timing-function: linear;
     animation-direction: normal;
-    animation-duration: 5s;
+    animation-duration: 30s;
     animation-iteration-count: infinite;
     animation-name: blink;
     animation-timing-function: linear;
@@ -135,7 +135,7 @@ table {
             {data: 'source', name: 'source'},
             {data: 'workvalue', name: 'workvalue'},
             {data: 'nitpublicationdate', name: 'nitpublicationdate'},
-            {data: 'lastdateofsubmisssion', name: 'lastdateofsubmisssion'},
+            {data: 'ldos', name: 'lastdateofsubmisssion'},
             {data: 'rfpavailabledate', name:'rfpavailabledate'},
             {name: 'created_at',data: 'created_at'},
             {data: 'sta', name: 'sta'},

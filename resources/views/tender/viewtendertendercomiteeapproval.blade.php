@@ -762,6 +762,18 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 		</tr>
 </table>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+		<td>USERNAME</td>
+		<td>REMARKS</td>
+		<td>CREATED_AT</td>
+	    </tr>
+	</thead>
+	<tbody id="userremark">
+		
+	</tbody>
+</table>
 </div>
 <div class="modal fade" id="rejectModal" role="dialog">
     <div class="modal-dialog">
@@ -1037,7 +1049,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#commentby").text('COMMENT OF '+data.user.name);
                	     	$("#durationtype").text(data.comment.durationtype);
                	     	$("#duration").val(data.comment.duration);
-
+                        	$("#userremark").empty();
+               	     	$.each(data.remarks,function (key,value) {
+               	     		var x='<tr><td>'+value.name+'</td><td>'+value.remarks+'</td><td>'+value.created_at+'</td><td><tr>';
+               	     		$("#userremark").append(x);
+               	     	})
                	     }
                	     else
                	     {

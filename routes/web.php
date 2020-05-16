@@ -110,7 +110,8 @@ Route::get('/tendercom/approvedcommiteetender','TenderController@approvedcommite
 Route::get('/viewapprovedcommiteetender/{id}','TenderController@viewapprovedcommiteetender');
 Route::get('/ata/admintenderapproval','TenderController@admintenderapproval');
 Route::get('/viewtenderadminforapproval/{id}','TenderController@viewtenderadminforapproval');
-
+Route::post('/tendernotintrested/{id}','TenderController@tendernotintrested');
+Route::post('/revokestatus','TenderController@revokestatus');
 Route::delete('/deletetenderdocument/{id}','TenderController@deletetenderdocument');
 Route::delete('/deletecorrigendumfile/{id}','TenderController@deletecorrigendumfile');
 Route::post('/approvetenderbycommitee/{id}','TenderController@approvetenderbycommitee');

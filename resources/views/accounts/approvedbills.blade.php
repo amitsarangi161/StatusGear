@@ -23,6 +23,7 @@
 		<tr class="bg-blue">
 		<td>ID</td>
 		<td>INVOICE NO</td>
+		<td>INVOICE DATE</td>
 		<td>CLIENT NAME</td>
 		
 
@@ -43,6 +44,7 @@
 		<tr>
 		<td><a href="/printbill/{{$bill->id}}" target="_blank" class="btn btn-success">{{$bill->id}}</a></td>
 		<td>{{$bill->fullinvno}}</td>
+		<td>{{$bill->invoicedate}}</td>
 		<td>{{$bill->clientname}}</td>
 		<td><p class="b" title="{{$bill->nameofthework}}">{{$bill->nameofthework}}</p></td>
 		<td>{{ $provider::moneyFormatIndia($bill->total)}}</td>

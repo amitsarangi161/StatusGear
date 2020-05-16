@@ -21,6 +21,29 @@ use App\usertenderremark;
 
 class TenderController extends Controller
 { 
+public function revokestatus(Request $request)
+{
+    //return $request->all();
+     $tender=tender::find($request->tid);
+     $tender->status=$request->status;
+     $tender->save();
+     if($tender->status=='ASSIGNED TO USER')
+     {
+        $assignedtenderuser=assignedtenderuser::where('tenderid',$tender->id)
+       ->update([
+           'status' => 'PENDING'
+        ]);
+     }
+     return back();
+}
+
+public function tendernotintrested(Request $request,$id)
+{
+     $tender=tender::find($id);
+     $tender->status='NOT INTERESTED';
+     $tender->save();
+     return redirect('/tm/tenderlist');
+}
 public function ajaxsaveadmincommemnt(Request $request)
 {
            $remark=new usertenderremark();
@@ -368,7 +391,8 @@ public function ajaxchangetenderstatus(Request $request)
 public function viewalltenders()
 {
               $tenders=tender::all();
-              return view('tender.viewalltenders',compact('tenders'));
+              $statuses=tender::select('status')->groupBy('status')->get();
+              return view('tender.viewalltenders',compact('tenders','statuses'));
 }
 
 
@@ -389,8 +413,9 @@ public function viewalltenders()
    public function adminapprovedtenders()
    {
          $tenders=DB::table('tenders')
-                ->select('tenders.*','users.name')
+                ->select('tenders.*','users.name','u1.name as assignedoffice')
                 ->leftJoin('users','tenders.author','=','users.id')
+                ->leftJoin('users as u1','tenders.assignedoffice','=','u1.id')
                 ->where('status','ADMIN APPROVED')
                 ->get();
          //return $tenders;
@@ -766,6 +791,7 @@ public function userassociatepartner(){
 
             $tenders=tender::whereIn('id',$mytenders)
                     ->orderBy('lastdateofsubmisssion', 'desc')
+                    ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
                     ->get();
 
             return view('myassignedtender',compact('tenders'));
@@ -1014,7 +1040,7 @@ public function userassociatepartner(){
                         {
                           $day=$diff;
                         }
-                              if($day>0 && $day<=5)
+                              if($day>=0 && $day<=5)
                                 {
                                   return 'blink';
                                 }
@@ -1058,10 +1084,13 @@ public function userassociatepartner(){
                   ->addColumn('now', function($tenders){
                          return '<p class="b" title="'.$tenders->nameofthework.'">'.$tenders->nameofthework.'</p>';
                     })
+                      ->addColumn('ldos', function($tenders) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($tenders->lastdateofsubmisssion).'</strong></span>';
+                     })
                   ->editColumn('nitpublicationdate', function($tenders) {
                     return $this->changedateformat($tenders->nitpublicationdate);
                      })
-                  ->editColumn('lastdateofsubmisssion', function($tenders) {
+                ->editColumn('lastdateofsubmisssion', function($tenders) {
                     return $this->changedateformat($tenders->lastdateofsubmisssion);
                      })
                   ->editColumn('rfpavailabledate', function($tenders) {
@@ -1071,7 +1100,7 @@ public function userassociatepartner(){
                         return $this->changedatetimeformat($tenders->created_at);
                      })
                   
-                  ->rawColumns(['idbtn','view','edit','now','sta'])
+                  ->rawColumns(['idbtn','view','edit','now','sta','ldos'])
                 
                
                  ->make(true);
@@ -1094,7 +1123,7 @@ public function userassociatepartner(){
                         {
                           $day=$diff;
                         }
-                              if($day>0 && $day<=5)
+                               if($day>=0 && $day<=5)
                                 {
                                   return 'blink';
                                 }
@@ -1108,14 +1137,22 @@ public function userassociatepartner(){
                     })
 
                   ->addColumn('sta', function($tenders) {
-                    if ($tenders->status=='PENDING') return '<span class="label label-default">'.$tenders->status.'</span>';
-                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success">'.$tenders->status.'</span>';
-                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning">'.$tenders->status.'</span>';
-                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info">'.$tenders->status.'</span>';
-                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary">'.$tenders->status.'</span>';
-                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger">'.$tenders->status.'</span>';
+                    if ($tenders->status=='PENDING') return '<span class="label label-default" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
                     else
-                      return '<span class="label label-default">'.$tenders->status.'</span>';
+                      return '<span class="label label-default" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    
+                    
+                    })
+
+                  ->addColumn('live', function($tenders) {
+                    if ($tenders->lastdateofsubmisssion < date("Y-m-d")) return '<span class="label label-danger">EXPIRED</span>';
+                    else
+                      return '<span class="label label-success">LIVE</span>';
                     
                     
                     })
@@ -1128,6 +1165,9 @@ public function userassociatepartner(){
                   ->addColumn('now', function($tenders){
                          return '<p class="b" title="'.$tenders->nameofthework.'">'.$tenders->nameofthework.'</p>';
                     })
+                   ->addColumn('ldos', function($tenders) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($tenders->lastdateofsubmisssion).'</strong></span>';
+                     })
                   ->editColumn('nitpublicationdate', function($tenders) {
                     return $this->changedateformat($tenders->nitpublicationdate);
                      })
@@ -1141,7 +1181,7 @@ public function userassociatepartner(){
                         return $this->changedatetimeformat($tenders->created_at);
                      })
                   
-                  ->rawColumns(['idbtn','view','edit','now','sta'])
+                  ->rawColumns(['idbtn','view','edit','now','sta','live','ldos'])
                 
                
                  ->make(true);

@@ -37,7 +37,7 @@
 	<tbody>
 		@foreach($tenders as $tender)
 		   <tr>
-		   	<td>{{$tender->id}}</td>
+		   	<td><a href="/viewtenderadminforapproval/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
 		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
 		   	<td>{{$tender->clientname}}</td>
 		   	<td>{{$tender->source}}</td>

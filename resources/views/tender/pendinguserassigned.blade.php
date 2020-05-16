@@ -42,7 +42,12 @@
 		   	<td>
 		   		<ol>
 		   		@foreach($tend['tenderusers'] as $user)
-                   <li>{{$user['name']}}<strong>({{$user->status}})</strong></li>
+                   <li>{{$user['name']}}
+                     @if($user->status=='PENDING')
+                   	<span class="label label-danger"><strong>({{$user->status}})</strong></li></span>
+                   	@else
+                       <span class="label label-success"><strong>({{$user->status}})</strong></li></span>
+                   	@endif
 		   		@endforeach
 		   		</ol>
 		   	</td>

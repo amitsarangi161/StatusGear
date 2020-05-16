@@ -346,6 +346,14 @@
    		<button type="submit" onclick="return confirm('Do you want to proceed?')" class="btn btn-primary btn-lg">WE ARE ELLIGIBLE?</button>
    	    </form>
    	</td>
+   		<td>
+   		<form action="/tendernotintrested/{{$tender->id}}" method="POST">
+   			{{csrf_field()}}
+   		<button type="submit" onclick="return confirm('Do you want to proceed?')" class="btn btn-warning btn-lg">NOT INTRESTED ?</button>
+   	    </form>
+   	</td>
+
+
    	<td><button type="button" class="btn btn-danger btn-lg" onclick="opennotilligiblemodal('{{$tender->id}}');">NOT ELLIGIBLE ?</button></td>
    </tr>	
 </table>

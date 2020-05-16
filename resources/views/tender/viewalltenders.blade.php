@@ -29,6 +29,7 @@
             <td>WORK VALUE</td>
             <td>NIT PUBLICATION DATE</td>
             <td>LAST DATE OF SUB.</td>
+            <td>LIVE/EXP</td>
             <td>RFP AVAILABLE DATE</td>
             <td>CREATED AT</td>
             <td>STATUS</td>
@@ -42,7 +43,47 @@
     </tbody>
 </table>
 </div>
+@if(Auth::user()->usertype=='MASTER ADMIN')
+<div id="revokeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CHANGE STATUS</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/revokestatus" method="POST">
+          {{csrf_field()}}
+        <table class="table">
+          <input type="hidden" name="tid" id="tid" required="">
+          <td><strong>Select a Status</strong></td>
+          <td>
+         <select class="form-control" name="status" required="">
+              <option value="">Select a Status</option>
+                              <option value="ASSIGNED TO USER">ASSIGNED TO USER</option>
+                              <option value="ELLIGIBLE">TO COMMITTEE</option>
+                              
+                            
+            </select>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
+          </td>
+          
+        </table>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@endif
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
@@ -67,7 +108,8 @@
             {data: 'source', name: 'source'},
             {data: 'workvalue', name: 'workvalue'},
             {data: 'nitpublicationdate', name: 'nitpublicationdate'},
-            {data: 'lastdateofsubmisssion', name: 'lastdateofsubmisssion'},
+            {data: 'ldos', name: 'lastdateofsubmisssion'},
+            {data: 'live', name: 'lastdateofsubmisssion'},
             {data: 'rfpavailabledate', name:'rfpavailabledate'},
             {name: 'created_at',data: 'created_at'},
             {data: 'sta', name: 'sta'},
@@ -85,5 +127,11 @@
     
 
   });
+
+  function revokestatus(id)
+  {
+       $("#tid").val(id);
+       $('#revokeModal').modal('show');
+  }
   </script>
 @endsection
