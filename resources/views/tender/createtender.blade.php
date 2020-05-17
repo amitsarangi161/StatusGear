@@ -49,7 +49,7 @@
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="text" name="workvalue" class="form-control" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
+	<td><input type="number" name="workvalue" class="form-control" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
