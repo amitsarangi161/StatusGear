@@ -21,6 +21,22 @@ use App\usertenderremark;
 
 class TenderController extends Controller
 { 
+
+public function previoustenders()
+{
+           $mytenders=assignedtenderuser::select('tenderid')
+                        ->where('userid',Auth::id())
+                        ->where('assignedtenderusers.status','COMPLETED')
+                        ->get();
+
+
+            $tenders=tender::whereIn('id',$mytenders)
+                    ->orderBy('lastdateofsubmisssion', 'desc')
+                    ->get();
+    
+            return view('myprevioustender',compact('tenders'));
+         
+}
 public function revokestatus(Request $request)
 {
     //return $request->all();
@@ -35,6 +51,20 @@ public function revokestatus(Request $request)
         ]);
      }
      return back();
+}public function revokestatusadmin(Request $request)
+{
+    //return $request->all();
+     $tender=tender::find($request->tid);
+     $tender->status=$request->status;
+     $tender->save();
+     if($tender->status=='ASSIGNED TO USER')
+     {
+        $assignedtenderuser=assignedtenderuser::where('tenderid',$tender->id)
+       ->update([
+           'status' => 'PENDING'
+        ]);
+     }
+     return redirect('/ata/admintenderapproval');
 }
 
 public function tendernotintrested(Request $request,$id)
@@ -732,6 +762,25 @@ public function viewalltenders()
            return view('viewtenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners','tendercomment','usertenderremarks'));
        }
 
+       public function viewprevioustenderuser($id)
+       {
+           $tender=tender::find($id);
+           $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+           $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+           $associatepartners=Associatepartner::get();
+
+           $tendercomment=tendercommitteecomment::where('tenderid',$id)->where('userid',Auth::id())->first();
+
+           $usertenderremarks=usertenderremark::select('usertenderremarks.*','users.name')
+            ->leftJoin('users','usertenderremarks.author','=','users.id')
+           ->where('tenderid',$id)
+           ->where('userid',Auth::id())
+           ->get();
+           
+           //return $usertenderremarks;
+           return view('viewprevioustenderuser',compact('tender','tenderdocuments','corrigendumfiles','associatepartners','tendercomment','usertenderremarks'));
+       }
+
 public function updateuserassociatepartner(Request $request){
            $updateassociate =Associatepartner::find($request->apid);
            $updateassociate->associatepartnername=$request->associatepartnername;
@@ -1019,18 +1068,15 @@ public function userassociatepartner(){
           ->select('tenders.*','users.name')
           ->leftJoin('users','tenders.author','=','users.id')
           ->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+           if ($request->has('status') && $request->get('status')!='') 
+                {
+                   $tenders=$tenders->where('status', $request->get('status'));
+                }
         
          
           
           
           return DataTables::of($tenders)
-              ->filter(function ($tenders) use ($request) {
-                if ($request->has('status') && $request->get('status')!='') 
-                {
-                    $tenders->where('status', $request->get('status'));
-                }
-
-            })
                  ->setRowClass(function ($tenders) {
                         $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
                         $now = \Carbon\Carbon::now();
@@ -1057,8 +1103,8 @@ public function userassociatepartner(){
 
                   ->addColumn('sta', function($tenders) {
                     /*if ($tenders->status=='PENDING') return '<span class="label label-default">'.$tenders->status.'</span>';*/
-                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success">'.$tenders->status.'</span>';
-                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning">'.$tenders->status.'</span>';
+                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
                     if ($tenders->status=='PENDING')
                       return '<select id="status" onchange="changestatus(this.value,'.$tenders->id.')">'.
                                '<option value="PENDING">PENDING</option>'.
@@ -1069,11 +1115,11 @@ public function userassociatepartner(){
 
 
 
-                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info">'.$tenders->status.'</span>';
-                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary">'.$tenders->status.'</span>';
-                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger">'.$tenders->status.'</span>';
+                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
                     else
-                      return '<span class="label label-default">'.$tenders->status.'</span>';
+                      return '<span class="label label-default" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
                     
                     
                     })

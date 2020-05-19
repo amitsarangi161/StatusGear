@@ -523,6 +523,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <table class="table">
 	<tr>
 		<td><button type="button" onclick="openapprovemodal('{{$tender->id}}');" class="btn btn-success btn-lg">APPROVE</button></td>
+		<td><button type="button" onclick="revokestatus('{{$tender->id}}');" class="btn btn-warning btn-lg">REVOKE</button></td>
 		<td><button type="button" onclick="openrejectmodal('{{$tender->id}}')" class="btn btn-danger btn-lg">REJECT</button></td>
 	</tr>
 	
@@ -670,6 +671,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 	</td>
 </tr>
+
 </table>
 
 <table class="table table-responsive table-hover table-bordered table-striped">
@@ -756,6 +758,18 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 		</tr>
 </table>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+		<td>USERNAME</td>
+		<td>REMARKS</td>
+		<td>CREATED_AT</td>
+	    </tr>
+	</thead>
+	<tbody id="userremark">
+		
+	</tbody>
+</table>
 </div>
 <div id="approvemodal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -838,7 +852,54 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
   </div>
 </div>
+@if(Auth::user()->usertype=='MASTER ADMIN')
+<div id="revokeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CHANGE STATUS</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/revokestatusadmin" method="POST">
+          {{csrf_field()}}
+        <table class="table">
+          <input type="hidden" name="tid" id="tid" required="">
+          <td><strong>Select a Status</strong></td>
+          <td>
+         <select class="form-control" name="status" required="">
+              <option value="">Select a Status</option>
+                              <option value="ASSIGNED TO USER">ASSIGNED TO USER</option>
+                              <option value="ELLIGIBLE">TO COMMITTEE</option>
+                              
+                            
+            </select>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
+          </td>
+          
+        </table>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@endif
 <script type="text/javascript">
+	function revokestatus(id)
+  {
+       $("#tid").val(id);
+       $('#revokeModal').modal('show');
+  }
+  
 	function openapprovemodal(id)
 	{
        $("#taid").val(id);
@@ -1093,6 +1154,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                	     	$("#durationtype").text(data.comment.durationtype);
                	     	$("#duration").val(data.comment.duration);
 
+                        $("#userremark").empty();
+               	     	$.each(data.remarks,function (key,value) {
+               	     		var x='<tr><td>'+value.name+'</td><td>'+value.remarks+'</td><td>'+value.created_at+'</td><td><tr>';
+               	     		$("#userremark").append(x);
+               	     	})
 
                	     }
                	     else

@@ -102,6 +102,7 @@ Route::post('/updateuserassociatepartner','TenderController@updateuserassociatep
 Route::post('/ajaxfetchtendercomment','TenderController@ajaxfetchtendercomment');
 Route::post('/ajaxsaveadmincommemnt','TenderController@ajaxsaveadmincommemnt');
 Route::get('/viewtenderuser/{id}','TenderController@viewtenderuser');
+Route::get('/viewprevioustenderuser/{id}','TenderController@viewprevioustenderuser');
 Route::post('/fillformtendercommitee/{id}','TenderController@fillformtendercommitee');
 Route::post('/fillformuser/{id}','TenderController@fillformuser');
 Route::get('/tendercom/pendingtenderapproval','TenderController@pendingtenderapproval');
@@ -112,6 +113,8 @@ Route::get('/ata/admintenderapproval','TenderController@admintenderapproval');
 Route::get('/viewtenderadminforapproval/{id}','TenderController@viewtenderadminforapproval');
 Route::post('/tendernotintrested/{id}','TenderController@tendernotintrested');
 Route::post('/revokestatus','TenderController@revokestatus');
+Route::post('/revokestatusadmin','TenderController@revokestatusadmin');
+Route::get('/mytenders/previoustenders','TenderController@previoustenders');
 Route::delete('/deletetenderdocument/{id}','TenderController@deletetenderdocument');
 Route::delete('/deletecorrigendumfile/{id}','TenderController@deletecorrigendumfile');
 Route::post('/approvetenderbycommitee/{id}','TenderController@approvetenderbycommitee');

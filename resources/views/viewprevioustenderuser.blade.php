@@ -3,15 +3,11 @@
 
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">CREATE TENDER</td>
+		<td class="text-center">VIEW PREVIOUS TENDER</td>
 		
 	</tr>
 </table>
 
-
-
-<form action="/fillformuser/{{$tender->id}}" method="post">
-	{{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
 	<td><strong>Name Of the Work *</strong></td>
@@ -800,12 +796,9 @@
 			</select>
 		</td>
 	  </tr>
-	<tr>
-		<td colspan="3" style="text-align: right;"><button class="btn btn-primary btn-lg" type="submit" name="SAVE" value="SAVE" onclick="return confirm('Do You want to save this Form?')">SAVE</button></td>
-		<td  style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" name="submit" value="SUBMIT" onclick="return confirm('Do You want to submit this Form?')">SUBMIT</button></td>
-	</tr>
+
 </table>
-</form>
+
 <script type="text/javascript">
 	$('input[type=radio][name=recomended]').change(function() {
     if (this.value == 'ASSOCIATION' || this.value=='JV') {

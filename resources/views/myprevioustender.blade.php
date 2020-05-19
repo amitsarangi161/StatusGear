@@ -11,7 +11,7 @@
 </style>
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">ASSIGNED TENDER</td>
+		<td class="text-center">PREVIOUS TENDERS</td>
 		
 	</tr>
 </table>
