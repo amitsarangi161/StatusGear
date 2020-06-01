@@ -867,6 +867,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
           {{csrf_field()}}
         <table class="table">
           <input type="hidden" name="tid" id="tid" required="">
+          <tr>
           <td><strong>Select a Status</strong></td>
           <td>
          <select class="form-control" name="status" required="">
@@ -877,6 +878,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                             
             </select>
           </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
           <td>
             <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
           </td>

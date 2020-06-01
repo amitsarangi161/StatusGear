@@ -644,10 +644,10 @@
 
              @if(count($banks)>0)
              @foreach($banks as $bank)
-          <li class="{{ Request::is('prb/'.$bank->bankname.'/*') ? 'active' : '' }}"><a href="/prb/{{$bank->bankname}}/{{$bank->id}}"><i class="fa fa-circle-o text-blue"></i>{{$bank->bankname}} PENDING AMOUNTS</a></li>
+          <li class="{{ Request::is('prb/'.$bank->bankname.'/*') ? 'active' : '' }}"><a href="/prb/{{$bank->bankname}}/{{$bank->id}}" title="Ac No {{$bank->acno}} /Branch {{$bank->branchname}}/ IFSC {{$bank->ifsccode}}/Company {{$bank->forcompany}}"><i class="fa fa-circle-o text-blue" ></i>{{$bank->bankname}}/{{$bank->forcompany}} PENDING AMOUNTS</a></li>
           
 
-              <li class="{{ Request::is('prb/paidamt/'.$bank->bankname.'/*') ? 'active' : '' }}"><a href="/prb/paidamt/{{$bank->bankname}}/{{$bank->id}}"><i class="fa fa-circle-o text-blue"></i>{{$bank->bankname}} PAID AMOUNTS</a></li>
+              <li class="{{ Request::is('prb/paidamt/'.$bank->bankname.'/*') ? 'active' : '' }}"><a href="/prb/paidamt/{{$bank->bankname}}/{{$bank->id}}" title="Ac No {{$bank->acno}} /Branch {{$bank->branchname}}/ IFSC {{$bank->ifsccode}}/Company {{$bank->forcompany}}"><i class="fa fa-circle-o text-blue"></i>{{$bank->bankname}}/{{$bank->forcompany}} PAID AMOUNTS</a></li>
              @endforeach
            
             @else

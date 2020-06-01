@@ -12,10 +12,27 @@
 }
 
 </style>
+
 <table class="table">
     <tr class="bg-navy">
         <td class="text-center">VIEW ALL TENDERS</td>
         
+    </tr>
+</table>
+<table class="table">
+    <tr>
+      <form method="POST" id="search-form1" class="form-inline" role="form">
+        <td>
+         
+          <button type="submit" value="" name="all" id="all" class="btn btn-primary btn-lg">ALL</button>
+        </td>
+      </form>
+      <form method="POST" id="search-form2" class="form-inline" role="form">
+        <td><button type="submit" value="" name="live" id="live" class="btn btn-success btn-lg">LIVE</button></td>
+      </form>
+      <form method="POST" id="search-form3" class="form-inline" role="form">
+        <td><button type="submit" value="" name="expired" id="expired" class="btn btn-danger btn-lg">EXPIRED</button></td>
+        </form>
     </tr>
 </table>
 <div class="table-responsive">
@@ -58,6 +75,7 @@
           {{csrf_field()}}
         <table class="table">
           <input type="hidden" name="tid" id="tid" required="">
+          <tr>
           <td><strong>Select a Status</strong></td>
           <td>
          <select class="form-control" name="status" required="">
@@ -68,6 +86,13 @@
                             
             </select>
           </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
           <td>
             <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
           </td>
@@ -88,7 +113,34 @@
 
 <script type="text/javascript">
 
-  $(function () {
+     $('#search-form1').on('submit', function(e) {
+
+        e.preventDefault();
+         $("#live").val('');
+         $("#expired").val('');
+        $("#all").val("ALL");
+       
+       table.draw(true);
+       
+    }); $('#search-form2').on('submit', function(e) {
+        e.preventDefault();
+         $("#expired").val('');
+        $("#all").val('');
+       $("#live").val("LIVE");
+
+       table.draw(true);
+       
+    }); $('#search-form3').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val("EXPIRED");
+     
+       table.draw(true);
+       
+    });
+
+
 
     
 
@@ -99,7 +151,15 @@
         "scrollY": 450,
         "scrollX": true,
         "iDisplayLength": 25,
-        ajax: "{{ route('getviewalltenderlist') }}",
+         ajax: {
+            url: '{{ url("getviewalltenderlist")  }}',
+            data: function (d) {
+                d.all = $('#all').val();
+                d.live = $('#live').val();
+                d.expired = $('#expired').val();
+               
+            }
+        },
         columns: [
 
             {data: 'idbtn', name: 'id'},
@@ -126,7 +186,8 @@
 
     
 
-  });
+
+
 
   function revokestatus(id)
   {

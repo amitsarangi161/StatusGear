@@ -22,6 +22,10 @@ use App\usertenderremark;
 class TenderController extends Controller
 { 
 
+public function viewalltendersuser(){
+     return view('viewalltendersuser');
+}
+
 public function previoustenders()
 {
            $mytenders=assignedtenderuser::select('tenderid')
@@ -31,6 +35,7 @@ public function previoustenders()
 
 
             $tenders=tender::whereIn('id',$mytenders)
+                    ->where('status','!=','COMMITTEE REJECTED')
                     ->orderBy('lastdateofsubmisssion', 'desc')
                     ->get();
     
@@ -42,6 +47,7 @@ public function revokestatus(Request $request)
     //return $request->all();
      $tender=tender::find($request->tid);
      $tender->status=$request->status;
+     $tender->revokeremarks=$request->remarks;
      $tender->save();
      if($tender->status=='ASSIGNED TO USER')
      {
@@ -49,13 +55,28 @@ public function revokestatus(Request $request)
        ->update([
            'status' => 'PENDING'
         ]);
+        $users=assignedtenderuser::where('tenderid',$tender->id)->get();
+        if ($users) {
+             foreach ($users as $key => $user) {
+                 $remark=new usertenderremark();
+                 $remark->userid=$user->userid;
+                 $remark->author=Auth::id();
+                 $remark->tenderid=$tender->id;
+                 $remark->remarks=$request->remarks;
+                 $remark->save();
+
+             }
+        }
+
      }
      return back();
-}public function revokestatusadmin(Request $request)
+}
+public function revokestatusrejectcommittee(Request $request)
 {
     //return $request->all();
      $tender=tender::find($request->tid);
      $tender->status=$request->status;
+     $tender->revokeremarks=$request->remarks;
      $tender->save();
      if($tender->status=='ASSIGNED TO USER')
      {
@@ -63,8 +84,103 @@ public function revokestatus(Request $request)
        ->update([
            'status' => 'PENDING'
         ]);
+            $users=assignedtenderuser::where('tenderid',$tender->id)->get();
+        if ($users) {
+             foreach ($users as $key => $user) {
+                 $remark=new usertenderremark();
+                 $remark->userid=$user->userid;
+                 $remark->author=Auth::id();
+                 $remark->tenderid=$tender->id;
+                 $remark->remarks=$request->remarks;
+                 $remark->save();
+
+             }
+        }
+     }
+     return redirect('/comrejected/comitteerejectedtenders');
+}
+public function revokestatuscommitteeapproved(Request $request)
+{
+    //return $request->all();
+     $tender=tender::find($request->tid);
+     $tender->status=$request->status;
+     $tender->revokeremarks=$request->remarks;
+     $tender->save();
+     if($tender->status=='ASSIGNED TO USER')
+     {
+        $assignedtenderuser=assignedtenderuser::where('tenderid',$tender->id)
+       ->update([
+           'status' => 'PENDING'
+        ]);
+           $users=assignedtenderuser::where('tenderid',$tender->id)->get();
+        if ($users) {
+             foreach ($users as $key => $user) {
+                 $remark=new usertenderremark();
+                 $remark->userid=$user->userid;
+                 $remark->author=Auth::id();
+                 $remark->tenderid=$tender->id;
+                 $remark->remarks=$request->remarks;
+                 $remark->save();
+
+             }
+        }
+     }
+     return redirect('/tendercom/approvedcommiteetender');
+}public function revokestatusadmin(Request $request)
+{
+    //return $request->all();
+
+     $tender=tender::find($request->tid);
+     $tender->status=$request->status;
+     $tender->revokeremarks=$request->remarks;
+     $tender->save();
+     if($tender->status=='ASSIGNED TO USER')
+     {
+        $assignedtenderuser=assignedtenderuser::where('tenderid',$tender->id)
+       ->update([
+           'status' => 'PENDING'
+        ]);
+           $users=assignedtenderuser::where('tenderid',$tender->id)->get();
+        if ($users) {
+             foreach ($users as $key => $user) {
+                 $remark=new usertenderremark();
+                 $remark->userid=$user->userid;
+                 $remark->author=Auth::id();
+                 $remark->tenderid=$tender->id;
+                 $remark->remarks=$request->remarks;
+                 $remark->save();
+
+             }
+        }
      }
      return redirect('/ata/admintenderapproval');
+}public function revokestatustendercommittee(Request $request)
+{
+    //return $request->all();
+     $tender=tender::find($request->tid);
+     $tender->status=$request->status;
+     $tender->revokeremarks=$request->remarks;
+     $tender->save();
+     if($tender->status=='ASSIGNED TO USER')
+     {
+        $assignedtenderuser=assignedtenderuser::where('tenderid',$tender->id)
+       ->update([
+           'status' => 'PENDING'
+        ]);
+            $users=assignedtenderuser::where('tenderid',$tender->id)->get();
+        if ($users) {
+             foreach ($users as $key => $user) {
+                 $remark=new usertenderremark();
+                 $remark->userid=$user->userid;
+                 $remark->author=Auth::id();
+                 $remark->tenderid=$tender->id;
+                 $remark->remarks=$request->remarks;
+                 $remark->save();
+
+             }
+        }
+     }
+     return redirect('/tendercom/pendingtenderapproval');
 }
 
 public function tendernotintrested(Request $request,$id)
@@ -582,6 +698,7 @@ public function viewalltenders()
          $tenders=DB::table('tenders')->where('status','COMMITEE APPROVED')
                   ->select('tenders.*','users.name')
                   ->leftJoin('users','tenders.author','=','users.id')
+                  ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
                   ->get();
 
          return view('tender.approvedcommiteetender',compact('tenders'));
@@ -928,6 +1045,7 @@ public function userassociatepartner(){
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;
                 $tender->workvalue=$request->workvalue;
+                $tender->workvalueinword=$request->workvalueinword;
                 $tender->nitpublicationdate=$request->nitpublicationdate;
                 $tender->source=$request->source;
                 $tender->tenderpriority=$request->tenderpriority;
@@ -1048,6 +1166,17 @@ public function userassociatepartner(){
            $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
            $associatepartners=Associatepartner::get();
            return view('tender.viewtender',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
+       } public function userviewtender($id)
+       {
+/*           $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();*/
+           $tender=tender::find($id);
+            $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+           $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+           $associatepartners=Associatepartner::get();
+           return view('userviewtender',compact('tender','tenderdocuments','corrigendumfiles','associatepartners'));
        }
 
        public function tenderlist()
@@ -1088,10 +1217,11 @@ public function userassociatepartner(){
                         {
                           $day=$diff;
                         }
-                              if($day>=0 && $day<=5)
-                                {
-                                  return 'blink';
-                                }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
                               
                    
                 })
@@ -1152,13 +1282,20 @@ public function userassociatepartner(){
                 
                
                  ->make(true);
-       }public function getviewalltenderlist()
+       }
+       public function getviewalltenderlist(Request $request)
        {
           $tenders=DB::table('tenders')
           ->select('tenders.*','users.name')
           ->leftJoin('users','tenders.author','=','users.id');
           
-
+          if ($request->has('live') && $request->get('live')!='') 
+                {
+                   $tenders=$tenders->where('lastdateofsubmisssion', '>=',date('Y-m-d'));
+                }
+            elseif ($request->has('expired') && $request->get('expired')!='') {
+                $tenders=$tenders->where('lastdateofsubmisssion', '<',date('Y-m-d'));
+            }
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {
                         $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
@@ -1234,6 +1371,89 @@ public function userassociatepartner(){
                
                  ->make(true);
        }
+
+        public function getviewalltenderlistuser()
+       {
+          $tenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id');
+          
+
+          return DataTables::of($tenders)
+                 ->setRowClass(function ($tenders) {
+                        $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                               if($day>=0 && $day<=5)
+                                {
+                                  return 'blink';
+                                }
+                              
+                   
+                })
+                 
+                 
+                 ->addColumn('idbtn', function($tenders){
+                         return '<a href="/viewtender/'.$tenders->id.'" class="btn btn-info">'.$tenders->id.'</a>';
+                    })
+
+                  ->addColumn('sta', function($tenders) {
+                    if ($tenders->status=='PENDING') return '<span class="label label-default" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-info" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    else
+                      return '<span class="label label-default" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    
+                    
+                    })
+
+                  ->addColumn('live', function($tenders) {
+                    if ($tenders->lastdateofsubmisssion < date("Y-m-d")) return '<span class="label label-danger">EXPIRED</span>';
+                    else
+                      return '<span class="label label-success">LIVE</span>';
+                    
+                    
+                    })
+                  ->addColumn('view', function($tenders){
+                         return '<a href="/userviewtender/'.$tenders->id.'" class="btn btn-info">VIEW</a>';
+                    })
+                  ->addColumn('edit', function($tenders){
+                         return '<a href="/edittender/'.$tenders->id.'" class="btn btn-warning">EDIT</a>';
+                    })
+                  ->addColumn('now', function($tenders){
+                         return '<p class="b" title="'.$tenders->nameofthework.'">'.$tenders->nameofthework.'</p>';
+                    })
+                   ->addColumn('ldos', function($tenders) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($tenders->lastdateofsubmisssion).'</strong></span>';
+                     })
+                  ->editColumn('nitpublicationdate', function($tenders) {
+                    return $this->changedateformat($tenders->nitpublicationdate);
+                     })
+                  ->editColumn('lastdateofsubmisssion', function($tenders) {
+                    return $this->changedateformat($tenders->lastdateofsubmisssion);
+                     })
+                  ->editColumn('rfpavailabledate', function($tenders) {
+                    return $this->changedateformat($tenders->rfpavailabledate);
+                     })
+                  ->editColumn('created_at', function($tenders) {
+                        return $this->changedatetimeformat($tenders->created_at);
+                     })
+                  
+                  ->rawColumns(['idbtn','view','edit','now','sta','live','ldos'])
+                
+               
+                 ->make(true);
+       }
        public function home()
        {
            return view('tender.home');
@@ -1254,6 +1474,7 @@ public function userassociatepartner(){
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;
                 $tender->workvalue=$request->workvalue;
+                $tender->workvalueinword=$request->workvalueinword;
                 $tender->nitpublicationdate=$request->nitpublicationdate;
                 $tender->source=$request->source;
                 $tender->tenderpriority=$request->tenderpriority;

@@ -195,7 +195,7 @@
       <tr id="singledate">
 
         <td><strong>DATE OF EXPENSE *</strong></td>
-        @if(Auth::user()->id=='47'|| Auth::user()->id=='54')
+        @if(Auth::user()->id=='106')
         <td><input type="text" name="date" id="date" class="form-control datepicker1 readonly" autocomplete="off" placeholder="Date Of Expense" required=""></td>
         @else
         <td><input type="text" name="date" id="date" class="form-control datepicker5 readonly" autocomplete="off" placeholder="Date Of Expense" required=""></td>

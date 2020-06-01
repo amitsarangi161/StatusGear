@@ -80,10 +80,12 @@ Route::get('/applied/appliedtenders','TenderController@appliedtenders');
 Route::post('/ajaxchangetenderstatus','TenderController@ajaxchangetenderstatus');
 Route::get('/admintender','TenderController@home');
 Route::get('/viewtender/{id}','TenderController@viewtender');
+Route::get('/userviewtender/{id}','TenderController@userviewtender');
 Route::get('/edittender/{id}','TenderController@edittender');
 Route::get('/tm/createtender','TenderController@createtender');
 Route::get('/tm/tenderlist','TenderController@tenderlist')->name('tenderlist');
 Route::get('/getviewalltenderlist','TenderController@getviewalltenderlist')->name('getviewalltenderlist');
+Route::get('/getviewalltenderlistuser','TenderController@getviewalltenderlistuser')->name('getviewalltenderlistuser');
 Route::post('/savetender','TenderController@savetender');
 Route::post('/updatetender/{id}','TenderController@updatetender');
 Route::get('/tendercom/tenderlistforcommitee','TenderController@tenderlistforcommitee');
@@ -103,6 +105,9 @@ Route::post('/ajaxfetchtendercomment','TenderController@ajaxfetchtendercomment')
 Route::post('/ajaxsaveadmincommemnt','TenderController@ajaxsaveadmincommemnt');
 Route::get('/viewtenderuser/{id}','TenderController@viewtenderuser');
 Route::get('/viewprevioustenderuser/{id}','TenderController@viewprevioustenderuser');
+Route::get('/mytenders/viewalltendersuser','TenderController@viewalltendersuser');
+
+
 Route::post('/fillformtendercommitee/{id}','TenderController@fillformtendercommitee');
 Route::post('/fillformuser/{id}','TenderController@fillformuser');
 Route::get('/tendercom/pendingtenderapproval','TenderController@pendingtenderapproval');
@@ -113,7 +118,10 @@ Route::get('/ata/admintenderapproval','TenderController@admintenderapproval');
 Route::get('/viewtenderadminforapproval/{id}','TenderController@viewtenderadminforapproval');
 Route::post('/tendernotintrested/{id}','TenderController@tendernotintrested');
 Route::post('/revokestatus','TenderController@revokestatus');
+Route::post('/revokestatusrejectcommittee','TenderController@revokestatusrejectcommittee');
+Route::post('/revokestatuscommitteeapproved','TenderController@revokestatuscommitteeapproved');
 Route::post('/revokestatusadmin','TenderController@revokestatusadmin');
+Route::post('/revokestatustendercommittee','TenderController@revokestatustendercommittee');
 Route::get('/mytenders/previoustenders','TenderController@previoustenders');
 Route::delete('/deletetenderdocument/{id}','TenderController@deletetenderdocument');
 Route::delete('/deletecorrigendumfile/{id}','TenderController@deletecorrigendumfile');

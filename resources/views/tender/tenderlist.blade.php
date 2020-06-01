@@ -10,37 +10,9 @@
    
 }
 
-@-webkit-keyframes blink {
-    100% {
-        background: rgba(255, 0, 0, 0.5);
-    }
-}
-@-moz-keyframes blink {
-    100% {
-        background: rgba(255, 0, 0, 0.5);
-    }
-}
-@keyframes blink {
-    100% {
-        background: rgba(255, 0, 0, 0.5);
-    }
-}
+
 .blink {
-    -webkit-animation-direction: normal;
-    -webkit-animation-duration: 30s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-name: blink;
-    -webkit-animation-timing-function: linear;
-    -moz-animation-direction: normal;
-    -moz-animation-duration: 30s;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-name: blink;
-    -moz-animation-timing-function: linear;
-    animation-direction: normal;
-    animation-duration: 30s;
-    animation-iteration-count: infinite;
-    animation-name: blink;
-    animation-timing-function: linear;
+   background-color:#ddf0a7bd !important;
 }
 table {
     width: 100%;
@@ -112,6 +84,7 @@ table {
           {{csrf_field()}}
         <table class="table">
           <input type="hidden" name="tid" id="tid" required="">
+          <tr>
           <td><strong>Select a Status</strong></td>
           <td>
          <select class="form-control" name="status" required="">
@@ -122,6 +95,13 @@ table {
                             
             </select>
           </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
           <td>
             <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
           </td>

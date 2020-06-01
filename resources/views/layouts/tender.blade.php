@@ -276,7 +276,56 @@
         </li>
         @endif
 
+      @if(Auth::user()->usertype=='TENDER COMMITTEE')
+
+    <li class="{{ Request::is('tm*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>VIEW ALL TENDERS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @php
+          $ctlcount=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))->count();
+          $alltenders=DB::table('tenders')->count();
+           $adminapprovedtenders=DB::table('tenders')
+                ->where('status','ADMIN APPROVED')
+                ->count();
+
+
+            @endphp
+
+          
+
+             <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
+             <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$ctlcount}}</span>
+              </span>
+              </a>
+              </li>
+
+
+             <li class="{{ Request::is('tm/viewalltenders') ? 'active' : '' }}"><a href="/tm/viewalltenders"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS
+              <span class="pull-right-container">
+                  <span class="label label-success pull-right">{{$alltenders}}</span>
+              </span>
+             </a></li>
+
+          
+     
+  
+          </ul>
+        </li>
+
+      @endif
       @if(Auth::user()->usertype=='TENDER COMMITTEE'|| Auth::user()->usertype=='MASTER ADMIN')
+
+
+
 
       @php
         $pendingcomitee=DB::table('tenders')->where('status','ELLIGIBLE')
@@ -289,6 +338,7 @@
         $comitteeapproved=DB::table('tenders')->where('status','COMMITEE APPROVED')
                   ->select('tenders.*','users.name')
                   ->leftJoin('users','tenders.author','=','users.id')
+                   ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
                   ->count();
        
       @endphp

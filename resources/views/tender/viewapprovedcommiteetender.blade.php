@@ -259,6 +259,12 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 	</tbody>
 </table>
+<table class="table">
+	<tr>
+		<td><button type="button" onclick="revokestatus('{{$tender->id}}');" class="btn btn-warning btn-lg">REVOKE</button></td>
+	</tr>
+	
+</table>
 
 <table class="table">
 	<tr>
@@ -745,7 +751,59 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </div>
 
 <input type="hidden" id="tenderid" value="{{$tender->id}}">
+<div id="revokeModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">CHANGE STATUS</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/revokestatuscommitteeapproved" method="POST">
+          {{csrf_field()}}
+         <table class="table">
+          <input type="hidden" name="tid" id="tid" required="">
+          <tr>
+          <td><strong>Select a Status</strong></td>
+          <td>
+         <select class="form-control" name="status" required="">
+              <option value="">Select a Status</option>
+                              <option value="ASSIGNED TO USER">ASSIGNED TO USER</option>
+                              <option value="ELLIGIBLE">TO COMMITTEE</option>
+                              
+                            
+            </select>
+          </td>
+          </tr>
+          <tr>
+            <td><strong>REMARKS</strong></td>
+            <td>
+              <textarea name="remarks" class="form-control" required=""></textarea>
+            </td>
+          </tr>
+          <td>
+            <button type="submit" class="btn btn-success" onclick="confirm('Do You want to change this ?')">CHANGE</button>
+          </td>
+          
+        </table>
+        </form>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script type="text/javascript">
+		function revokestatus(id)
+  {
+       $("#tid").val(id);
+       $('#revokeModal').modal('show');
+  }
 		$('input[type=radio][name=recomended]').change(function() {
     if (this.value == 'ASSOCIATION' || this.value=='JV') {
         $("#selected").attr( "disabled",false);

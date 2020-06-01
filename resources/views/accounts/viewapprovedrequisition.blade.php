@@ -442,7 +442,7 @@ $bal=$requisitionheader->approvalamount-$paid;
           			<select class="form-control" name="bankid" id="reqbank">
           				<option value="">Select a Bank</option>
           				@foreach($banks as $bank)
-                          <option value="{{$bank->id}}">{{$bank->bankname}}({{$bank->forcompany}})</option>
+                          <option value="{{$bank->id}}">{{$bank->bankname}}({{$bank->forcompany}},{{$bank->acno}})</option>
           				@endforeach
           				
           			</select>
@@ -564,7 +564,7 @@ $bal=$requisitionheader->approvalamount-$paid;
                 <select class="form-control" name="bankid" id="reqbank1">
                   <option value="">Select a Bank</option>
                   @foreach($banks as $bank)
-                          <option value="{{$bank->id}}">{{$bank->bankname}}({{$bank->forcompany}})</option>
+                          <option value="{{$bank->id}}">{{$bank->bankname}}({{$bank->forcompany}},{{$bank->acno}})</option>
                   @endforeach
                   
                 </select>

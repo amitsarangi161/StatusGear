@@ -32,10 +32,20 @@
 <tr>
 	<td><strong>Work Value *</strong></td>
 	<td><input type="text" name="workvalue" class="form-control" placeholder="Enter Work Value" disabled="" value="{{$tender->workvalue}}" ></td>
+	<td><strong>Work Value in Word</strong></td>
+	<td>
+       <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">{{$tender->workvalueinword}}</textarea>
+	</td>
+
+</tr>
+
+<tr>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
 	<td><input type="text" name="nitpublicationdate" class="form-control readonly" disabled="" value="{{$tender->nitpublicationdate}}"></td>
+	<td></td>
+	<td></td>
 	
 </tr>
 <tr>
@@ -483,7 +493,7 @@
 	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
 
 	<td>
-		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		   
 		      @php
 		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
 		         $val="";
@@ -496,9 +506,7 @@
             	<option value="{{$associatepartner->id}}">{{$associatepartner->associatepartnername}}</option>
             	@endforeach
             </select>
-            @else
-             <td></td>
-            @endif
+          
 	</td>
 </tr>
 
@@ -737,7 +745,7 @@
 	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
 
 	<td>
-		   @if(Auth::user()->usertype=='MASTER ADMIN')
+		  
 		      @php
 		        if($tender->recomended=='ASSOCIATION' ||$tender->recomended=='JV')
 		         $val="";
@@ -750,9 +758,6 @@
             	<option value="{{$associatepartner->id}}" {{($tendercomment->associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
             	@endforeach
             </select>
-            @else
-             <td></td>
-            @endif
 	</td>
 </tr>
 

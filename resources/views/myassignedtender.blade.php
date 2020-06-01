@@ -46,7 +46,7 @@
 		   	<td>{{$tender->rfpavailabledate}}</td>
 		   	<td>{{$tender->created_at}}</td>
 		   	<td><span class="label label-success">{{$tender->status}}</span></td>
-		   	<td><a href="/viewprevioustenderuser/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
+		   	<td><a href="/viewtenderuser/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   </tr>
 
 		@endforeach

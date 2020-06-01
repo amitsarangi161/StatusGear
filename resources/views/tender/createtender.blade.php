@@ -49,11 +49,20 @@
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="number" name="workvalue" class="form-control" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
+	<td><input type="number" name="workvalue" id="workvalue" class="form-control convert3" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
+	<td><strong>Work Value in Word</strong></td>
+	<td>
+       <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">Zero</textarea>
+	</td>
+	
+</tr>
+<tr>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
 	<td><input type="text" name="nitpublicationdate" class="form-control datepicker1 readonly" required="" autocomplete="off"></td>
+	<td></td>
+	<td></td>
 	
 </tr>
 <tr>
@@ -331,6 +340,12 @@ document.getElementById('tenderamountinword').value=money1;
  $( ".convert2" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('registrationamount').value*100)/100);
 document.getElementById('registrationamountinword').value=money1;
+
+	
+ });
+  $( ".convert3" ).on("change paste keyup", function() {
+ var money1=RsPaise(Math.round(document.getElementById('workvalue').value*100)/100);
+document.getElementById('workvalueinword').value=money1;
 
 	
  });

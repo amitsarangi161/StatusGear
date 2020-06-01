@@ -654,6 +654,8 @@
 
              <li class="{{ Request::is('mytenders/previoustenders') ? 'active' : '' }}"><a href="/mytenders/previoustenders"><i class="fa fa-circle-o text-aqua"></i>PREVIOUS TENDERS</a></li>
 
+             <li class="{{ Request::is('mytenders/viewalltendersuser') ? 'active' : '' }}"><a href="/mytenders/viewalltendersuser"><i class="fa fa-circle-o text-aqua"></i>VIEW ALL TENDERS</a></li>
+
               <li class="{{ Request::is('mytenders/associatepartner') ? 'active' : '' }}"><a href="/mytenders/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
             
           </ul>

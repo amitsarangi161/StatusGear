@@ -48,11 +48,20 @@
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="text" name="workvalue" value="{{$tender->workvalue}}" class="form-control" placeholder="Enter Work Value" required="" autocomplete="off"></td>
+	<td><input type="text" name="workvalue" id="workvalue" value="{{$tender->workvalue}}" class="form-control convert3" placeholder="Enter Work Value" required="" autocomplete="off"></td>
+    <td><strong>Work Value in Word</strong></td>
+	<td>
+       <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">{{$tender->workvalueinword}}</textarea>
+	</td>
+	
+</tr>
+<tr>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
 	<td><input type="text" name="nitpublicationdate" value="{{$tender->nitpublicationdate}}" class="form-control datepicker readonly" required="" autocomplete="off"></td>
+	<td></td>
+	<td></td>
 	
 </tr>
 <tr>
@@ -407,6 +416,12 @@ document.getElementById('amountinword').value=money;
  $( ".convert1" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('tenderamount').value*100)/100);
 document.getElementById('tenderamountinword').value=money1;
+
+	
+ });
+   $( ".convert3" ).on("change paste keyup", function() {
+ var money1=RsPaise(Math.round(document.getElementById('workvalue').value*100)/100);
+document.getElementById('workvalueinword').value=money1;
 
 	
  });

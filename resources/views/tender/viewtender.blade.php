@@ -4,7 +4,7 @@
 
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">CREATE TENDER</td>
+		<td class="text-center">VIEW TENDER</td>
 		
 	</tr>
 </table>
@@ -32,10 +32,18 @@
 <tr>
 	<td><strong>Work Value *</strong></td>
 	<td><input type="text" name="workvalue" class="form-control" placeholder="Enter Work Value" disabled="" value="{{$tender->workvalue}}" ></td>
+	<td><strong>Work Value in Word</strong></td>
+	<td>
+       <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">{{$tender->workvalueinword}}</textarea>
+	</td>
+</tr>
+<tr>
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
 	<td><input type="text" name="nitpublicationdate" class="form-control readonly" disabled="" value="{{$provider::changedateformat($tender->nitpublicationdate)}}"></td>
+	<td></td>
+	<td></td>
 	
 </tr>
 <tr>
