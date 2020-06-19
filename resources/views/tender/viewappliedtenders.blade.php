@@ -847,6 +847,32 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		</td>
 	</tr>
 	<tr>
+		<td><strong>TECHNICAL SCORE UPLOAD</strong></td>
+		<td><input type="file" name="technicalscoreupload"></td>
+		<td>
+			@if($tender->financialproposal!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->technicalscoreupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>FINANCIAL SCORE UPLOAD</strong></td>
+		<td><input type="file" name="technicalscoreupload"></td>
+		<td>
+			@if($tender->financialscoreupload!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->financialscoreupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
 		<td colspan="3"><button type="submit" class="btn btn-primary">Upload</button></td>
 	</tr>
 	
