@@ -562,6 +562,15 @@ public function viewappliedtenders($id)
 
     return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
 } 
+ public function updateparticipant(Request $request){
+    $tenderparticipant=tenderparticipant::find($request->uid);
+    $tenderparticipant->techscore=$request->techscore;
+    $tenderparticipant->financialscore=$request->financialscore;
+    $tenderparticipant->save();
+    Session::flash('msg','Tenderparticipant Updated Successfully');
+    return back();
+
+  }
 public function appliedtenders()
 {
     $tenders=DB::table('tenders')

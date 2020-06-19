@@ -77,6 +77,7 @@ Route::post('/updateassociatepartner','TenderController@updateassociatepartner')
 Route::get('/viewnotappliedtender/{id}','TenderController@viewnotappliedtender');
 Route::get('/notapplied/approvedbutnotappliedtenders','TenderController@approvedbutnotappliedtenders');
 Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');
+Route::post('/updateparticipant','TenderController@updateparticipant');
 Route::get('/applied/appliedtenders','TenderController@appliedtenders');
 Route::post('/ajaxchangetenderstatus','TenderController@ajaxchangetenderstatus');
 Route::get('/admintender','TenderController@home');
