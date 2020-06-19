@@ -15,7 +15,7 @@
     <tr>
       <td>Report For Date</td>
       <td>
-        <input type="text" name="reportfordate" autocomplete="off" class="form-control datepicker readonly" placeholder="select a date"  required="">
+        <input type="text" name="reportfordate" autocomplete="off" class="form-control datepicker4 readonly" placeholder="select a date"  required="">
       </td>
     </tr>
 
