@@ -1,5 +1,10 @@
 @extends('layouts.tender')
 @section('content')
+
+ @if(Session::has('msg'))
+   <p class="alert alert-success text-center">{{ Session::get('msg') }}</p>
+   @endif
+
 <style type="text/css">
 .rbox{
 padding: 4px;
@@ -892,7 +897,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			</td>
 		</tr>
 	</tbody>
-</form>s
+</form>
 	
 	 
 </table>
@@ -902,6 +907,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<td>Participant</td>
 			<td>Technical Score</td>
 			<td>Financial Score</td>
+			<td>Edit</td>
 			<td>Remove</td>
 		</tr>
 
@@ -913,6 +919,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
           	<td>{{$tenderparticipant->associatepartnername}}</td>
           	<td>{{$tenderparticipant->techscore}}</td>
           	<td>{{$tenderparticipant->financialscore}}</td>
+          	<td>
+				<button class="btn btn-info" onclick="editparticipant('{{$tenderparticipant->id}}','{{$tenderparticipant->associatepartnername}}','{{$tenderparticipant->techscore}}','{{$tenderparticipant->financialscore}}');" type="button">EDIT</button>
+			</td>
           	<td>
           		<form action="/removeparticipants/{{$tenderparticipant->id}}" method="post">
           			{{method_field('DELETE')}}
@@ -928,9 +937,59 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 </table>
 
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><b>EDIT PARTICIPANT</b></h4>
+      </div>
+      <div class="modal-body">
+
+    <form action="/updateparticipant" method="post" enctype="multipart/form-data"> 
+		{{csrf_field()}}
+<table class="table table-responsive table-hover table-bordered table-striped">
+		<input type="hidden" id="uid" name="uid">
+	
+	  <tr>
+	  	<td><strong>Participant</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername1" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Technical Score</strong></td>
+	  	<td><input type="text" name="techscore" id="techscore1" class="form-control" placeholder="Enter Technical Score"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Financial Score</strong></td>
+	  	<td><input type="text" id="financialscore1" name="financialscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
+	  </tr>
+	  <tr>
+	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  </tr>
+
+</table>
+</form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 <script>
+	function editparticipant(id,associatepartnername,techscore,financialscore) {
+		$("#uid").val(id);
+		$("#associatepartnername1").val(associatepartnername);
+		$("#techscore1").val(techscore);
+        $("#financialscore1").val(financialscore);
+		$("#myModal").modal('show');
+	}
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();
