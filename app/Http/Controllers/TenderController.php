@@ -362,6 +362,30 @@ public function uploadposttenderdocuments(Request $request,$id)
       $success3=$rarefile3->move($raupload3,$rarefilename3);
       $tender->financialproposal = $rarefilename3;
       }
+
+      $rarefile4 = $request->file('technicalscoreupload');    
+      if($rarefile4!=''){
+      $raupload4 = public_path() .'/img/posttenderdoc/';
+      $rarefilename3=time().'.'.$rarefile4->getClientOriginalName();
+      $success4=$rarefile4->move($raupload4,$rarefilename3);
+      $tender->technicalscoreupload = $rarefilename3;
+      }
+      
+      $rarefile5 = $request->file('financialscoreupload');    
+      if($rarefile5!=''){
+      $raupload5 = public_path() .'/img/posttenderdoc/';
+      $rarefilename3=time().'.'.$rarefile5->getClientOriginalName();
+      $success5=$rarefile5->move($raupload5,$rarefilename3);
+      $tender->financialscoreupload = $rarefilename3;
+      }
+
+      $rarefile6 = $request->file('participantlistupload');    
+      if($rarefile6!=''){
+      $raupload6 = public_path() .'/img/posttenderdoc/';
+      $rarefilename3=time().'.'.$rarefile6->getClientOriginalName();
+      $success6=$rarefile6->move($raupload6,$rarefilename3);
+      $tender->participantlistupload = $rarefilename3;
+      }
     
       $tender->save();
 

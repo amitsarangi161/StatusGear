@@ -851,11 +851,24 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			@endif
 		</td>
 	</tr>
+		<tr>
+		<td><strong>LIST OF PARTICIPANT UPLOAD</strong></td>
+		<td><input type="file" name="participantlistupload"></td>
+		<td>
+			@if($tender->participantlistupload!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->participantlistupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
 	<tr>
 		<td><strong>TECHNICAL SCORE UPLOAD</strong></td>
 		<td><input type="file" name="technicalscoreupload"></td>
 		<td>
-			@if($tender->financialproposal!='')
+			@if($tender->technicalscoreupload!='')
             <a href="{{asset('img/posttenderdoc/'.$tender->technicalscoreupload)}}" target="_blank">
             Click to View the document
             </a>
@@ -866,7 +879,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</tr>
 	<tr>
 		<td><strong>FINANCIAL SCORE UPLOAD</strong></td>
-		<td><input type="file" name="technicalscoreupload"></td>
+		<td><input type="file" name="financialscoreupload"></td>
 		<td>
 			@if($tender->financialscoreupload!='')
             <a href="{{asset('img/posttenderdoc/'.$tender->financialscoreupload)}}" target="_blank">
