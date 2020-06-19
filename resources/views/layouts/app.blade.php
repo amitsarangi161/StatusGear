@@ -634,12 +634,14 @@
                 
                 ->where(function ($query) {
                   $query->where('assignedtenderusers.status','PENDING')
-                  ->orWhere('assignedtenderusers.status','SAVED');
+                  ->orWhere('assignedtenderusers.status','SAVED')
+                  ->orWhere('assignedtenderusers.status','COMPLETED');
+                  
                  })
                 ->get();
 
 @endphp
-
+@if(sizeof($findtender)>0)
 
 <li class="{{ Request::is('mytenders*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -660,7 +662,7 @@
             
           </ul>
 </li>
-
+@endif
   <!-- user End -->
 
         
@@ -890,6 +892,34 @@ $(document).ready(function(){
                 footer:true,
                 title: 'REPORT'
             }
+
+       ],
+            });
+      $('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 25,
+        "scrollY": 450,
+        "scrollX": true,
+
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
 
        ],
             });

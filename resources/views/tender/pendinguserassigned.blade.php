@@ -11,10 +11,17 @@
 </style>
 <table class="table">
 	<tr class="bg-navy">
-		<td class="text-center">TENDER LIST FOR ADMIN APPROVAL</td>
+		<td class="text-center">USER PENDING TENDERS</td>
 		
 	</tr>
 </table>
+<h4>PENDING USERS</h4>
+<ol>
+	@foreach($pendingtenderusers as $pendingtenderuser)
+     <li style="font-weight: bold;background-color:#ffafaf;"><strong>Name:-</strong>{{$pendingtenderuser->name}} <strong>PENDING </strong> {{$pendingtenderuser->total}}</li>
+	@endforeach
+</ol>
+
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped datatable">
 	<thead>

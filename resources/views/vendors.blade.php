@@ -55,7 +55,7 @@
 	 	 
 	    </tr>
          
-           <tr>
+    <tr>
 	 	 <td colspan="2"><strong>DETAILS<span style="color: red"> *</span></strong></td>
 	 	 <td colspan="2">
 	 	 <textarea name="details" class="form-control" autocomplete="off"></textarea>

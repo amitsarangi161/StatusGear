@@ -59,6 +59,7 @@ Route::post('/savetenderparticipants/{id}','TenderController@savetenderparticipa
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
 Route::post('/tendercostdetailupdate/{id}','TenderController@tendercostdetailsupdate');
 Route::post('/emddetailsupdate/{id}','TenderController@emddetailsupdate');
+Route::post('/importassociatepartners','TenderController@importassociatepartners');
 
 Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender');
 

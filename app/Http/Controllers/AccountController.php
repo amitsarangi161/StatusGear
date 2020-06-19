@@ -770,10 +770,20 @@ public function viewallinvoicenos()
    
    public function createbill()
    {
+
+       if(Auth::user()->usertype=='MASTER ADMIN')
        $banks=useraccount::select('useraccounts.*','banks.bankname')
               ->where('useraccounts.type','COMPANY')
               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
               ->get();
+        else{
+          $banks=useraccount::select('useraccounts.*','banks.bankname')
+              ->where('useraccounts.type','COMPANY')
+              ->where('useraccounts.show',1)
+              ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+              ->get();
+
+        }
   
        $clients=client::all();
        $discounts=discount::all();
@@ -787,10 +797,19 @@ public function viewallinvoicenos()
    }
     public function createbillacc()
    {
-     $banks=useraccount::select('useraccounts.*','banks.bankname')
+           if(Auth::user()->usertype=='MASTER ADMIN')
+       $banks=useraccount::select('useraccounts.*','banks.bankname')
               ->where('useraccounts.type','COMPANY')
               ->leftJoin('banks','useraccounts.bankid','=','banks.id')
               ->get();
+        else{
+          $banks=useraccount::select('useraccounts.*','banks.bankname')
+              ->where('useraccounts.type','COMPANY')
+              ->where('useraccounts.show',1)
+              ->leftJoin('banks','useraccounts.bankid','=','banks.id')
+              ->get();
+
+        }
 
     
        $clients=client::all();
@@ -2542,9 +2561,11 @@ public function approvedebitvoucheradmin(Request $request,$id)
 
          }
 
+       
 
          $chk=debitvoucherheader::where('vendorid',$request->vendorid)
               ->where('billno',$request->billno)
+              ->where('billno',$request->billdate)
               ->where('billno','!=','NA')
               ->where('status','!=','CANCELLED')
               ->count();

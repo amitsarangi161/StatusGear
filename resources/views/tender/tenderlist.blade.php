@@ -52,16 +52,16 @@ table {
             <td>ID</td>
             <td>NAME OF WORK</td>
             <td>CLIENT</td>
-            <td>SOURCE</td>
+            <td>TENDER REF NO</td>
             <td>WORK VALUE</td>
-            <td>NIT PUBLICATION DATE</td>
             <td>LAST DATE OF SUB.</td>
             <td>RFP AVAILABLE DATE</td>
-            <td>CREATED AT</td>
+            <td>EMD Amount</td>
             <td>STATUS</td>
             <td>AUTHOR</td>
             <td>VIEW</td>
             <td>EDIT</td>
+            <td>CREATED AT</td>
         </tr>
     </thead>
     <tbody>
@@ -135,7 +135,7 @@ table {
     
 
     var table = $('.yajratable').DataTable({
-        order: [[ 6, "asc" ]],
+        order: [[ 5, "asc" ]],
         processing: true, 
         serverSide: true,
         "scrollY": 450,
@@ -153,16 +153,16 @@ table {
             {data: 'idbtn', name: 'id'},
             {data: 'now',name: 'nameofthework'},
             {data: 'clientname', name: 'clientname'},
-            {data: 'source', name: 'source'},
+            {data: 'tenderrefno', name: 'tenderrefno'},
             {data: 'workvalue', name: 'workvalue'},
-            {data: 'nitpublicationdate', name: 'nitpublicationdate'},
             {data: 'ldos', name: 'lastdateofsubmisssion'},
-            {data: 'rfpavailabledate', name:'rfpavailabledate'},
-            {name: 'created_at',data: 'created_at'},
+            {data: 'rfpavailabledate', name:'rfpavailabledate'},    
+            {data: 'emdamount', name:'emdamount'},    
             {data: 'sta', name: 'sta'},
             {data: 'name', name: 'users.name'},
             {data: 'view', name: 'view'},
             {data: 'edit', name: 'edit'},
+            {name: 'created_at',data: 'created_at'},
             
 
           

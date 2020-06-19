@@ -266,6 +266,29 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		
 	</tbody>
 </table>
+<h4 class="text-center"><strong>COMMITTEE REMARKS</strong></h4>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+			<td>SL_NO</td>
+			<td>NAME</td>
+			<td>REMARKS</td>
+			<td>CREATED_AT</td>
+		</tr>
+	</thead>
+	@foreach($remarks as $key=>$remark)
+	
+	<tr>
+	<td>{{++$key}}</td>		
+	<td>{{$remark->name}}</td>		
+	<td>{{$remark->remarks}}</td>		
+	<td>{{$remark->created_at}}</td>	
+	
+	</tr>
+    @endforeach
+
+	
+</table>
 <table class="table">
 	<tr>
 		<td><strong>Select a User</strong></td>

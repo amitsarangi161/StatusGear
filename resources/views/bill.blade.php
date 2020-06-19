@@ -139,6 +139,16 @@ body
 
 
     <a href="/editbills/{{$billheader->id}}" class="btn btn-warning no-print">EDIT</a>
+    @if($billheader->status=='APPROVED')
+    @php
+            $found=\App\crvoucherheader::where('fullinvno',$billheader->fullinvno)->get();
+      @endphp
+      @if(count($found)=='0')
+      <a href="/makethisbillascrvoucher/{{$billheader->id}}" class="btn btn-primary no-print">MAKE THIS AS A CR VOUCHER</a></td>
+    @else
+         <button type="button" disabled="" class="btn btn-primary no-print">CR VOUCHER DONE</button>
+    @endif
+    @endif
   <table class="table table-bordered table-striped" style="border-bottom:0px;">
       <thead>
           <tr class="noborder1">

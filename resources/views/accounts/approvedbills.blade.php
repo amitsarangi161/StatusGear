@@ -36,6 +36,7 @@
 	    <td>STATUS</td>
         <td>EDIT</td>
 	    <td>PRINT/VIEW</td>
+	    <td>ACTION</td>
 	    <td>CANCEL</td>
 	</tr>
 	</thead>
@@ -56,6 +57,14 @@
 		<td><a href="/editbills/{{$bill->id}}" class="btn btn-warning">EDIT</a></td>
 		
 		<td class="text-center" style="font-size: 20px;"><a href="/printbill/{{$bill->id}}" target="_blank"><i class="fa fa-print" aria-hidden="true"></i></a></td>
+		 @php
+            $found=\App\crvoucherheader::where('fullinvno',$bill->fullinvno)->get();
+	    @endphp
+	    @if(count($found)=='0')
+		<td><a href="/makethisbillascrvoucher/{{$bill->id}}" class="btn btn-warning">MAKE THIS AS A CR VOUCHER</a></td>
+		@else
+         <td><button type="button" disabled="" class="btn btn-warning">DONE</button></td>
+		@endif
         <td><button type="button" class="btn btn-danger" onclick="openrejectmodal('{{$bill->id}}');">REJECT</button></td>
 	   </tr>
 		@endforeach

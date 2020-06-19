@@ -423,7 +423,10 @@
          $committeerejected=DB::table('tenders')
               ->where('status','COMMITTEE REJECTED')
               ->count();
-             $userassigned=DB::table('tenders')->where('status','ASSIGNED TO USER')->count();
+             $userassigned=DB::table('tenders')
+               ->where('status','ASSIGNED TO USER')
+               ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+               ->count();
          @endphp
         <li class="{{ Request::is('applied*') ? 'active' : '' }} treeview">
           <a href="#">
@@ -819,6 +822,34 @@ var jqf = $.noConflict();
      "scrollX": true,
      "iDisplayLength": 25
   });
+  $('.datatablescrollexport').DataTable({
+        dom: 'Bfrtip',
+        "order": [[ 0, "desc" ]],
+        "iDisplayLength": 25,
+        "scrollY": 450,
+        "scrollX": true,
+
+        buttons: [
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                footer:true,
+                pageSize: 'A4',
+                title: 'Report',          
+            },
+            {
+                extend: 'excelHtml5',
+                footer:true,
+                title: 'Report'
+            },
+            {
+                extend: 'print',
+                footer:true,
+                title: 'Report'
+            },
+
+       ],
+            });
 </script>
 
 

@@ -4,7 +4,7 @@
 
 @if(Session::has('message'))
    <p class="alert alert-info text-center">{{ Session::get('message') }}</p>
-   @endif
+@endif
 <form action="/saveclient" method="post">
 	{{csrf_field()}}
 <table class="table table-responsive table-hover table-bordered table-striped" >

@@ -107,12 +107,6 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <tr>
 	<td><strong>PRE-BID MEETING START DATE*</strong></td>
 	<td><input type="text" name="prebidmeetingdate" class="form-control" value="{{$tender->prebidmeetingdate}}" disabled=""></td>
-		<td><strong>RECOMENDED FOR</strong></td>
-		<td>
-			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->recomended == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->recomended == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
-			<input type="radio" name="recomended" value="JV" {{ ( $tender->recomended == 'JV') ? 'checked' : '' }}>JV
-	</td>
 	
 	
 </tr>
@@ -271,11 +265,64 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	{{csrf_field()}}
 <table class="table">
 	<tr>
-		<td><strong>COMMITTEE COMENTS</strong></td>
-		<td>
-			<textarea class="form-control" name="committeecomment" placeholder="Write Your Comment Here"></textarea>
+		<td><strong>COMMITTEE COMMENTS</strong></td>
+		<td colspan="3">
+			<textarea class="form-control" name="committeecomment" placeholder="Write Your Comment Here" required=""></textarea>
 		</td>
+		
+		
+	
 	</tr>
+	<tr>
+	<td><strong>RECOMENDED FOR</strong></td>
+	
+	<td>
+			<input type="radio" name="recomended" value="SOLE" {{ ( $tender->committee_recomend == 'SOLE') ? 'checked' : '' }}>SOLE &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="ASSOCIATION" {{ ( $tender->committee_recomend == 'ASSOCIATION') ? 'checked' : '' }}>ASSOCIATION &nbsp;&nbsp;&nbsp;
+
+			<input type="radio" name="recomended" value="JV" {{ ( $tender->committee_recomend == 'JV') ? 'checked' : '' }}>JV
+	</td>
+	<td><strong>SELECT A ASSOCIATE PARTNER</strong></td>
+	<td>
+	@php
+		        if($tender->committee_recomend=='ASSOCIATION' ||$tender->committee_recomend=='JV')
+		         $val="";
+		         else
+		         $val="disabled";
+		      @endphp
+            <select id="selected" class="form-control select2" name="committee_associatepartner"  {{$val}} required="">
+            	<option value="">Select a Partner</option>
+            	@foreach($associatepartners as $associatepartner)
+            	<option value="{{$associatepartner->id}}" {{($tender->committee_associatepartner==$associatepartner->id)? 'selected':''}}>{{$associatepartner->associatepartnername}}</option>
+            	@endforeach
+            </select>
+        </td>
+
+</tr>
+	
+</table>
+<h4 class="text-center"><strong>COMMITTEE REMARKS</strong></h4>
+<table class="table">
+	<thead>
+		<tr class="bg-green">
+			<td>SL_NO</td>
+			<td>NAME</td>
+			<td>REMARKS</td>
+			<td>CREATED_AT</td>
+		</tr>
+	</thead>
+	@foreach($remarks as $key=>$remark)
+	
+	<tr>
+	<td>{{++$key}}</td>		
+	<td>{{$remark->name}}</td>		
+	<td>{{$remark->remarks}}</td>		
+	<td>{{$remark->created_at}}</td>	
+	
+	</tr>
+    @endforeach
+
 	
 </table>
 <div id="committeecommenttable" style="display: none;">
@@ -524,7 +571,6 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<td>
 			<select class="form-control select2" id="selecteduser" onchange="fetchcomment();">
 				<option value="">Select User</option>
-				<option value="COMMITTEE">COMMITTEE</option>
 				@foreach($users as $user)
 				  <option value="{{$user->userid}}">{{$user->name}}</option>
 				@endforeach
@@ -537,7 +583,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	<tr>
 		<td colspan="4" style="text-align: left;"><button class="btn btn-danger btn-lg" type="button" onclick="rejecttender();">COMMITEE REJECT</button></td>
 		<td><button type="button" onclick="revokestatus('{{$tender->id}}');" class="btn btn-warning btn-lg">REVOKE</button></td>
-		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit">APPROVE COMMITEE</button></td>
+		<td><button type="submit" class="btn btn-primary btn-lg" name="SAVE" value="SAVE">SAVE</button></td>
+		<td colspan="4" style="text-align: right;"><button class="btn btn-success btn-lg" type="submit" name="SUBMIT" value="SUBMIT">APPROVE COMMITEE</button></td>
 	</tr>
 </table>
 </form>
@@ -858,6 +905,15 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 
 <script type="text/javascript">
+
+	$('input[type=radio][name=recomended]').change(function() {
+    if (this.value == 'ASSOCIATION' || this.value=='JV') {
+        $("#selected").attr( "disabled",false);
+    }
+    else{
+        $("#selected").attr( "disabled",true);
+    }
+});
 		function revokestatus(id)
   {
        $("#tid").val(id);
