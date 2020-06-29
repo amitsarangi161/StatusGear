@@ -54,12 +54,14 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
+Route::get('/tm/temptenders','TenderController@temptenders');
 Route::get('/viewtenderpendinguser/{id}','TenderController@viewtenderpendinguser');
 Route::post('/savetenderparticipants/{id}','TenderController@savetenderparticipants');
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
 Route::post('/tendercostdetailupdate/{id}','TenderController@tendercostdetailsupdate');
 Route::post('/emddetailsupdate/{id}','TenderController@emddetailsupdate');
 Route::post('/importassociatepartners','TenderController@importassociatepartners');
+Route::post('/importtender','TenderController@importtender');
 
 Route::get('/viewcommitteerejectedtender/{id}','TenderController@viewcommitteerejectedtender');
 
@@ -77,9 +79,17 @@ Route::post('/updateassociatepartner','TenderController@updateassociatepartner')
 Route::get('/viewnotappliedtender/{id}','TenderController@viewnotappliedtender');
 Route::get('/notapplied/approvedbutnotappliedtenders','TenderController@approvedbutnotappliedtenders');
 Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');
+Route::get('/viewposttenderupload/{id}','TenderController@viewposttenderupload');
 Route::post('/updateparticipant','TenderController@updateparticipant');
+
+
 Route::get('/applied/appliedtenders','TenderController@appliedtenders');
+Route::get('/alltenderpdu/alltendersdocupload','TenderController@alltendersdocupload');
+
+
 Route::post('/ajaxchangetenderstatus','TenderController@ajaxchangetenderstatus');
+Route::post('/ajaxchangetemptenderstatus','TenderController@ajaxchangetemptenderstatus');
+
 Route::get('/admintender','TenderController@home');
 Route::get('/viewtender/{id}','TenderController@viewtender');
 Route::get('/userviewtender/{id}','TenderController@userviewtender');

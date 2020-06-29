@@ -9,6 +9,7 @@
 		
 	</tr>
 </table>
+ <button class="btn btn-success" type="button" onclick="openimport();">Import</button>
 @if(Session::has('msg'))
 <div class="alert alert-success alert-block">
 
@@ -285,11 +286,44 @@
 	</table>
 </form>
 
+<div class="modal fade in" id="importmodal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <form method="post" enctype="multipart/form-data" action="/importtender">
+      <div class="modal-header bg-navy">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: #fff;">×</span>
+      </button>
+        <h4 class="modal-title text-center">Upload Tender Excel</h4>
+      </div>
+      <div class="modal-body">
+        
+              
+                {{ csrf_field() }}
+                <div class="form-group">
+                <label>Select File for Upload Tender</label>
+                    <input type="file" name="select_file" />
+                    <span class="text-muted">.xls, .xslx</span>
+                </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success btn-flat">Upload</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha256-yMjaV542P+q1RnH6XByCPDfUFhmOafWbeLPmqKh11zo=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	 function openimport()
+    {
+        $("#importmodal").modal('show');
+    }
 
 
 	$(".chngdate").on("change keyup paste", function(){

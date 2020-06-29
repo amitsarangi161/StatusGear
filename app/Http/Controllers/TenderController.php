@@ -18,12 +18,94 @@ use App\tenderparticipant;
 use App\usertenderremark;
 use App\committeetenderremark;
 use Excel;
+use App\temptender;
+use DateTime;
 
 
 
 
 class TenderController extends Controller
 { 
+public function ajaxchangetemptenderstatus(Request $request)
+{
+    if($request->status=='ELLIGIBLE')
+    {
+           $temptender=temptender::find($request->id);
+          $check=tender::where('tenderrefno',$temptender->tenderrefno)
+          ->count();
+          if($check==0){
+
+           $tender=new tender();
+           $tender->nameofthework=$temptender->nameofthework;
+           $tender->clientname=$temptender->clientname;
+           if (DateTime::createFromFormat('Y-m-d H:i:s',$temptender->lastdateofsubmisssion) !== FALSE) {
+          $tender->lastdateofsubmisssion=date_format(date_create($temptender->lastdateofsubmisssion),"Y-m-d");
+           }
+          
+          
+           $tender->workvalue=$temptender->workvalue;
+           $tender->location=$temptender->location;
+           $tender->tenderrefno=$temptender->tenderrefno;
+           $tender->tendersiteid=$temptender->tendersiteid;
+           $tender->tender_website=$temptender->tender_website;
+           $tender->tender_site_ref=$temptender->tender_site_ref;
+           $tender->save();
+           }
+           $t=temptender::find($request->id);
+           $t->isactive=0;
+           $t->save();
+
+           return $request->id;
+
+    }
+    else
+    {
+          $t=temptender::find($request->id);
+           $t->isactive=0;
+           $t->save();
+
+           return $request->id;
+    }
+}
+public function temptenders()
+{
+      $temptenders=temptender::where('isactive',1)->get();
+
+      return view('tender.temptenders',compact('temptenders'));
+}
+
+public function importtender(Request $request)
+{
+       $this->validate($request, [
+      'select_file'  => 'required|mimes:xls,xlsx'
+     ]);
+      $path = $request->file('select_file')->getRealPath();
+      $data = Excel::selectSheetsByIndex(0)->load($path)->get();
+      //return $data;
+      if($data->count()>0){
+        foreach($data as $kay=>$value){
+        $check=tender::where('tenderrefno',$value['t247_id'])
+          ->count();
+        if($check==0){
+           $temptender=new temptender();
+           $temptender->tendersiteid=$value['t247_id'];
+           $temptender->nameofthework=$value['tender_brief'];
+           $temptender->clientname=$value['organization'];
+           $temptender->tender_website=$value['tender_website'];
+           $temptender->tender_site_ref=$value['t247_refrence'];
+           $temptender->tenderrefno=$value['ref_no'];
+           $temptender->location=$value['location'];
+           $temptender->workvalue=$value['value'];
+           $temptender->lastdateofsubmisssion=$value['deadline'];
+           $temptender->save();
+               
+        }
+      }
+  }
+
+
+      return back();
+}
 
 public function importassociatepartners(Request $request)
 {
@@ -504,6 +586,12 @@ public function updateassociatepartner(Request $request)
             }
 public function saveassociatepartner(Request $request)
 {
+    $chk=associatepartner::where('associatepartnername',$request->associatepartnername)->count();
+     if($chk>0)
+     {
+        Session::flash('message','Already Exist');
+        return back();
+     }
      $authid=Auth::id();
      $associatepartner=new Associatepartner();
      $associatepartner->associatepartnername=$request->associatepartnername;
@@ -574,6 +662,7 @@ public function viewappliedtenders($id)
 
     $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername')
       ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->where('tenderid',$id)
       ->get();
     $tender=Tender::find($id);
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
@@ -582,9 +671,28 @@ public function viewappliedtenders($id)
                   ->get();
     $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
-     $participants=Associatepartner::get();
+    $participants=Associatepartner::get();
 
     return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
+} 
+
+public function viewposttenderupload($id)
+{
+
+    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername')
+      ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->where('tenderid',$id)
+      ->get();
+    $tender=Tender::find($id);
+    $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
+                  ->where('tenderid',$id)
+                  ->leftJoin('users','assignedtenderusers.userid','=','users.id')
+                  ->get();
+    $tenderdocuments=tenderdocument::where('tenderid',$id)->get();
+    $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
+    $participants=Associatepartner::get();
+
+    return view('tender.viewposttenderupload',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
 } 
  public function updateparticipant(Request $request){
     $tenderparticipant=tenderparticipant::find($request->uid);
@@ -595,6 +703,15 @@ public function viewappliedtenders($id)
     return back();
 
   }
+
+public function alltendersdocupload()
+{
+      $tenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->get();
+   return view('tender.alltendersdocupload',compact('tenders'));
+}
 public function appliedtenders()
 {
     $tenders=DB::table('tenders')

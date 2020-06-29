@@ -16,7 +16,7 @@
          <td><strong>ASSOCIATE PARTNER NAME</strong><span style="color: red"> *</span></td>
          <td><input type="text" name="associatepartnername" class="form-control" placeholder="Enter Associate Partner Name Name" required=""></td>
          	<td><strong>OFFICE ADDRESS</strong><span style="color: red"> *</span></td>
-        	<td><textarea name="officeaddress" class="form-control" placeholder="Enter Office address" required=""></textarea></td>
+        	<td><textarea name="officeaddress" class="form-control" placeholder="Enter Office address" ></textarea></td>
         </tr>
         <tr>
         	<td><strong>CONTACT NO</strong><span style="color: red"> *</span></td>
@@ -44,15 +44,15 @@
     
         <tr>
         	<td><strong>CITY</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="city" class="form-control" placeholder="Enter city Here" required=""></td>
+         <td><input type="text" name="city" class="form-control" placeholder="Enter city Here" ></td>
          <td><strong>DISTICT</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="dist" class="form-control" placeholder="Enter Distict Here" required=""></td>
+         <td><input type="text" name="dist" class="form-control" placeholder="Enter Distict Here" ></td>
         </tr>
         <tr>
         	<td><strong>STATE</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="state" class="form-control" placeholder="Enter state Here" required=""></td>
+         <td><input type="text" name="state" class="form-control" placeholder="Enter state Here" ></td>
          <td><strong>COUNTRY</strong><span style="color: red"> *</span></td>
-         <td><input type="text" name="country" class="form-control" placeholder="Enter Country Here" required=""></td>
+         <td><input type="text" name="country" class="form-control" placeholder="Enter Country Here" ></td>
         </tr>
         <tr>
         	<td><strong>ADDITIONAL INFO</strong></td>
@@ -162,6 +162,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade in" id="importmodal">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">

@@ -245,6 +245,8 @@
 
             <li class="{{ Request::is('tm/createtender') ? 'active' : '' }}"><a href="/tm/createtender"><i class="fa fa-circle-o text-aqua"></i>CREATE TENDER</a></li>
 
+            <li class="{{ Request::is('tm/temptenders') ? 'active' : '' }}"><a href="/tm/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS</a></li>
+
              <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
              <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$ctlcount}}</span>
@@ -269,12 +271,38 @@
              </a></li>
 
 
+
+
      <li class="{{ Request::is('tm/associatepartner') ? 'active' : '' }}"><a href="/tm/associatepartner"><i class="fa fa-circle-o text-aqua"></i>ASSOCIATE PARTNER</a></li>
      
                <!--       <li class="{{ Request::is('tm/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/tm/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>APPROVED NOT APPLIED TENDERS</a></li> -->
           </ul>
         </li>
         @endif
+      <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>TENDER RESULT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('temptender/temptenders') ? 'active' : '' }}"><a href="/temptender/temptenders"><i class="fa fa-circle-o text-aqua"></i>PENDING TEMP TENDER
+             <span class="pull-right-container">
+                  
+              </span>
+
+            </a></li>
+            <li class="{{ Request::is('temptender/notellgible') ? 'active' : '' }}"><a href="/temptender/notellgible"><i class="fa fa-circle-o text-aqua"></i>NOT ELLIGIBLE
+             <span class="pull-right-container">
+                  
+              </span>
+
+            </a></li>
+            
+          </ul>
+        </li>
 
       @if(Auth::user()->usertype=='TENDER COMMITTEE')
 
@@ -502,6 +530,23 @@
             <li class="{{ Request::is('notapplied/approvedbutnotappliedtenders') ? 'active' : '' }}"><a href="/notapplied/approvedbutnotappliedtenders"><i class="fa fa-circle-o text-aqua"></i>NOT APPLIED TENDERS
               <span class="pull-right-container">
                   <span class="label label-success pull-right">{{$notapplied}}</span>
+              </span>
+
+            </a></li>
+          </ul>
+        </li>
+           <li class="{{ Request::is('alltenderpdu*') ? 'active' : '' }} treeview">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>TENDER RESULT</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+              
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{ Request::is('alltenderpdu/alltendersdocupload') ? 'active' : '' }}"><a href="/alltenderpdu/alltendersdocupload"><i class="fa fa-circle-o text-aqua"></i>TENDER DOC UPLOAD
+             <span class="pull-right-container">
+                  
               </span>
 
             </a></li>
