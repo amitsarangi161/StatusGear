@@ -203,7 +203,7 @@ p { margin: 0; }
         <h4 class="modal-title">Modal Header</h4>
       </div>
       <div class="modal-body">
-          <form id="composemmessage" method="post" enctype="multipart/form-data">
+<form id="composemmessage" method="post" enctype="multipart/form-data">
     {{csrf_field()}}
   <table class="table">
     <tr>

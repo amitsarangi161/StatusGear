@@ -905,7 +905,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <table class="table table-responsive table-hover table-bordered table-striped">
 	<thead>
 		<tr class="bg-navy">
-			<td><strong>Participants</strong></td>
+			<td><strong>Participant1</strong></td>
+			<td><strong>Participant2</strong></td>
+			<td><strong>Participant3</strong></td>
 			<td><strong>Technical Score</strong></td>
 			<td><strong>Financial Score</strong></td>
             <td><strong>ACTION</strong></td>
@@ -919,6 +921,22 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<tr>
 			<td>
 				<select class="form-control select2" id="participant" name="participant">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant2">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant3">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -943,7 +961,9 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 <table class="table">
 	<thead>
 		<tr class="bg-gray">
-			<td>Participant</td>
+			<td>Participant1</td>
+			<td>Participant2</td>
+			<td>Participant3</td>
 			<td>Technical Score</td>
 			<td>Financial Score</td>
 			<td>Edit</td>
@@ -956,10 +976,12 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		@foreach($tenderparticipants as $tenderparticipant)
           <tr>
           	<td>{{$tenderparticipant->associatepartnername}}</td>
+          	<td>{{$tenderparticipant->associatepartnername2}}</td>
+          	<td>{{$tenderparticipant->associatepartnername3}}</td>
           	<td>{{$tenderparticipant->techscore}}</td>
           	<td>{{$tenderparticipant->financialscore}}</td>
           	<td>
-				<button class="btn btn-info" onclick="editparticipant('{{$tenderparticipant->id}}','{{$tenderparticipant->associatepartnername}}','{{$tenderparticipant->techscore}}','{{$tenderparticipant->financialscore}}');" type="button">EDIT</button>
+				<button class="btn btn-info" onclick="editparticipant('{{$tenderparticipant->id}}','{{$tenderparticipant->associatepartnername}}','{{$tenderparticipant->associatepartnername2}}','{{$tenderparticipant->associatepartnername3}}','{{$tenderparticipant->techscore}}','{{$tenderparticipant->financialscore}}');" type="button">EDIT</button>
 			</td>
           	<td>
           		<form action="/removeparticipants/{{$tenderparticipant->id}}" method="post">
@@ -993,8 +1015,16 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		<input type="hidden" id="uid" name="uid">
 	
 	  <tr>
-	  	<td><strong>Participant</strong></td>
-	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername1" class="form-control" placeholder="Enter Acount No"></td>
+	  	<td><strong>Participant1</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername1" class="form-control"></td>
+	  </tr>
+	   <tr>
+	  	<td><strong>Participant2</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername2" id="associatepartnername2" class="form-control"></td>
+	  </tr>
+	    <tr>
+	  	<td><strong>Participant3</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername3" id="associatepartnername3" class="form-control"></td>
 	  </tr>
 	  <tr>
 	  	<td><strong>Technical Score</strong></td>
@@ -1022,9 +1052,12 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 
 <script>
-	function editparticipant(id,associatepartnername,techscore,financialscore) {
+	function editparticipant(id,associatepartnername,associatepartnername2,associatepartnername3,techscore,financialscore) {
 		$("#uid").val(id);
+		//alert(associatepartnername2);
 		$("#associatepartnername1").val(associatepartnername);
+		$("#associatepartnername2").val(associatepartnername2);
+		$("#associatepartnername3").val(associatepartnername3);
 		$("#techscore1").val(techscore);
         $("#financialscore1").val(financialscore);
 		$("#myModal").modal('show');

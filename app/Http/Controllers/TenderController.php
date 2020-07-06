@@ -67,6 +67,13 @@ public function ajaxchangetemptenderstatus(Request $request)
            return $request->id;
     }
 }
+public function notellgible()
+{
+      $temptenders=temptender::where('isactive',0)->get();
+
+      return view('tender.temptenders',compact('temptenders'));
+}
+
 public function temptenders()
 {
       $temptenders=temptender::where('isactive',1)->get();
@@ -84,8 +91,10 @@ public function importtender(Request $request)
       //return $data;
       if($data->count()>0){
         foreach($data as $kay=>$value){
-        $check=tender::where('tenderrefno',$value['t247_id'])
+        $check=temptender::where('tendersiteid',$value['t247_id'])
+             ->orWhere('tenderrefno',$value['ref_no'])
           ->count();
+        //dd($check);
         if($check==0){
            $temptender=new temptender();
            $temptender->tendersiteid=$value['t247_id'];
@@ -337,6 +346,8 @@ public function removeparticipants(Request $request,$id)
 
 public function savetenderparticipants(Request $request,$id)
 {
+
+    
      $chk=tenderparticipant::where('tenderid',$id)
                            ->where('participant',$request->participant)
                            ->get();
@@ -345,8 +356,12 @@ public function savetenderparticipants(Request $request,$id)
      $tenderparticipant=new tenderparticipant();
      $tenderparticipant->tenderid=$id;
      $tenderparticipant->participant=$request->participant;
+     $tenderparticipant->participant2=$request->participant2;
+     $tenderparticipant->participant3=$request->participant3;
      $tenderparticipant->techscore=$request->techscore;
      $tenderparticipant->financialscore=$request->financialscore;
+    
+
      $tenderparticipant->save();
      }
  
@@ -660,8 +675,10 @@ public function approvedbutnotappliedtenders()
 public function viewappliedtenders($id)
 {
 
-    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername')
+    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
       ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderparticipants.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
       ->where('tenderid',$id)
       ->get();
     $tender=Tender::find($id);
@@ -679,10 +696,13 @@ public function viewappliedtenders($id)
 public function viewposttenderupload($id)
 {
 
-    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername')
+    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
       ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderparticipants.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
       ->where('tenderid',$id)
       ->get();
+      
     $tender=Tender::find($id);
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
                   ->where('tenderid',$id)

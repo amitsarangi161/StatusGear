@@ -245,7 +245,7 @@
 
             <li class="{{ Request::is('tm/createtender') ? 'active' : '' }}"><a href="/tm/createtender"><i class="fa fa-circle-o text-aqua"></i>CREATE TENDER</a></li>
 
-            <li class="{{ Request::is('tm/temptenders') ? 'active' : '' }}"><a href="/tm/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS</a></li>
+            <!-- <li class="{{ Request::is('tm/temptenders') ? 'active' : '' }}"><a href="/tm/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS</a></li> -->
 
              <li class="{{ Request::is('tm/tenderlist') ? 'active' : '' }}"><a href="/tm/tenderlist"><i class="fa fa-circle-o text-aqua"></i>CURRENT TENDER LIST
              <span class="pull-right-container">
@@ -281,14 +281,14 @@
         @endif
       <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
           <a href="#">
-            <i class="fa fa-folder"></i> <span>TENDER RESULT</span>
+            <i class="fa fa-folder"></i> <span>TEMP TENDER</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
               
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ Request::is('temptender/temptenders') ? 'active' : '' }}"><a href="/temptender/temptenders"><i class="fa fa-circle-o text-aqua"></i>PENDING TEMP TENDER
+            <li class="{{ Request::is('temptender/temptenders') ? 'active' : '' }}"><a href="/temptender/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS
              <span class="pull-right-container">
                   
               </span>

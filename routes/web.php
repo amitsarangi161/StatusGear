@@ -54,7 +54,11 @@ Route::group(['middleware' => 'auth'], function () {
 /*
 Tender Routes
 */
-Route::get('/tm/temptenders','TenderController@temptenders');
+//Route::get('/tm/temptenders','TenderController@temptenders');
+Route::get('/temptender/temptenders','TenderController@temptenders');
+Route::get('/temptender/notellgible','TenderController@notellgible');
+
+
 Route::get('/viewtenderpendinguser/{id}','TenderController@viewtenderpendinguser');
 Route::post('/savetenderparticipants/{id}','TenderController@savetenderparticipants');
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
