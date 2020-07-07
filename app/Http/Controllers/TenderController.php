@@ -1304,6 +1304,12 @@ public function userassociatepartner(){
 
 
                 $tender=tender::find($id);
+
+                $tender->location=$request->location;
+                $tender->evaluationprocess=$request->evaluationprocess;
+                $tender->evaluationtechnical=$request->evaluationtechnical;
+                $tender->evaluationfinancial=$request->evaluationfinancial;
+
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;
@@ -1537,6 +1543,9 @@ public function userassociatepartner(){
                    ->editColumn('emdamount', function($tenders) {
                     return $tenders->emdamount;
                      })
+                   ->editColumn('location', function($tenders) {
+                    return $tenders->location;
+                     })
                 ->editColumn('lastdateofsubmisssion', function($tenders) {
                     return $this->changedateformat($tenders->lastdateofsubmisssion);
                      })
@@ -1625,6 +1634,9 @@ public function userassociatepartner(){
                      })
                   ->editColumn('nitpublicationdate', function($tenders) {
                     return $this->changedateformat($tenders->nitpublicationdate);
+                     })
+                    ->editColumn('location', function($tenders) {
+                    return $tenders->location;
                      })
                   ->editColumn('lastdateofsubmisssion', function($tenders) {
                     return $this->changedateformat($tenders->lastdateofsubmisssion);
@@ -1760,6 +1772,12 @@ public function userassociatepartner(){
 
                 $tender=new tender();
                 $tender->author=Auth::id();
+
+                $tender->location=$request->location;
+                $tender->evaluationprocess=$request->evaluationprocess;
+                $tender->evaluationtechnical=$request->evaluationtechnical;
+                $tender->evaluationfinancial=$request->evaluationfinancial;
+
                 $tender->nameofthework=$request->nameofthework;
                 $tender->clientname=$request->clientname;
                 $tender->recomended=$request->recomended;

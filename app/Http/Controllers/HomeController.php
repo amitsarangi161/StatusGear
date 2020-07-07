@@ -453,8 +453,8 @@ foreach ($all as $type) {
     {
          $addressarr=array();
          $p=attendance::where('userid',$uid)
-                 ->where('created_at', '>=',$date.' 00:00:00')
-                 ->where('created_at', '<=',$date.' 23:59:59')
+                 ->where('time', '>=',$date.' 00:00:00')
+                 ->where('time', '<=',$date.' 23:59:59')
                  ->get();
 
        //return $p;
@@ -990,8 +990,8 @@ $url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='.trim($value->
               $uname=$user->name;
              
                 $p=attendance::where('userid',$uid)
-                 ->where('created_at', '>=',$request->date.' 00:00:00')
-                 ->where('created_at', '<=',$request->date.' 23:59:59')
+                 ->where('time', '>=',$request->date.' 00:00:00')
+                 ->where('time', '<=',$request->date.' 23:59:59')
                  ->get();
                  
                  
@@ -1232,8 +1232,8 @@ if($request->has('status') && $request->status!='')
          $userlocations=attendance::select('attendances.*','users.name')
                         ->leftJoin('users','attendances.userid','=','users.id')
                         ->where('attendances.userid',$request->uid)
-                        ->where('attendances.created_at', '>=',$request->date.' 00:00:00')
-                        ->where('attendances.created_at', '<=',$request->date.' 23:59:00')
+                        ->where('attendances.time', '>=',$request->date.' 00:00:00')
+                        ->where('attendances.time', '<=',$request->date.' 23:59:00')
 
                         ->get();
          

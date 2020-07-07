@@ -34,6 +34,23 @@
 	</td>
 </tr>
 <tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" checked> <strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess"><strong>QCBS</strong>
+	</td>
+	
+</tr>
+<tr id="evaluationscore" style="display: none;background-color: gray;">
+	<td><strong>TECHNICAL</strong></td>
+	<td><input type="number" name="evaluationtechnical" id="evaluationtechnical" class="form-control" value="0"></td>
+	<td><strong>FINANCIAL</strong></td>
+	<td><input type="number" name="evaluationfinancial" id="evaluationfinancial" class="form-control" value="0"></td>
+	
+</tr>
+<tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td>
            <input type="text" name="tenderrefno" id="tenderrefno" class="form-control" value="{{$tender->tenderrefno}}" placeholder="Enter Tender Reference No" required="" onkeyup="searchtenderno(this.value)">
@@ -365,6 +382,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+	$('input[type=radio][name=evaluationprocess]').change(function() {
+       if (this.value=='QCBS') {
+       	    $("#evaluationscore").show();
+
+       }
+       else{
+       	   $("#evaluationscore").hide();
+       }
+    });
 
 	 $( ".convert2" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('registrationamount').value*100)/100);

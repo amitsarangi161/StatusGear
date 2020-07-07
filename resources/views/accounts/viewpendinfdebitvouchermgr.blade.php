@@ -269,6 +269,7 @@
           var final=Number.parseFloat(parseFloat(totalamt)-(parseFloat(itdedamt)+parseFloat(otheramt))).toFixed(2);
 
           $("#finalamount").val(final);
+          $("#approvalamount").val(final);
 
 
           

@@ -42,6 +42,7 @@
             <td>ID</td>
             <td>NAME OF WORK</td>
             <td>CLIENT</td>
+            <td>LOCATION</td>
             <td>TENDER REF NO</td>
             <td>WORK VALUE</td>
             <td>LAST DATE OF SUB.</td>
@@ -165,6 +166,7 @@
             {data: 'idbtn', name: 'id'},
             {data: 'now',name: 'nameofthework'},
             {data: 'clientname', name: 'clientname'},
+            {data: 'location', name: 'location'},
             {data: 'tenderrefno', name: 'tenderrefno'},
             {data: 'workvalue', name: 'workvalue'},
             {data: 'ldos', name: 'lastdateofsubmisssion'},
