@@ -1115,6 +1115,21 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</tbody>
 	
 </table>
+<table class="table">
+	<form action="/addagreementvalue/{{$tender->id}}" method="POST">
+		{{csrf_field()}}
+	<tr>
+		<td><strong>AGREEMENT VALUE</strong></td>
+		<td>
+			<input type="text" name="agreementvalue" value="{{$tender->agreementvalue}}" class="form-control" required="">
+			</td>
+			<td>
+			<button type="submit" class="btn btn-success">CHANGE</button>
+		    </td>
+		
+	</tr>
+	</form>
+</table>
 
 
   <div id="myModal" class="modal fade" role="dialog">

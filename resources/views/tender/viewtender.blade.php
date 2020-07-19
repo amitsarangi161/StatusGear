@@ -856,6 +856,165 @@
 	
 </table>
 
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center"><strong>TENDER AWARDS</strong></td>
+		
+	</tr>
+</table>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<thead>
+		<tr class="bg-navy">
+			<td><strong>Participant1</strong></td>
+			<td><strong>Participant2</strong></td>
+			<td><strong>Participant3</strong></td>
+			<td><strong>Financial Score</strong></td>
+            <td><strong>ACTION</strong></td>
+
+		</tr>
+	</thead>
+	<form action="/savetenderawards/{{$tender->id}}" method="post">
+		{{csrf_field()}}
+	
+	<tbody>
+		<tr>
+			<td>
+				<select class="form-control select2" id="participant" name="participant">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant2">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant3">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<input type="text" id="finalscore" name="finalscore" placeholder="Financial Score" class="form-control">
+			</td>
+			<td>
+				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
+			</td>
+		</tr>
+	</tbody>
+</form>
+	
+	 
+</table>
+<table class="table">
+	<thead>
+		<tr class="bg-gray">
+			<td>Participant1</td>
+			<td>Participant2</td>
+			<td>Participant3</td>
+			<td>Final Score</td>
+			<td>Edit</td>
+			<td>Remove</td>
+		</tr>
+
+		
+	</thead>
+	<tbody>
+		@foreach($tenderrewards as $tenderreward)
+          <tr>
+          	<td>{{$tenderreward->associatepartnername}}</td>
+          	<td>{{$tenderreward->associatepartnername2}}</td>
+          	<td>{{$tenderreward->associatepartnername3}}</td>
+          	<td>{{$tenderreward->finalscore}}</td>
+          	<td>
+			<button class="btn btn-info" onclick="editaward('{{$tenderreward->id}}','{{$tenderreward->associatepartnername}}','{{$tenderreward->associatepartnername2}}','{{$tenderreward->associatepartnername3}}','{{$tenderreward->finalscore}}');" type="button">EDIT</button>
+			</td>
+          	<td>
+          		<form action="/removeawards/{{$tenderreward->id}}" method="post">
+          			{{method_field('DELETE')}}
+          			{{csrf_field()}}
+          			
+          			<button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Remove this?');">Delete</button>
+          		</form>
+          			
+          	</td>
+          </tr>
+		@endforeach
+	</tbody>
+	
+</table>
+<table class="table">
+	<form action="/addagreementvalue/{{$tender->id}}" method="POST">
+		{{csrf_field()}}
+	<tr>
+		<td><strong>AGREEMENT VALUE</strong></td>
+		<td>
+			<input type="text" name="agreementvalue" value="{{$tender->agreementvalue}}" class="form-control" required="">
+			</td>
+			<td>
+			<button type="submit" class="btn btn-success">CHANGE</button>
+		    </td>
+		
+	</tr>
+	</form>
+</table>
+
+ <div id="myModal2" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><b>EDIT TENDER AWARDS</b></h4>
+      </div>
+      <div class="modal-body">
+
+    <form action="/updateaward" method="post" enctype="multipart/form-data"> 
+		{{csrf_field()}}
+<table class="table table-responsive table-hover table-bordered table-striped">
+		<input type="hidden" id="awid" name="awid">
+	
+	  <tr>
+	  	<td><strong>Participant1</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername5" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Participant2</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername6" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	    <tr>
+	  	<td><strong>Participant3</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername7" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Final Score</strong></td>
+	  	<td><input type="text" id="finalscore1" name="finalscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
+	  </tr>
+	  <tr>
+	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  </tr>
+
+</table>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -909,6 +1068,16 @@
 </div>
 
 <script type="text/javascript">
+	function editaward(id,associatepartnername,associatepartnername2,associatepartnername3,finalscore) {
+		//alert(finalscore);
+		//alert(id);
+		$("#awid").val(id);
+		$("#associatepartnername5").val(associatepartnername);
+		$("#associatepartnername6").val(associatepartnername2);
+		$("#associatepartnername7").val(associatepartnername3);
+        $("#finalscore1").val(finalscore);
+		$("#myModal2").modal('show');
+	}
 	function editparticipant(id,associatepartnername,associatepartnername2,associatepartnername3,techscore,financialscore) {
 		$("#uid").val(id);
 		//alert(associatepartnername2);

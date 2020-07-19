@@ -28,6 +28,14 @@ use DateTime;
 class TenderController extends Controller
 { 
   
+public function addagreementvalue(Request $request,$id)
+{
+     $tender=tender::find($id);
+     $tender->agreementvalue=$request->agreementvalue;
+     $tender->save();
+
+     return back();
+}
 public function removeawards(Request $request,$id)
 {
        tenderaward::find($id)->delete();
@@ -734,6 +742,12 @@ public function viewappliedtenders($id)
       ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
       ->where('tenderid',$id)
       ->get();
+      $tenderrewards=tenderaward::select('tenderawards.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderawards.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderawards.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderawards.participant3','=','a3.id')
+      ->where('tenderid',$id)
+      ->get();
     $tender=Tender::find($id);
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
                   ->where('tenderid',$id)
@@ -743,7 +757,7 @@ public function viewappliedtenders($id)
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
     $participants=Associatepartner::get();
 
-    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
+    return view('tender.viewappliedtenders',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants','tenderrewards'));
 } 
 
 public function viewposttenderupload($id)
@@ -1498,6 +1512,12 @@ public function userassociatepartner(){
       ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
       ->where('tenderid',$id)
       ->get();
+        $tenderrewards=tenderaward::select('tenderawards.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderawards.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderawards.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderawards.participant3','=','a3.id')
+      ->where('tenderid',$id)
+      ->get();
 
     $participants=Associatepartner::get();
 
@@ -1511,7 +1531,7 @@ public function userassociatepartner(){
            $associatepartners=Associatepartner::get();
 
           // return $users;
-           return view('tender.viewtender',compact('tender','tenderdocuments','corrigendumfiles','associatepartners','users','participants','tenderparticipants'));
+           return view('tender.viewtender',compact('tender','tenderdocuments','corrigendumfiles','associatepartners','users','participants','tenderparticipants','tenderrewards'));
        } public function userviewtender($id)
        {
          $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
