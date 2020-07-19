@@ -1770,11 +1770,17 @@ public function userassociatepartner(){
                    ->addColumn('openingdate', function($tenders) {
                         return '<a target="_blank" href="//'.$tenders->tender_website.'"><u>'.'NA'.'</u></a>';
                      })
-                   ->editColumn('awardedto', function($tenders) {
-                        return 'ABC';
+                   ->addColumn('awardedto', function($tenders) {
+      $tenderreward=tenderaward::select('tenderawards.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderawards.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderawards.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderawards.participant3','=','a3.id')
+      ->where('tenderid',$tenders->id)
+      ->first();
+       return $tenderreward['associatepartnername'];
                      })
                    ->editColumn('agreementvalue', function($tenders) {
-                        return 'NA';
+                        return $tenders->agreementvalue;
                      })
           ->addColumn('nitandrfp', function($tenders) {
           $tenderdocuments=tenderdocument::where('tenderid',$tenders->id)->get();
@@ -1894,7 +1900,7 @@ public function userassociatepartner(){
                        
           })
                   
-          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant'])
+          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant','awardedto'])
                 
                
                  ->make(true);
