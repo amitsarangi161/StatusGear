@@ -24,6 +24,7 @@
 			<td>ID</td>
 			<td>NAME OF WORK</td>
 			<td>CLIENT</td>
+			<td>LOCATION</td>
 			<td>SOURCE</td>
 			<td>WORK VALUE</td>
 			<td>NIT PUBLICATION DATE</td>
@@ -44,6 +45,7 @@
 		   	<td><a href="/viewcommitteerejectedtender/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
 		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
 		   	<td>{{$tender->clientname}}</td>
+		   	<td>{{$tender->location}}</td>
 		   	<td>{{$tender->source}}</td>
 		   	<td>{{$tender->workvalue}}</td>
 		   <td data-sort="{{strtotime($tender->nitpublicationdate)}}">{{$provider::changedateformat($tender->nitpublicationdate)}}</td>

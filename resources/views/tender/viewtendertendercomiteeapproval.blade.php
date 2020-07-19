@@ -35,6 +35,22 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</td>
 </tr>
 <tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
+</tr>
+<tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td><textarea name="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" disabled="">{{$tender->tenderrefno}}</textarea></td>
 	<td><strong>NO OF COVERS *</strong></td>

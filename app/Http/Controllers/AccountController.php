@@ -102,7 +102,7 @@ class AccountController extends Controller
                    $paidamt=$paid->sum('amount');
                    $bal=$tobepaidamt-$paidamt;
 
-                   $custarr=array('vendorname'=>$vendor->vendorname,'cr'=>$tobepaidamt,'dr'=>$paidamt,'bal'=>$bal);
+                   $custarr=array('vid'=>$vendor->id,'vendorname'=>$vendor->vendorname,'cr'=>$tobepaidamt,'dr'=>$paidamt,'bal'=>$bal);
                  $alldebitvoucherarr[]=$custarr;
                 }
                 
@@ -4040,21 +4040,24 @@ public function approvedebitvoucheradmin(Request $request,$id)
                        ->leftJoin('vendors','expenseentries.vendorid','=','vendors.id')
                       ->groupBy('expenseentries.id');
 
-
-         $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
-              $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
-          return DataTables::of($expenseentries)
-               ->filter(function ($expenseentries) use ($request) {
                 if ($request->has('name') && $request->get('name')!='') 
                 {
-                    $expenseentries->where('employeeid', $request->get('name'));
+                    $expenseentries=$expenseentries->where('employeeid', $request->get('name'));
                 }
                 if ($request->has('expensehead') && $request->get('expensehead')!='') 
                 {
-                    $expenseentries->where('expenseentries.expenseheadid', $request->get('expensehead'));
+                    $expenseentries=$expenseentries->where('expenseentries.expenseheadid', $request->get('expensehead'));
                 }
 
-            })
+
+
+      $sumamt=$this->moneyFormatIndia($expenseentries->sum('amount'));
+      $sumapproveamt=$this->moneyFormatIndia($expenseentries->sum('approvalamount'));
+
+      
+
+          return DataTables::of($expenseentries)
+         
 
                 ->addColumn('idbtn', function($expenseentries){
                          return '<a href="/viewexpenseentrydetails/'.$expenseentries->id.'" class="btn btn-info">'.$expenseentries->id.'</a>';

@@ -356,8 +356,12 @@
 
 
       @php
-        $pendingcomitee=DB::table('tenders')->where('status','ELLIGIBLE')
+        $pendingcomitee=DB::table('tenders')
           ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+          ->where(function ($query) {
+                  $query->where('status','ELLIGIBLE')
+                ->orWhere('status','ELLIGIBLE,INTERESTED');
+           })   
           ->count();
         $pendingcomitteeapproval=DB::table('tenders')->where('status','PENDING COMMITEE APPROVAL')
                   ->select('tenders.*','users.name')

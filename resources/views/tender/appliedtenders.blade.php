@@ -24,6 +24,8 @@
 			<td>ID</td>
 			<td>NAME OF WORK</td>
 			<td>CLIENT</td>
+			<td>LOCATION</td>
+
 			<td>TENDER REF NO</td>
 			<td>WORK VALUE</td>
 			<td>LAST DATE OF SUB.</td>
@@ -44,6 +46,7 @@
 		   	<td><a href="/viewappliedtenders/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
 		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
 		   	<td>{{$tender->clientname}}</td>
+		   	<td>{{$tender->location}}</td>
 		   	<td>{{$tender->tenderrefno}}</td>
 		   	<td>{{$tender->workvalue}}</td>
 		   	

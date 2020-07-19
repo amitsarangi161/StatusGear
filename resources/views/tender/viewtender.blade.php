@@ -22,6 +22,22 @@
 	</td>
 </tr>
 <tr>
+	<td><strong>Location</strong></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
+	<td><strong>Evaluation Process</strong></td>
+	<td>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+	
+	@if($tender->evaluationprocess=='QCBS')	
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+    @endif
+	
+	</td>
+	
+</tr>
+<tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td><textarea name="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" disabled="">{{$tender->tenderrefno}}</textarea></td>
 	<td><strong>NO OF COVERS *</strong></td>
@@ -308,12 +324,15 @@
            <td>{{$corrigendumfile->id}}</td>
            <td>{{$corrigendumfile->file}}</td>
            
-           <td>  <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" target="_blank">
+           <td>  
+     <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" target="_blank">
             Click to View
         </a>
         <a href="{{asset('img/tender/'.$corrigendumfile->file)}}" class="btn btn-primary btn-sm" download>
                <span class="glyphicon glyphicon-download-alt"></span> Download
-        </a></td>
+        </a>
+
+    </td>
  
         </tr>
 		@endforeach
@@ -653,10 +672,253 @@
 	</tbody>
 </table>
 </div>
+<table class="table">
+	<tr class="bg-blue">
+		<td class="text-center"><strong>TENDER POST DOCUMENT UPLOAD</strong></td>
+		
+	</tr>
+</table>
 
+<form action="/uploadposttenderdocuments/{{$tender->id}}" method="post" enctype="multipart/form-data">
+	{{csrf_field()}}
+<table class="table">
 
+	<tr>
+		<td><strong>TECHNICAL PROPOSAL</strong></td>
+		<td><input type="file" name="technicalproposal"></td>
+		<td>
+			@if($tender->technicalproposal!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->technicalproposal)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>FINANCIAL PROPOSAL</strong></td>
+		<td><input type="file" name="financialproposal"></td>
+		<td>
+			@if($tender->financialproposal!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->financialproposal)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+		<tr>
+		<td><strong>LIST OF PARTICIPANT UPLOAD</strong></td>
+		<td><input type="file" name="participantlistupload"></td>
+		<td>
+			@if($tender->participantlistupload!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->participantlistupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>TECHNICAL SCORE UPLOAD</strong></td>
+		<td><input type="file" name="technicalscoreupload"></td>
+		<td>
+			@if($tender->technicalscoreupload!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->technicalscoreupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td><strong>FINANCIAL SCORE UPLOAD</strong></td>
+		<td><input type="file" name="financialscoreupload"></td>
+		<td>
+			@if($tender->financialscoreupload!='')
+            <a href="{{asset('img/posttenderdoc/'.$tender->financialscoreupload)}}" target="_blank">
+            Click to View the document
+            </a>
+			@else
+             <p style="color:red;">No doc Uploaded</p>
+			@endif
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3"><button type="submit" class="btn btn-primary">Upload</button></td>
+	</tr>
+	
+</table>
+</form>
+<table class="table">
+	<tr class="bg-green">
+		<td class="text-center"><strong>LIST OF PARTICIPANTS & SCORE</strong></td>
+		
+	</tr>
+</table>
+<table class="table table-responsive table-hover table-bordered table-striped">
+	<thead>
+		<tr class="bg-navy">
+			<td><strong>Participant1</strong></td>
+			<td><strong>Participant2</strong></td>
+			<td><strong>Participant3</strong></td>
+			<td><strong>Technical Score</strong></td>
+			<td><strong>Financial Score</strong></td>
+            <td><strong>ACTION</strong></td>
+
+		</tr>
+	</thead>
+	<form action="/savetenderparticipants/{{$tender->id}}" method="post">
+		{{csrf_field()}}
+	
+	<tbody>
+		<tr>
+			<td>
+				<select class="form-control select2" id="participant" name="participant">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant2">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<select class="form-control select2"  name="participant3">
+				<option value="">Select a Participant</option>
+				@foreach($participants as $participant)
+                  <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
+				@endforeach
+				</select>
+			</td>
+			<td>
+				<input type="text" id="techscore" name="techscore" placeholder="Technical Score" class="form-control">
+			</td>
+			<td>
+				<input type="text" id="financialscore" name="financialscore" placeholder="Financial Score" class="form-control">
+			</td>
+			<td>
+				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
+			</td>
+		</tr>
+	</tbody>
+</form>
+	
+	 
+</table>
+<table class="table">
+	<thead>
+		<tr class="bg-gray">
+			<td>Participant1</td>
+			<td>Participant2</td>
+			<td>Participant3</td>
+			<td>Technical Score</td>
+			<td>Financial Score</td>
+			<td>Edit</td>
+			<td>Remove</td>
+		</tr>
+
+		
+	</thead>
+	<tbody>
+		@foreach($tenderparticipants as $tenderparticipant)
+          <tr>
+          	<td>{{$tenderparticipant->associatepartnername}}</td>
+          	<td>{{$tenderparticipant->associatepartnername2}}</td>
+          	<td>{{$tenderparticipant->associatepartnername3}}</td>
+          	<td>{{$tenderparticipant->techscore}}</td>
+          	<td>{{$tenderparticipant->financialscore}}</td>
+          	<td>
+			<button class="btn btn-info" onclick="editparticipant('{{$tenderparticipant->id}}','{{$tenderparticipant->associatepartnername}}','{{$tenderparticipant->associatepartnername2}}','{{$tenderparticipant->associatepartnername3}}','{{$tenderparticipant->techscore}}','{{$tenderparticipant->financialscore}}');" type="button">EDIT</button>
+			</td>
+          	<td>
+          		<form action="/removeparticipants/{{$tenderparticipant->id}}" method="post">
+          			{{method_field('DELETE')}}
+          			{{csrf_field()}}
+          			
+          			<button type="submit" class="btn btn-danger" onclick="return confirm('Do You want to Remove this Participant ?');">Delete</button>
+          		</form>
+          			
+          	</td>
+          </tr>
+		@endforeach
+	</tbody>
+	
+</table>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><b>EDIT PARTICIPANT</b></h4>
+      </div>
+      <div class="modal-body">
+
+    <form action="/updateparticipant" method="post" enctype="multipart/form-data"> 
+		{{csrf_field()}}
+<table class="table table-responsive table-hover table-bordered table-striped">
+		<input type="hidden" id="uid" name="uid">
+	
+	  <tr>
+	  	<td><strong>Participant1</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername" id="associatepartnername1" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Participant2</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername2" id="associatepartnername2" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	    <tr>
+	  	<td><strong>Participant3</strong></td>
+	  	<td><input type="text" disabled="" name="associatepartnername3" id="associatepartnername3" class="form-control" placeholder="Enter Acount No"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Technical Score</strong></td>
+	  	<td><input type="text" name="techscore" id="techscore1" class="form-control" placeholder="Enter Technical Score"></td>
+	  </tr>
+	  <tr>
+	  	<td><strong>Financial Score</strong></td>
+	  	<td><input type="text" id="financialscore1" name="financialscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
+	  </tr>
+	  <tr>
+	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  </tr>
+
+</table>
+</form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script type="text/javascript">
+	function editparticipant(id,associatepartnername,associatepartnername2,associatepartnername3,techscore,financialscore) {
+		$("#uid").val(id);
+		//alert(associatepartnername2);
+		$("#associatepartnername1").val(associatepartnername);
+		$("#associatepartnername2").val(associatepartnername2);
+		$("#associatepartnername3").val(associatepartnername3);
+		$("#techscore1").val(techscore);
+        $("#financialscore1").val(financialscore);
+		$("#myModal").modal('show');
+	}
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
 		var tenderid=$("#tenderid").val();

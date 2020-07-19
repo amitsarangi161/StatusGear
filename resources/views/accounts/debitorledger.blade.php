@@ -49,7 +49,7 @@
 		@endphp
 		@foreach($alldebitvoucherarr as $key=>$value)
 		<tr>
-			<td style="font-weight: bold;">{{++$key}}</td>
+			<td style="font-weight: bold;"><a href="debitorledger?vendor={{$value['vid']}}" class="btn btn-info" target="_blank">{{++$key}}</a></td>
 			<td style="font-weight: bold;">{{$value['vendorname']}}</td>
 			<td style="font-weight: bold;">{{$tcr[]=$value['cr']}}</td>
 			<td style="font-weight: bold;">{{$tdr[]=$value['dr']}}</td>
@@ -188,6 +188,7 @@ BALANCE</td>
 	<td style="width: 10%; text-align:right;font-weight: bold;">{{$totalpaid}}</td>
 	<td style="width: 10%; text-align:right;font-weight: bold;">{{$totalexp}}</td>
 	<td style="width: 10%; text-align:right;font-weight: bold;">{{$start}}</td>
+	<td></td>
 </tr>
 
 

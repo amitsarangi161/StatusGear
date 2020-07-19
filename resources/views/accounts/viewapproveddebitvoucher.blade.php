@@ -27,22 +27,24 @@
 		<tr style="background-color: chartreuse;">
 			<td width="20%"><strong>TOTAL AMOUNT:</strong></td>
 			<td width="30%">{{$debitvoucherheader->finalamount}}</td>
-			<td width="20%"><strong>PAID AMOUNT:</strong></td>
+			<td width="20%"><strong>TOTAL PAID AMOUNT:</strong></td>
 			<td width="30%">{{number_format((float)$paid, 2, '.', '')}}</td>
 		</tr>
 
 		<tr style="background-color: chartreuse;">
 			<td width="20%"><strong>BALANCE AMOUNT:</strong></td>
 			<td width="30%">{{number_format((float)$debitvoucherheader->finalamount-$paid, 2, '.', '')}}</td>
-			<td width="20%"><strong>BANK PAID:</strong></td>
-			<td width="30%">{{number_format((float)$bankpaid, 2, '.', '')}}</td>
+			
+      <td width="10%"><strong>CREATED AT  :</strong></td>
+      <td width="40%">{{$debitvoucherheader->created_at}}</td>
 		</tr>
 
 		<tr>
-			<td width="10%"><strong>CREATED AT  :</strong></td>
-			<td width="40%">{{$debitvoucherheader->created_at}}</td>
+			
 			<td width="10%"><strong>STATUS :</strong></td>
 			<td width="40%"><span class="label label-warning">{{$debitvoucherheader->status}}</span></td>
+      <td width="20%"></td>
+      <td width="30%"></td>
 		</tr>
 
 		
@@ -110,7 +112,7 @@
 <div class="table-responsive">
 <table class="table">
 	    	<tr>
-	    		<td width="25%"><strong>Total MRP</strong></td>
+	    		<td width="25%"><strong>Total MRP/BILLED VALUE</strong></td>
 	    		<td width="25%"><input type="text" id="tmrp" value="{{$debitvoucherheader->tmrp}}" name="tmrp" class="form-control" readonly="" required=""></td>
 	    	
 	    		<td width="25%"><strong>Total Discount</strong></td>
@@ -146,7 +148,9 @@
 	    		<td width="25%"><strong>Other Deduction(in %)</strong></td>
 	    		<td width="25%"><input type="text" class="form-control " id="otherdeduction" value="{{$debitvoucherheader->otherdeduction}}" autocomplete="off" readonly="" name="otherdeduction" value="0"></td>
 	    		<td width="25%"><strong>IT Deduction(in %)</strong></td>
-	    		<td width="25%"><input type="text" class="form-control" id="itdeduction" name="itdeduction" value="{{$debitvoucherheader->itdeduction}}" autocomplete="off" readonly=""  value="0"></td>
+	    		<td width="25%"><input type="text" class="form-control" id="itdeduction" name="itdeduction" value="{{$debitvoucherheader->itdeduction}}" autocomplete="off" readonly=""  value="0">
+
+          </td>
 	    	 
 	    		
 	    		
@@ -287,11 +291,17 @@
           		</td>
           	</tr>
           	<tr>
-          		<td><strong>PAID AMOUNT</strong></td>
+          		<td><strong>TOTAL PAID AMOUNT</strong></td>
           		<td>
           			<input type="text" class="form-control"  value="{{number_format((float)$paid, 2, '.', '')}}" readonly>
           		</td>
           	</tr>
+              <tr>
+              <td><strong>BALANCE AMOUNT</strong></td>
+              <td>
+                <input type="text" class="form-control"  value="{{number_format((float)$debitvoucherheader->approvalamount-$paid, 2, '.', '')}}" id="balanceamt" readonly>
+              </td>
+            </tr>
           	<tr>
           		<td><strong>PAYMENT TYPE</strong></td>
           		<td>
@@ -323,12 +333,7 @@
           			<input type="text" name="amount"  class="form-control" id="amt1" autocomplete="off"  required="">
           		</td>
           	</tr>
-          	<tr>
-          		<td><strong>BALANCE AMOUNT</strong></td>
-          		<td>
-          			<input type="text" class="form-control"  value="{{number_format((float)$debitvoucherheader->approvalamount-$paid, 2, '.', '')}}" id="balanceamt" readonly>
-          		</td>
-          	</tr>
+          
     
           	<tr>
           		<td><strong>REMARKS</strong></td>

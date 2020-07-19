@@ -10,6 +10,15 @@
     text-overflow: ellipsis; 
    
 }
+.greenRow{
+    background-color: #8eff8e !important;
+}
+.yellowRow{
+    background-color: #ffcb00!important;
+}
+.lightRow{
+    background-color: #d2d2d2!important;
+}
 
 </style>
 
@@ -40,16 +49,27 @@
     <thead>
         <tr class="bg-blue">
             <td>ID</td>
+            <td>TENDER SOURCE ID</td>
+            <td>TENDER REF NO</td>
             <td>NAME OF WORK</td>
             <td>CLIENT</td>
             <td>LOCATION</td>
-            <td>TENDER REF NO</td>
+            <td title="Tender Inviting Authority">TIA</td>
             <td>WORK VALUE</td>
             <td>LAST DATE OF SUB.</td>
+            <td>OPENING DT</td>
             <td>LIVE/EXP</td>
             <td>RFP AVAILABLE DATE</td>
             <td>EMD AMT</td>
             <td>STATUS</td>
+            <td>NIT AND RFP</td>
+            <td>CORRIGENDUM</td>
+            <td>APPLIED AS</td>
+            <td>COMMENTS VIEW</td>
+            <td>NO OF PARTICIPANT</td>
+            <td>AWARDED TO</td>
+            <td>AGREEMENT VALUE</td>
+            
             <td>AUTHOR</td>
             <td>VIEW</td>
             <td>EDIT</td>
@@ -164,16 +184,26 @@
         columns: [
 
             {data: 'idbtn', name: 'id'},
+            {data: 'tendersiteidlink', name: 'tendersiteid'},
+             {data: 'tenderrefnolink', name: 'tenderrefno'},
             {data: 'now',name: 'nameofthework'},
             {data: 'clientname', name: 'clientname'},
             {data: 'location', name: 'location'},
-            {data: 'tenderrefno', name: 'tenderrefno'},
+            {data: 'tia', name: 'tia', searchable: false, sortable : false},
             {data: 'workvalue', name: 'workvalue'},
             {data: 'ldos', name: 'lastdateofsubmisssion'},
+            {data: 'openingdate',name: 'openingdate', searchable: false, sortable : false},
             {data: 'live', name: 'lastdateofsubmisssion'},
             {data: 'rfpavailabledate', name:'rfpavailabledate'},
             {data: 'emdamount', name:'emdamount'},
             {data: 'sta', name: 'sta'},
+            {data: 'nitandrfp', name: 'nitandrfp',searchable: false, sortable : false},
+            {data: 'corrigendum', name: 'corrigendum',searchable: false, sortable : false},
+            {data: 'recomended', name: 'recomended'},
+            {data: 'commentview', name: 'commentview',searchable: false, sortable : false},
+            {data: 'noofparticipant', name: 'noofparticipant',searchable: false, sortable : false},
+            {data: 'awardedto', name: 'awardedto',searchable: false, sortable : false},
+            {data: 'agreementvalue', name: 'agreementvalue',searchable: false, sortable : false},
             {data: 'name', name: 'users.name'},
             {data: 'view', name: 'view'},
             {data: 'edit', name: 'edit'},
@@ -182,7 +212,18 @@
 
           
 
-        ]
+        ],
+        "createdRow": function (row, data, index) {
+             if (data.status == "ELLIGIBLE,INTERESTED") {
+                 $(row).addClass('greenRow');
+             }
+             if (data.status == "ELLIGIBLE,NOT INTERESTED") {
+                 $(row).addClass('yellowRow');
+             }
+              if (data.status == "NOT ELLIGIBLE,INTERESTED") {
+                 $(row).addClass('lightRow');
+             }
+         }
 
     });
 

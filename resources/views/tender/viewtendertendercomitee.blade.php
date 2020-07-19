@@ -193,6 +193,12 @@
 		<textarea name="registrationamountpayableto" disabled="" class="form-control">{{$tender->registrationamountpayableto}}</textarea>
 	</td>
 	</tr>
+	<tr>
+		<td>TENDER WEBSITE LINK</td>
+		<td><a href="{{$tender->tender_website}}" target="_blank">{{$tender->tender_website}}</a></td>
+		<td>TENDER SITE LINK</td>
+		<td><a href="{{$tender->tender_site_ref}}" target="_blank">{{$tender->tender_site_ref}}</a></td>
+	</tr>
 	
 </table>
 <h1 style="text-align: center;font-weight: bold;">TENDER FILES</h1>

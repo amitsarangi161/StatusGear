@@ -40,16 +40,19 @@
 	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
 	<td><strong>Evaluation Process</strong></td>
 	<td>
-		<input type="radio" value="LCS" name="evaluationprocess" checked> <strong>LCS</strong>
+		<input type="radio" value="LCS" name="evaluationprocess" checked><strong>LCS</strong>
 		<input type="radio" value="QCBS" name="evaluationprocess"><strong>QCBS</strong>
+	<div id="evaluationscore" style="display: none;">
+		
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="0" style="width:30%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="0" style="width:30%">
+	</div>
+	
 	</td>
 	
 </tr>
-<tr id="evaluationscore" style="display: none;background-color: gray;">
-	<td><strong>TECHNICAL</strong></td>
-	<td><input type="number" name="evaluationtechnical" id="evaluationtechnical" class="form-control" value="0"></td>
-	<td><strong>FINANCIAL</strong></td>
-	<td><input type="number" name="evaluationfinancial" id="evaluationfinancial" class="form-control" value="0"></td>
+<tr >
+	
 	
 </tr>
 <tr>
@@ -168,8 +171,7 @@
 			<input type="radio" name="recomended" value="ASSOCIATION">ASSOCIATION &nbsp;&nbsp;&nbsp;
 			<input type="radio" name="recomended" value="JV" >JV
 	</td>
-	
-	
+
 </tr>
 	
 </table>

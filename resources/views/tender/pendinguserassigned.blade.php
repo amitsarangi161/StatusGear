@@ -29,6 +29,7 @@
 			<td>ID</td>
 			<td>NAME OF WORK</td>
 			<td>CLIENT</td>
+			<td>LOCATION</td>
 			<td>SOURCE</td>
 			<td>WORK VALUE</td>
 			<td>LAST DATE OF SUB.</td>
@@ -43,6 +44,7 @@
 	    	<td><a href="/viewtenderpendinguser/{{$tend['tender']->id}}" target="_blank" class="btn btn-info">{{$tend['tender']->id}}</a></td>
 	    	<td><p class="b" title="{{$tend['tender']->nameofthework}}">{{$tend['tender']->nameofthework}}</p></td>
 		   	<td>{{$tend['tender']->clientname}}</td>
+		   	<td>{{$tend['tender']->location}}</td>
 		   	<td>{{$tend['tender']->source}}</td>
 		   	<td>{{$tend['tender']->workvalue}}</td>
 		   	<td data-sort="{{strtotime($tend['tender']->lastdateofsubmisssion)}}">{{$provider::changedateformat($tend['tender']->lastdateofsubmisssion)}}</td>
