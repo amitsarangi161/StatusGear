@@ -61,6 +61,7 @@ Route::get('/temptender/notellgible','TenderController@notellgible');
 
 Route::get('/viewtenderpendinguser/{id}','TenderController@viewtenderpendinguser');
 Route::post('/savetenderparticipants/{id}','TenderController@savetenderparticipants');
+Route::post('/savetenderawards/{id}','TenderController@savetenderawards');
 Route::post('/uploadposttenderdocuments/{id}','TenderController@uploadposttenderdocuments');
 Route::post('/tendercostdetailupdate/{id}','TenderController@tendercostdetailsupdate');
 Route::post('/emddetailsupdate/{id}','TenderController@emddetailsupdate');
@@ -73,6 +74,7 @@ Route::get('/userassigned/pendinguserassigned','TenderController@pendinguserassi
 
 Route::get('/tm/assignedtendersoffice','TenderController@assignedtendersoffice');
 Route::delete('/removeparticipants/{id}','TenderController@removeparticipants');
+Route::delete('/removeawards/{id}','TenderController@removeawards');
 
 Route::get('/viewassignedtenderoffice/{id}','TenderController@viewassignedtenderoffice');
 Route::get('/comrejected/comitteerejectedtenders','TenderController@comitteerejectedtenders');
@@ -85,6 +87,7 @@ Route::get('/notapplied/approvedbutnotappliedtenders','TenderController@approved
 Route::get('/viewappliedtenders/{id}','TenderController@viewappliedtenders');
 Route::get('/viewposttenderupload/{id}','TenderController@viewposttenderupload');
 Route::post('/updateparticipant','TenderController@updateparticipant');
+Route::post('/updateaward','TenderController@updateaward');
 
 
 Route::get('/applied/appliedtenders','TenderController@appliedtenders');

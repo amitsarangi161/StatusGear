@@ -15,6 +15,7 @@ use DataTables;
 use App\tendercommitteecomment;
 use DB;
 use App\tenderparticipant;
+use App\tenderaward;
 use App\usertenderremark;
 use App\committeetenderremark;
 use Excel;
@@ -26,6 +27,43 @@ use DateTime;
 
 class TenderController extends Controller
 { 
+  
+public function removeawards(Request $request,$id)
+{
+       tenderaward::find($id)->delete();
+
+       return back();
+}
+public function savetenderawards(Request $request,$id)
+{
+
+    
+    $chk=tenderaward::where('tenderid',$id)->count();
+    //return $chk;
+     if($chk==0)
+     {
+     $tenderaward=new tenderaward();
+     $tenderaward->tenderid=$id;
+     $tenderaward->participant=$request->participant;
+     $tenderaward->participant2=$request->participant2;
+     $tenderaward->participant3=$request->participant3;
+     $tenderaward->finalscore=$request->finalscore;
+
+     $tenderaward->save();
+     }
+ 
+
+     return back();
+}
+public function updateaward(Request $request){
+
+    //return $request->all();
+    $tenderaward=tenderaward::find($request->awid);
+    $tenderaward->finalscore=$request->finalscore;
+    $tenderaward->save();
+    Session::flash('msg','Tender Award Updated Successfully');
+    return back();
+  }
 public function ajaxchangetemptenderstatus(Request $request)
 {
     if($request->status!='NOT ELLIGIBLE,NOT INTERESTED')
@@ -385,6 +423,7 @@ public function savetenderparticipants(Request $request,$id)
      return $request->all();
 }
 
+
 public function emddetailsupdate(Request $request,$id)
 {
       $tender=tender::find($id); 
@@ -716,7 +755,13 @@ public function viewposttenderupload($id)
       ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
       ->where('tenderid',$id)
       ->get();
-      
+    $tenderrewards=tenderaward::select('tenderawards.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderawards.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderawards.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderawards.participant3','=','a3.id')
+      ->where('tenderid',$id)
+      ->get();
+    //return $tenderrewards; 
     $tender=Tender::find($id);
     $users=assignedtenderuser::select('assignedtenderusers.*','users.name')
                   ->where('tenderid',$id)
@@ -726,7 +771,7 @@ public function viewposttenderupload($id)
     $corrigendumfiles=corrigendumfile::where('tenderid',$id)->get();
     $participants=Associatepartner::get();
 
-    return view('tender.viewposttenderupload',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants'));
+    return view('tender.viewposttenderupload',compact('tender','tenderdocuments','corrigendumfiles','users','participants','tenderparticipants','tenderrewards'));
 } 
  public function updateparticipant(Request $request){
     $tenderparticipant=tenderparticipant::find($request->uid);
