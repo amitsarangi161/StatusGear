@@ -28,10 +28,10 @@
 <tr>
 
 	<td><strong>Name Of the Work *</strong></td>
-	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" required=""></textarea></td>
+	<td><textarea name="nameofthework" class="form-control" required="" placeholder="Enter Name of The Work" ></textarea></td>
 	<td><strong>Client Name *</strong></td>
 	<td>
-		<input type="text" name="clientname" class="form-control" placeholder="Enter Name of the Work" required="">
+		<input type="text" name="clientname" class="form-control" placeholder="Enter Name of the Work" >
 	</td>
 </tr>
 
@@ -59,19 +59,19 @@
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td>
 		
-        <input type="text" name="tenderrefno" id="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" autocomplete="off" required="" onkeyup="searchtenderno(this.value)">
+        <input type="text" name="tenderrefno" id="tenderrefno" class="form-control" placeholder="Enter Tender Reference No" autocomplete="off"  onkeyup="searchtenderno(this.value)">
         <div id="searchlist" style="background-color: #d9d9d9">
         	
         </div>
 	</td>
 	<td><strong>NO OF COVERS *</strong></td>
 	<td>
-		<input type="number" name="noofcovers" class="form-control" placeholder="Enter No of Covers" required="">
+		<input type="number" name="noofcovers" class="form-control" placeholder="Enter No of Covers" >
 	</td>
 </tr>
 <tr>
 	<td><strong>Work Value *</strong></td>
-	<td><input type="number" name="workvalue" id="workvalue" class="form-control convert3" placeholder="Enter Work Value" required="" value="0" autocomplete="off"></td>
+	<td><input type="number" name="workvalue" id="workvalue" class="form-control convert3" placeholder="Enter Work Value"  value="0" autocomplete="off"></td>
 	<td><strong>Work Value in Word</strong></td>
 	<td>
        <textarea class="form-control" readonly="" name="workvalueinword" id="workvalueinword">Zero</textarea>
@@ -82,18 +82,18 @@
 
 
 	<td><strong>NIT PUBLICATION DATE *</strong></td>
-	<td><input type="text" name="nitpublicationdate" class="form-control datepicker1 readonly" required="" autocomplete="off"></td>
+	<td><input type="text" name="nitpublicationdate" class="form-control datepicker1 readonly"  autocomplete="off"></td>
 	<td></td>
 	<td></td>
 	
 </tr>
 <tr>
 	<td><strong>SOURCE *</strong></td>
-	<td><input type="text" name="source" class="form-control" placeholder="Enter Source Name" value="NA" required=""></td>
+	<td><input type="text" name="source" class="form-control" placeholder="Enter Source Name" value="NA" ></td>
 
 	<td><strong>TENDER PRIORITY *</strong></td>
 	<td>
-		<select class="form-control select2" name="tenderpriority" required="">
+		<select class="form-control select2" name="tenderpriority" >
 			<option value="HIGH">HIGH</option>
 			<option value="MEDIUM" selected>MEDIUM</option>
 			<option value="LOW">LOW</option>
@@ -105,7 +105,7 @@
 <tr>
 	<td><strong>Type Of Work *</strong></td>
 	<td>
-		<select class="form-control select2" name="typeofwork" required="">
+		<select class="form-control select2" name="typeofwork" >
 			<option value="">--Select a Work Type--</option>
 			<option value="DPR">DPR</option>
 			<option value="SURVEY">SURVEY</option>
@@ -119,7 +119,7 @@
 		</select>
 	</td>
 	<td><strong>LAST DATE OF SUBMISSION *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" id="lastdateofsubmisssion" required="" autocomplete="off"></td>
+	<td><input type="text" class="form-control datepicker readonly" name="lastdateofsubmisssion" id="lastdateofsubmisssion"  autocomplete="off"></td>
 	
 </tr>
 <tr>
@@ -131,17 +131,17 @@
 </tr>
 <tr>
 	<td><strong>RFP AVAILABLE DATE *</strong></td>
-	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate" required="" autocomplete="off"></td>
+	<td><input type="text" class="form-control datepicker readonly" name="rfpavailabledate"  autocomplete="off"></td>
 	<td><strong>RFP DOCUMENT/NIT/QUOTATION *</strong></td>
 
-	<td><input type="file" name="rfpdocument[]" class="form-control" multiple  required=""></td>
+	<td><input type="file" name="rfpdocument[]" class="form-control" multiple  ></td>
 	
 </tr>
 
 <tr>
 	<td><strong>REF PAGE NO OF RFP DOCUMENT *</strong></td>
 	<td>
-		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" required="">NOT MENTIONED</textarea>
+		<textarea name="refpageofrfp" class="form-control" placeholder="Enter Reference Page No of RFP Document" >NOT MENTIONED</textarea>
         
 	</td>
 	<td><strong>CORRIGENDUM FILE</strong></td>
