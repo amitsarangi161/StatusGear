@@ -803,6 +803,7 @@ public function alltendersdocupload()
           ->select('tenders.*','users.name')
           ->leftJoin('users','tenders.author','=','users.id')
           ->get();
+      //return $tenders;
    return view('tender.alltendersdocupload',compact('tenders'));
 }
 public function appliedtenders()

@@ -33,6 +33,11 @@
 			<td>EMD AMT</td>
 			<td>CREATED AT</td>
 			<td>STATUS</td>
+			<td>TS</td>
+			<td>FS</td>
+			<td>TP</td>
+			<td>FP</td>
+			<td>PARTICIPANT</td>
 			<td>AUTHOR</td>
 			<td>VIEW</td>
 			
@@ -57,6 +62,31 @@
 		   	<td>
 		   		<span class="label label-success">{{$tender->status}}</span>
 		   	</td>
+		   	@if($tender->technicalscoreupload != "")
+		   	<td> <a href="/img/posttenderdoc/{{$tender->technicalscoreupload}}" target="_blank"><i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+		   	@else
+		   	<td><i style="color: red;font-size: 20px;" class='fa fa-times-circle-o'> </i></td>
+		   	@endif
+		   	@if($tender->financialscoreupload != "")
+		   	<td><a href="/img/posttenderdoc/{{$tender->financialscoreupload}}" target="_blank"> <i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+		   	@else
+		   	<td><i style="color: red;font-size: 20px;" class='fa fa-times-circle-o'> </i></td>
+		   	@endif
+		   	@if($tender->technicalproposal != "")
+		   	<td><a href="/img/posttenderdoc/{{$tender->technicalproposal}}" target="_blank"> <i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+		   	@else
+		   	<td><i style="color: red;font-size: 20px;" class='fa fa-times-circle-o'> </i></td>
+		   	@endif
+		   	@if($tender->financialproposal != "")
+		   	<td><a href="/img/posttenderdoc/{{$tender->financialproposal}}" target="_blank"><i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+		   	@else
+		   	<td><i style="color: red;font-size: 20px;" class='fa fa-times-circle-o'> </i></td>
+		   	@endif
+		   	@if($tender->participantlistupload != "")
+		   	<td><a href="/img/posttenderdoc/{{$tender->participantlistupload}}" target="_blank"><i style="color: green;font-size: 20px;" class='fa fa-check-circle-o'></i></a></td>
+		   	@else
+		   	<td><i style="color: red;font-size: 20px;" class='fa fa-times-circle-o'> </i></td>
+		   	@endif
 		   	<td>{{$tender->name}}</td>
 		   	<td><a href="/viewappliedtenders/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
 		   	
