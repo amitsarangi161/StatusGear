@@ -33,15 +33,30 @@
       <form method="POST" id="search-form1" class="form-inline" role="form">
         <td>
          
-          <button type="submit" value="" name="all" id="all" class="btn btn-primary btn-lg">ALL</button>
+          <button type="submit" value="" name="all" id="all" class="btn btn-primary">ALL</button>
         </td>
       </form>
       <form method="POST" id="search-form2" class="form-inline" role="form">
-        <td><button type="submit" value="" name="live" id="live" class="btn btn-success btn-lg">LIVE</button></td>
+        <td><button type="submit" value="" name="live" id="live" class="btn btn-success">LIVE</button></td>
       </form>
       <form method="POST" id="search-form3" class="form-inline" role="form">
-        <td><button type="submit" value="" name="expired" id="expired" class="btn btn-danger btn-lg">EXPIRED</button></td>
-        </form>
+        <td><button type="submit" value="" name="expired" id="expired" class="btn btn-danger">EXPIRED</button></td>
+      </form>
+      <form method="POST" id="search-form4" class="form-inline" role="form">
+        <td><button type="submit" value="" name="applied" id="applied" class="btn btn-warning">APPLIED</button></td>
+      </form>
+      <form method="POST" id="search-form5" class="form-inline" role="form">
+        <td><button type="submit" value="" name="technical" id="technical" class="btn btn-info">TECHNICAL EVALUATION</button></td>
+      </form>
+      <form method="POST" id="search-form6" class="form-inline" role="form">
+        <td><button type="submit" value="" name="financial" id="financial" class="btn btn-primary">FINANCIAL EVALUATION</button></td>
+      </form>
+      <form method="POST" id="search-form7" class="form-inline" role="form">
+        <td><button type="submit" value="" name="ei" id="ei" class="btn btn-success">ELLIGIBLE,INTERESTED</button></td>
+      </form>
+      <form method="POST" id="search-form8" class="form-inline" role="form">
+        <td><button type="submit" value="" name="ni" id="ni" class="btn btn-info">NOT ELLIGIBLE,INTERESTED</button></td>
+      </form>
     </tr>
 </table>
 <div class="table-responsive">
@@ -140,6 +155,11 @@
          $("#live").val('');
          $("#expired").val('');
         $("#all").val("ALL");
+        $("#applied").val('');
+        $("#technical").val('');
+       $("#financial").val('FE');
+       $("#ei").val('');
+       $("#ni").val('');
        
        table.draw(true);
        
@@ -147,7 +167,12 @@
         e.preventDefault();
          $("#expired").val('');
         $("#all").val('');
+        $("#applied").val('');
        $("#live").val("LIVE");
+       $("#technical").val('');
+       $("#financial").val('');
+       $("#ei").val('');
+       $("#ni").val('');
 
        table.draw(true);
        
@@ -155,13 +180,88 @@
         e.preventDefault();
         $("#all").val('');
        $("#live").val('');
+       $("#applied").val('');
        $("#expired").val("EXPIRED");
+       $("#technical").val('');
+       $("#financial").val('');
+       $("#ei").val('');
+       $("#ni").val('');
+     
+       table.draw(true);
+       
+    });
+    $('#search-form4').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val('');
+       $("#applied").val('APPLIED');
+       $("#technical").val('');
+       $("#financial").val('');
+       $("#ei").val('');
+       $("#ni").val('');
+     
+       table.draw(true);
+       
+    });  
+    $('#search-form5').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val('');
+       $("#applied").val('');
+       $("#technical").val('TE');
+       $("#financial").val('');
+       $("#ei").val('');
+       $("#ni").val('');
+
+     
+       table.draw(true);
+       
+    });
+      $('#search-form6').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val('');
+       $("#applied").val('');
+       $("#technical").val('');
+       $("#financial").val('FE');
+       $("#ei").val('');
+       $("#ni").val('');
+     
+       table.draw(true);
+       
+    });
+         $('#search-form7').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val('');
+       $("#applied").val('');
+       $("#technical").val('');
+       $("#financial").val('');
+       $("#ei").val('EI');
+       $("#ni").val('');
      
        table.draw(true);
        
     });
 
-
+  $('#search-form8').on('submit', function(e) {
+        e.preventDefault();
+        $("#all").val('');
+       $("#live").val('');
+       $("#expired").val('');
+       $("#applied").val('');
+       $("#technical").val('');
+       $("#financial").val('');
+       $("#ei").val('');
+       $("#ni").val('NI');
+     
+       table.draw(true);
+       
+    });
 
     
 
@@ -178,6 +278,11 @@
                 d.all = $('#all').val();
                 d.live = $('#live').val();
                 d.expired = $('#expired').val();
+                d.applied = $('#applied').val();
+                d.technical = $('#technical').val();
+                d.financial = $('#financial').val();
+                d.ei = $('#ei').val();
+                d.ni = $('#ni').val();
                
             }
         },

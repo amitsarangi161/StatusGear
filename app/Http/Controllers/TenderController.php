@@ -1669,6 +1669,22 @@ public function userassociatepartner(){
             elseif ($request->has('expired') && $request->get('expired')!='') {
                 $tenders=$tenders->where('lastdateofsubmisssion', '<',date('Y-m-d'));
             }
+            elseif ($request->has('applied') && $request->get('applied')!='') {
+                $tenders=$tenders->where('status','=','APPLIED');
+            } 
+            elseif ($request->has('technical') && $request->get('technical')!='') {
+                $tenders=$tenders->where('technicalscoreupload','!=','');
+            }  
+            elseif ($request->has('financial') && $request->get('financial')!='') {
+                $tenders=$tenders->where('financialscoreupload','!=','');
+            }
+            elseif ($request->has('ei') && $request->get('ei')!='') {
+                $tenders=$tenders->where('status','!=','NOT ELLIGIBLE,INTERESTED');
+            }
+            elseif ($request->has('ni') && $request->get('ni')!='') {
+                $tenders=$tenders->where('status','NOT ELLIGIBLE,INTERESTED');
+            }
+
           return DataTables::of($tenders)
                  ->setRowClass(function ($tenders) {
                         $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
