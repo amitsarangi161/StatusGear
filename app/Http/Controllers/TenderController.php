@@ -1636,7 +1636,7 @@ public function userassociatepartner(){
                     return $this->changedateformat($tenders->nitpublicationdate);
                      })
                    ->editColumn('emdamount', function($tenders) {
-                    return $tenders->emdamount;
+                    return app('App\Http\Controllers\AccountController')->moneyFormatIndia($tenders->emdamount);
                      })
                    ->editColumn('location', function($tenders) {
                     return $tenders->location;
@@ -1753,7 +1753,7 @@ public function userassociatepartner(){
                     return $this->changedateformat($tenders->lastdateofsubmisssion);
                      }) 
                       ->editColumn('emdamount', function($tenders) {
-                    return $tenders->emdamount;
+                   return app('App\Http\Controllers\AccountController')->moneyFormatIndia($tenders->emdamount);
                      })  
 
                       ->editColumn('tenderrefno', function($tenders) {
