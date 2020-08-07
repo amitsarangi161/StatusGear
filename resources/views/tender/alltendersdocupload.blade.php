@@ -1,6 +1,7 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+@inject('tend', 'App\Http\Controllers\AccountController')
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -54,9 +55,9 @@
 		   	<td>{{$tender->tenderrefno}}</td>
 		   	<td>{{$tender->workvalue}}</td>
 		   	
-		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</td>
+		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span></td>
 		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
-		   	<td>{{$tender->emdamount}}</td>
+		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
 		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td>
 		   		<span class="label label-success">{{$tender->status}}</span>

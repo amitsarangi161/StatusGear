@@ -1,6 +1,7 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+@inject('tend', 'App\Http\Controllers\AccountController')
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -35,6 +36,7 @@
 			<td>WORK VALUE</td>
 			<td>ACTION</td>
 			<td>LAST DATE OF SUB.</td>
+			<td>EMD AMT</td>
 			<td width="10%">TENDER WEBSITE</td>
 			<td width="10%">TENDER REF LINK</td>
 			<td>STATUS</td>
@@ -64,8 +66,9 @@
 		    	 <option value="NOT ELLIGIBLE,NOT INTERESTED">NOT ELLIGIBLE,NOT INTERESTED</option>
 		    	</select>
 		    </td>
-		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}
+		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span>
 		   	</td>
+		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
 		   	<td width="10%"><a href="{{$tender->tender_website}}" target="_blank">{{$tender->tender_website}}</a></td>
 		   	<td width="10%"><a href="{{$tender->tender_site_ref}}" target="_blank">{{$tender->tender_site_ref}}</a></td>
 		   

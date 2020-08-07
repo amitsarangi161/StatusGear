@@ -1,6 +1,7 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+@inject('tend', 'App\Http\Controllers\AccountController')
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -30,6 +31,7 @@
 			<td>NIT PUBLICATION DATE</td>
 			<td>LAST DATE OF SUB.</td>
 			<td>RFP AVAILABLE DATE</td>
+			<td>EMD AMT</td>
 			<td>CREATED AT</td>
 			<td>STATUS</td>
 			<td>AUTHOR</td>
@@ -49,8 +51,9 @@
 		   	<td>{{$tender->source}}</td>
 		   	<td>{{$tender->workvalue}}</td>
 		   <td data-sort="{{strtotime($tender->nitpublicationdate)}}">{{$provider::changedateformat($tender->nitpublicationdate)}}</td>
-		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</td>
+		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span></td>
 		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
+		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
 		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td>
 		   		<span class="label label-danger">{{$tender->status}}</span>

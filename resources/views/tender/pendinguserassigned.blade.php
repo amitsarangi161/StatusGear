@@ -1,6 +1,7 @@
 @extends('layouts.tender')
 @section('content')
 @inject('provider', 'App\Http\Controllers\TenderController')
+@inject('tend1', 'App\Http\Controllers\AccountController')
 <style type="text/css">
     .b {
     white-space: nowrap; 
@@ -33,6 +34,7 @@
 			<td>SOURCE</td>
 			<td>WORK VALUE</td>
 			<td>LAST DATE OF SUB.</td>
+			<td>EMD AMT</td>
 			<td>ASSIGNED USER</td>
 			<td>CREATED AT</td>
 			<td>VIEW</td>
@@ -47,7 +49,8 @@
 		   	<td>{{$tend['tender']->location}}</td>
 		   	<td>{{$tend['tender']->source}}</td>
 		   	<td>{{$tend['tender']->workvalue}}</td>
-		   	<td data-sort="{{strtotime($tend['tender']->lastdateofsubmisssion)}}">{{$provider::changedateformat($tend['tender']->lastdateofsubmisssion)}}</td>
+		   	<td data-sort="{{strtotime($tend['tender']->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tend['tender']->lastdateofsubmisssion)}}</span></td>
+		   	<td>{{$tend1::moneyFormatIndia($tend['tender']->emdamount)}}</td>
 		   	<td>
 		   		<ol>
 		   		@foreach($tend['tenderusers'] as $user)

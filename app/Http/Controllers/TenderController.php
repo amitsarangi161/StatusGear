@@ -487,7 +487,6 @@ public function pendinguserassigned()
          
           $tenderarr[]=compact('tender','tenderusers');
       }
-     
        $pendingtenderusers=assignedtenderuser::select('users.name','userid', DB::raw('count(*) as total'))
                    ->groupBy('userid')
                    ->whereIn('tenderid',$idarr)
