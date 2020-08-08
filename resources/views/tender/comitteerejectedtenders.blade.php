@@ -52,7 +52,7 @@
 		   	<td>{{$tender->workvalue}}</td>
 		   <td data-sort="{{strtotime($tender->nitpublicationdate)}}">{{$provider::changedateformat($tender->nitpublicationdate)}}</td>
 		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span></td>
-		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</td>
+		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}"><a href="/viewassignedtenderoffice/{{$tender->id}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</a></td>
 		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
 		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
 		   	<td>

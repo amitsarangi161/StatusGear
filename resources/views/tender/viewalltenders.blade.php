@@ -89,6 +89,7 @@
             <td>VIEW</td>
             <td>EDIT</td>
             <td>CREATED AT</td>
+            <td>UPDATED AT</td>
         </tr>
     </thead>
     <tbody>
@@ -299,7 +300,7 @@
             {data: 'ldos', name: 'lastdateofsubmisssion'},
             {data: 'openingdate',name: 'openingdate', searchable: false, sortable : false},
             {data: 'live', name: 'lastdateofsubmisssion'},
-            {data: 'rfpavailabledate', name:'rfpavailabledate'},
+            {data: 'rfpavailabledatelink', name:'rfpavailabledate'},
             {data: 'emdamount', name:'emdamount'},
             {data: 'sta', name: 'sta'},
             {data: 'nitandrfp', name: 'nitandrfp',searchable: false, sortable : false},
@@ -313,6 +314,7 @@
             {data: 'view', name: 'view'},
             {data: 'edit', name: 'edit'},
             {name: 'created_at',data: 'created_at'},
+            {name: 'updated_at',data: 'updated_at'},
             
 
           

@@ -1762,11 +1762,17 @@ public function userassociatepartner(){
                      ->addColumn('tenderrefnolink', function($tenders) {
                          return '<a target="_blank" href="//'.$tenders->tender_website.'"><u>'.$tenders->tenderrefno.'</u></a>';
                      })
+                  ->addColumn('rfpavailabledatelink', function($tenders) {
+                    return '<a target="_blank" href="/viewtender/'.$tenders->id.'" >'.$this->changedateformat($tenders->rfpavailabledate).'</a>';
+                     })  
                   ->editColumn('rfpavailabledate', function($tenders) {
                     return $this->changedateformat($tenders->rfpavailabledate);
                      })
                   ->editColumn('created_at', function($tenders) {
                         return $this->changedatetimeformat($tenders->created_at);
+                     })
+                  ->editColumn('updated_at', function($tenders) {
+                        return $this->changedatetimeformat($tenders->updated_at);
                      })
                    ->editColumn('status', function($tenders) {
                         return $tenders->status;
@@ -1916,7 +1922,7 @@ public function userassociatepartner(){
                        
           })
                   
-          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant','awardedto'])
+          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant','awardedto','rfpavailabledatelink'])
                 
                
                  ->make(true);
