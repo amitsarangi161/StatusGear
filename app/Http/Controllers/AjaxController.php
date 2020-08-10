@@ -24,10 +24,60 @@ use App\engagedlabour;
 use App\dailyvehicle;
 use App\suggestion;
 use App\tender;
+use App\tenderparticipant;
+use App\tenderaward;
 class AjaxController extends Controller
 { 
+  public function ajaxsavetenderaward(Request $request){
+    $chk=tenderaward::where('tenderid',$request->id)->count();
+     if($chk==0)
+     {
+     $tenderaward=new tenderaward();
+     $tenderaward->tenderid=$request->id;
+     $tenderaward->participant=$request->participant;
+     $tenderaward->participant2=$request->participant2;
+     $tenderaward->participant3=$request->participant3;
+     $tenderaward->finalscore=$request->finalscore;
+     $tenderaward->save();
+     return response()->json(1);
+     }
 
+  }
+  public function ajaxdeleteparticipants(Request $request){
+      tenderparticipant::find($request->id)->delete();
 
+  }
+  public function ajaxupdateparticipants(Request $request){
+    $tenderparticipant=tenderparticipant::find($request->id);
+    $tenderparticipant->techscore=$request->techscore;
+    $tenderparticipant->financialscore=$request->financialscore;
+    $tenderparticipant->save();
+  }
+  public function ajaxgetparticipantlist(Request $request){
+    $tenderparticipants=tenderparticipant::select('tenderparticipants.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderparticipants.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderparticipants.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderparticipants.participant3','=','a3.id')
+      ->where('tenderid',$request->tenderid)
+      ->get();
+      return response()->json($tenderparticipants);
+  }
+  public function ajaxsaveparticipants(Request $request){
+    $chk=tenderparticipant::where('tenderid',$request->id)
+                           ->where('participant',$request->participant)
+                           ->get();
+     if(count($chk)==0)
+     {
+     $tenderparticipant=new tenderparticipant();
+     $tenderparticipant->tenderid=$request->id;
+     $tenderparticipant->participant=$request->participant;
+     $tenderparticipant->participant2=$request->participant2;
+     $tenderparticipant->participant3=$request->participant3;
+     $tenderparticipant->techscore=$request->techscore;
+     $tenderparticipant->financialscore=$request->financialscore;
+     $tenderparticipant->save();
+     }
+  }
   public function ajaxexpchangedate(Request $request)
   {
         $expense=expenseentry::find($request->id);

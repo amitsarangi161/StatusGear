@@ -591,4 +591,12 @@ Route::get('/vouchers/cancelleddebitvoucher','AccountController@cancelleddebitvo
 Route::post('/changedrvoucherstatus/{id}','AccountController@changedrvoucherstatus');
 Route::get('/hodrequisition/previousapprovedreq','HomeController@previousapprovedreq');
 
+Route::post('/ajaxsaveparticipants','AjaxController@ajaxsaveparticipants');
+Route::post('/ajaxgetparticipantlist','AjaxController@ajaxgetparticipantlist');
+Route::post('/ajaxupdateparticipants','AjaxController@ajaxupdateparticipants');
+Route::post('/ajaxdeleteparticipants','AjaxController@ajaxdeleteparticipants');
+
+
+Route::post('/ajaxsavetenderaward','AjaxController@ajaxsavetenderaward');
+
 });
