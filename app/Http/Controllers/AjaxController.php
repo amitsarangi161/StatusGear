@@ -28,6 +28,24 @@ use App\tenderparticipant;
 use App\tenderaward;
 class AjaxController extends Controller
 { 
+  public function ajaxdeletetenderaward(Request $request){
+    tenderaward::find($request->id)->delete();    
+
+  }
+  public function ajaxupdateaward(Request $request){
+    $tenderreward=tenderaward::find($request->id);
+    $tenderreward->finalscore=$request->finalscore;
+    $tenderreward->save();
+  }
+  public function ajaxgettenderawardlist(Request $request){
+    $tenderrewards=tenderaward::select('tenderawards.*','associatepartners.associatepartnername','a2.associatepartnername as associatepartnername2','a3.associatepartnername as associatepartnername3')
+      ->leftJoin('associatepartners','tenderawards.participant','=','associatepartners.id')
+      ->leftJoin('associatepartners as a2','tenderawards.participant2','=','a2.id')
+      ->leftJoin('associatepartners as a3','tenderawards.participant3','=','a3.id')
+      ->where('tenderid',$request->tenderid)
+      ->get();
+      return response()->json($tenderrewards);
+  }
   public function ajaxsavetenderaward(Request $request){
     $chk=tenderaward::where('tenderid',$request->id)->count();
      if($chk==0)

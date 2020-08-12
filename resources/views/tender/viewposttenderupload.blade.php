@@ -1031,7 +1031,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 			<td><strong>Participant1</strong></td>
 			<td><strong>Participant2</strong></td>
 			<td><strong>Participant3</strong></td>
-			<td><strong>Finanal Score</strong></td>
+			<td><strong>Final Score</strong></td>
             <td><strong>ACTION</strong></td>
 
 		</tr>
@@ -1065,7 +1065,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 				</select>
 			</td>
 			<td>
-				<input type="text" id="tfinalscore" name="finalscore" placeholder="Financial Score" class="form-control">
+				<input type="text" id="tfinalscore" name="finalscore" placeholder="Final Score" class="form-control">
 			</td>
 			<td>
 				<button type="button" onclick="savetenderaward('{{$tender->id}}');" id="addnew" class="addauthor btn btn-primary">ADD</button>
@@ -1075,6 +1075,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	
 	 
 </table>
+
 <table class="table">
 	<thead>
 		<tr class="bg-gray">
@@ -1088,8 +1089,8 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 		
 	</thead>
-	<tbody>
-		@foreach($tenderrewards as $tenderreward)
+	<tbody id="tenderreward_id">
+		<!-- @foreach($tenderrewards as $tenderreward)
           <tr>
           	<td>{{$tenderreward->associatepartnername}}</td>
           	<td>{{$tenderreward->associatepartnername2}}</td>
@@ -1108,7 +1109,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
           			
           	</td>
           </tr>
-		@endforeach
+		@endforeach -->
 	</tbody>
 	
 </table>
@@ -1189,8 +1190,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
       </div>
       <div class="modal-body">
 
-    <form action="/updateaward" method="post" enctype="multipart/form-data"> 
-		{{csrf_field()}}
+   
 <table class="table table-responsive table-hover table-bordered table-striped">
 		<input type="hidden" id="awid" name="awid">
 	
@@ -1211,11 +1211,11 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	  	<td><input type="text" id="finalscore1" name="finalscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
 	  </tr>
 	  <tr>
-	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  	<td colspan="2" style="text-align: right;"><button onclick="ajaxupdateaward();" class="btn btn-success" type="button">UPDATE</button></td>
 	  </tr>
 
 </table>
-</form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1392,6 +1392,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
                      finalscore:finalscore,
                      },
                      success:function(data) { 
+                     	tenderrewardlist();
 
                      
                      
@@ -1403,6 +1404,99 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
   		alert("please enter a participant");
 		}
 		
+	}
+	tenderrewardlist();
+	function tenderrewardlist(){
+		var tenderid=$("#tenderid").val();
+		        $.ajaxSetup({
+		            headers:{
+		                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+		            }
+		        });
+              
+
+              $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxgettenderawardlist")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                      tenderid:tenderid,
+                     },
+               success:function(data) { 
+               				//console.log(data);
+                         $("#tenderreward_id").empty();
+                         
+                        $("#tenderreward_id").show();
+                     $.each(data,function(key,value){
+
+                     	var x='<tr>'+
+                     	       '<td>'+value.associatepartnername+'</td>'+
+                     	       '<td>'+value.associatepartnername2+'</td>'+
+                     	       '<td>'+value.associatepartnername3+'</td>'+
+                     	       '<td>'+value.finalscore+'</td>'+
+                     	       '<td><button class="btn btn-info" onclick="editaward('+value.id+',\''+value.associatepartnername+'\',\''+value.associatepartnername2+'\',\''+value.associatepartnername3+'\',\''+value.finalscore+'\');" type="button">EDIT</button></td>'+
+                     	       '<td><button type="button" class="btn btn-danger"onclick="deletetenderaward('+value.id+');">X</button></td>'+
+                     	       '</tr>';
+                     	       
+
+                        $("#tenderreward_id").append(x);
+                     });
+                 
+                }
+              });
+
+
+	}
+	function ajaxupdateaward(){
+		var id=$('#awid').val();
+		var finalscore = $('#finalscore1').val();
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxupdateaward")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     finalscore:finalscore,
+                     },
+                     success:function(data) {
+                     	$('#myModal2').modal('toggle');
+                     	tenderrewardlist();
+
+                     
+                     
+               }
+
+             });
+	}
+	function deletetenderaward(id){
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxdeletetenderaward")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     },
+
+                     success:function(data) {
+                     	tenderrewardlist();
+                     
+               }
+
+             });
 	}
 	
 	function editparticipant(id,associatepartnername,associatepartnername2,associatepartnername3,techscore,financialscore) {
@@ -1416,8 +1510,6 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 		$("#myModal").modal('show');
 	}
 	function editaward(id,associatepartnername,associatepartnername2,associatepartnername3,finalscore) {
-		//alert(finalscore);
-		//alert(id);
 		$("#awid").val(id);
 		$("#associatepartnername5").val(associatepartnername);
 		$("#associatepartnername6").val(associatepartnername2);

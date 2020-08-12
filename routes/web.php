@@ -598,5 +598,8 @@ Route::post('/ajaxdeleteparticipants','AjaxController@ajaxdeleteparticipants');
 
 
 Route::post('/ajaxsavetenderaward','AjaxController@ajaxsavetenderaward');
+Route::post('/ajaxgettenderawardlist','AjaxController@ajaxgettenderawardlist');
+Route::post('/ajaxupdateaward','AjaxController@ajaxupdateaward');
+Route::post('/ajaxdeletetenderaward','AjaxController@ajaxdeletetenderaward');
 
 });

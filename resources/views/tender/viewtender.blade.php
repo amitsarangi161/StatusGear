@@ -772,8 +772,6 @@
 
 		</tr>
 	</thead>
-	<form action="/savetenderparticipants/{{$tender->id}}" method="post">
-		{{csrf_field()}}
 	
 	<tbody>
 		<tr>
@@ -786,7 +784,7 @@
 				</select>
 			</td>
 			<td>
-				<select class="form-control select2"  name="participant2">
+				<select class="form-control select2" id="participant2" name="participant2">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -794,7 +792,7 @@
 				</select>
 			</td>
 			<td>
-				<select class="form-control select2"  name="participant3">
+				<select class="form-control select2" id="participant3" name="participant3">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -808,11 +806,10 @@
 				<input type="text" id="financialscore" name="financialscore" placeholder="Financial Score" class="form-control">
 			</td>
 			<td>
-				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
+				<button type="button" onclick="savetenderparticipant('{{$tender->id}}');" id="addnew" class="addauthor btn btn-primary">ADD</button>
 			</td>
 		</tr>
 	</tbody>
-</form>
 	
 	 
 </table>
@@ -830,8 +827,8 @@
 
 		
 	</thead>
-	<tbody>
-		@foreach($tenderparticipants as $tenderparticipant)
+	<tbody id="participant_id">
+		<!-- @foreach($tenderparticipants as $tenderparticipant)
           <tr>
           	<td>{{$tenderparticipant->associatepartnername}}</td>
           	<td>{{$tenderparticipant->associatepartnername2}}</td>
@@ -851,7 +848,7 @@
           			
           	</td>
           </tr>
-		@endforeach
+		@endforeach -->
 	</tbody>
 	
 </table>
@@ -873,13 +870,12 @@
 
 		</tr>
 	</thead>
-	<form action="/savetenderawards/{{$tender->id}}" method="post">
-		{{csrf_field()}}
+	
 	
 	<tbody>
 		<tr>
 			<td>
-				<select class="form-control select2" id="participant" name="participant">
+				<select class="form-control select2" id="tparticipant" name="participant">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -887,7 +883,7 @@
 				</select>
 			</td>
 			<td>
-				<select class="form-control select2"  name="participant2">
+				<select class="form-control select2" id="tparticipant2" name="participant2">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -895,7 +891,7 @@
 				</select>
 			</td>
 			<td>
-				<select class="form-control select2"  name="participant3">
+				<select class="form-control select2" id="tparticipant3" name="participant3">
 				<option value="">Select a Participant</option>
 				@foreach($participants as $participant)
                   <option value="{{$participant->id}}">{{$participant->associatepartnername}}</option>
@@ -903,14 +899,13 @@
 				</select>
 			</td>
 			<td>
-				<input type="text" id="finalscore" name="finalscore" placeholder="Financial Score" class="form-control">
+				<input type="text" id="tfinalscore" name="finalscore" placeholder="Final Score" class="form-control">
 			</td>
 			<td>
-				<button type="submit" id="addnew" class="addauthor btn btn-primary">ADD</button>
+				<button type="button" onclick="savetenderaward('{{$tender->id}}');" id="addnew" class="addauthor btn btn-primary">ADD</button>
 			</td>
 		</tr>
 	</tbody>
-</form>
 	
 	 
 </table>
@@ -927,8 +922,8 @@
 
 		
 	</thead>
-	<tbody>
-		@foreach($tenderrewards as $tenderreward)
+	<tbody id="tenderreward_id">
+		<!-- @foreach($tenderrewards as $tenderreward)
           <tr>
           	<td>{{$tenderreward->associatepartnername}}</td>
           	<td>{{$tenderreward->associatepartnername2}}</td>
@@ -947,7 +942,7 @@
           			
           	</td>
           </tr>
-		@endforeach
+		@endforeach -->
 	</tbody>
 	
 </table>
@@ -978,8 +973,7 @@
       </div>
       <div class="modal-body">
 
-    <form action="/updateaward" method="post" enctype="multipart/form-data"> 
-		{{csrf_field()}}
+  
 <table class="table table-responsive table-hover table-bordered table-striped">
 		<input type="hidden" id="awid" name="awid">
 	
@@ -1000,11 +994,11 @@
 	  	<td><input type="text" id="finalscore1" name="finalscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
 	  </tr>
 	  <tr>
-	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" onclick="ajaxupdateaward();"  type="button">UPDATE</button></td>
 	  </tr>
 
 </table>
-</form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1015,7 +1009,7 @@
 </div>
 
 
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModalparticipant" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -1026,8 +1020,7 @@
       </div>
       <div class="modal-body">
 
-    <form action="/updateparticipant" method="post" enctype="multipart/form-data"> 
-		{{csrf_field()}}
+  
 <table class="table table-responsive table-hover table-bordered table-striped">
 		<input type="hidden" id="uid" name="uid">
 	
@@ -1052,11 +1045,10 @@
 	  	<td><input type="text" id="financialscore1" name="financialscore" class="form-control" placeholder="Enter Financial Score"autocomplete="off"></td>
 	  </tr>
 	  <tr>
-	  	<td colspan="2" style="text-align: right;"><button class="btn btn-success" type="submit">UPDATE</button></td>
+	  	<td colspan="2" style="text-align: right;"><button onclick="ajaxupdateparticipant();" class="btn btn-success" type="button">UPDATE</button></td>
 	  </tr>
 
 </table>
-</form>
   
       </div>
       <div class="modal-footer">
@@ -1068,6 +1060,277 @@
 </div>
 
 <script type="text/javascript">
+	tenderrewardlist();
+	function tenderrewardlist(){
+		var tenderid=$("#tenderid").val();
+		        $.ajaxSetup({
+		            headers:{
+		                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+		            }
+		        });
+              
+
+              $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxgettenderawardlist")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                      tenderid:tenderid,
+                     },
+               success:function(data) { 
+               				//console.log(data);
+                         $("#tenderreward_id").empty();
+                         
+                        $("#tenderreward_id").show();
+                     $.each(data,function(key,value){
+
+                     	var x='<tr>'+
+                     	       '<td>'+value.associatepartnername+'</td>'+
+                     	       '<td>'+value.associatepartnername2+'</td>'+
+                     	       '<td>'+value.associatepartnername3+'</td>'+
+                     	       '<td>'+value.finalscore+'</td>'+
+                     	       '<td><button class="btn btn-info" onclick="editaward('+value.id+',\''+value.associatepartnername+'\',\''+value.associatepartnername2+'\',\''+value.associatepartnername3+'\',\''+value.finalscore+'\');" type="button">EDIT</button></td>'+
+                     	       '<td><button type="button" class="btn btn-danger"onclick="deletetenderaward('+value.id+');">X</button></td>'+
+                     	       '</tr>';
+                     	       
+
+                        $("#tenderreward_id").append(x);
+                     });
+                 
+                }
+              });
+
+
+	}
+		tenderparticipantlist();
+	function tenderparticipantlist(){
+		var tenderid=$("#tenderid").val();
+		        $.ajaxSetup({
+		            headers:{
+		                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+		            }
+		        });
+              
+
+              $.ajax({
+               type:'POST',
+              
+               url:'{{url("/ajaxgetparticipantlist")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                      tenderid:tenderid,
+                     },
+               success:function(data) { 
+               				//console.log(data);
+                         $("#participant_id").empty();
+                         
+                        $("#participant_id").show();
+                     $.each(data,function(key,value){
+
+                     	var x='<tr>'+
+                     	       '<td>'+value.associatepartnername+'</td>'+
+                     	       '<td>'+value.associatepartnername2+'</td>'+
+                     	       '<td>'+value.associatepartnername3+'</td>'+
+                     	       '<td>'+value.techscore+'</td>'+
+                     	       '<td>'+value.financialscore+'</td>'+
+                     	       '<td><button class="btn btn-info" onclick="editparticipant('+value.id+',\''+value.associatepartnername+'\',\''+value.associatepartnername2+'\',\''+value.associatepartnername3+'\',\''+value.techscore+'\',\''+value.financialscore+'\');" type="button">EDIT</button></td>'+
+                     	       '<td><button type="button" class="btn btn-danger"onclick="deleteparticipant('+value.id+');">X</button></td>'+
+                     	       '</tr>';
+                     	       
+
+                        $("#participant_id").append(x);
+                     });
+                 
+                }
+              });
+
+
+	}
+		function savetenderparticipant(id){
+
+		var participant = $('#participant').val();
+		var participant2 = $('#participant2').val();
+		var participant3 = $('#participant3').val();
+		var techscore = $('#techscore').val();
+		var financialscore = $('#financialscore').val();
+		if(participant != ""){
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxsaveparticipants")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     participant:participant,
+                     participant2:participant2,
+                     participant3:participant3,
+                     techscore:techscore,
+                     financialscore:financialscore,
+                     },
+                     success:function(data) { 
+                     	tenderparticipantlist();
+
+                     
+                     
+               }
+
+             });
+
+		}else{
+  		alert("please enter a participant");
+		}
+		
+	}
+	function ajaxupdateparticipant(){
+		var id=$('#uid').val();
+		var techscore = $('#techscore1').val();
+		var financialscore = $('#financialscore1').val();
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxupdateparticipants")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     techscore:techscore,
+                     financialscore:financialscore,
+                     },
+
+                     success:function(data) {
+                     	$('#myModalparticipant').modal('toggle');
+                     	tenderparticipantlist();
+
+                     
+                     
+               }
+
+             });
+
+		}
+		function deleteparticipant(id){
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxdeleteparticipants")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     },
+
+                     success:function(data) {
+                     	tenderparticipantlist();
+                     
+               }
+
+             });
+
+		}
+		function savetenderaward(id){
+		var participant = $('#tparticipant').val();
+		var participant2 = $('#tparticipant2').val();
+		var participant3 = $('#tparticipant3').val();
+		var finalscore = $('#tfinalscore').val();
+		if(participant != ""){
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxsavetenderaward")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     participant:participant,
+                     participant2:participant2,
+                     participant3:participant3,
+                     finalscore:finalscore,
+                     },
+                     success:function(data) { 
+                     	tenderrewardlist();
+
+                     
+                     
+               }
+
+             });
+
+		}else{
+  		alert("please enter a participant");
+		}
+		
+	}
+	function ajaxupdateaward(){
+		var id=$('#awid').val();
+		var finalscore = $('#finalscore1').val();
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxupdateaward")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     finalscore:finalscore,
+                     },
+                     success:function(data) {
+                     	$('#myModal2').modal('toggle');
+                     	tenderrewardlist();
+
+                     
+                     
+               }
+
+             });
+	}
+	function deletetenderaward(id){
+		$.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf_token"]').attr('content')
+            }
+        });
+           $.ajax({
+               type:'POST',
+               url:'{{url("/ajaxdeletetenderaward")}}',
+              
+               data: {
+                     "_token": "{{ csrf_token() }}",
+                     id:id,
+                     },
+
+                     success:function(data) {
+                     	tenderrewardlist();
+                     
+               }
+
+             });
+	}
 	function editaward(id,associatepartnername,associatepartnername2,associatepartnername3,finalscore) {
 		//alert(finalscore);
 		//alert(id);
@@ -1086,7 +1349,7 @@
 		$("#associatepartnername3").val(associatepartnername3);
 		$("#techscore1").val(techscore);
         $("#financialscore1").val(financialscore);
-		$("#myModal").modal('show');
+		$("#myModalparticipant").modal('show');
 	}
 	function fetchcomment(argument) {
 		var selecteduser=$("#selecteduser").val();
