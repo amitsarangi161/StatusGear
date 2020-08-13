@@ -36,7 +36,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 </tr>
 <tr>
 	<td><strong>Location</strong></td>
-	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location"></td>
+	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
 	<td><strong>Evaluation Process</strong></td>
 	<td>
 		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>

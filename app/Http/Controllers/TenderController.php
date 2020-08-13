@@ -2018,7 +2018,50 @@ public function userassociatepartner(){
        }
        public function home()
        {
-           return view('tender.home');
+           $nooftenders=tender::count();
+           $temptenders=temptender::where('isactive',0)->count();
+           $adminapprovedtenders=DB::table('tenders')
+                ->select('tenders.*','users.name','u1.name as assignedoffice')
+                ->leftJoin('users','tenders.author','=','users.id')
+                ->leftJoin('users as u1','tenders.assignedoffice','=','u1.id')
+                ->where('status','ADMIN APPROVED')
+                ->count();
+          $approvedtendercommitte=DB::table('tenders')->where('status','COMMITEE APPROVED')
+            ->select('tenders.*','users.name')
+            ->leftJoin('users','tenders.author','=','users.id')
+            ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))
+            ->count();
+          $appliedtenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('status','APPLIED')
+          ->count();
+          $rejectedtenders=DB::table('tenders')
+              ->select('tenders.*','users.name')
+              ->leftJoin('users','tenders.author','=','users.id')
+              ->where('status','COMMITTEE REJECTED')
+              ->orderBy('lastdateofsubmisssion','desc')
+              ->count();
+          $assigntendertoapply=DB::table('tenders')
+                ->select('tenders.*','users.name')
+                ->leftJoin('users','tenders.author','=','users.id')
+                ->where('status','ADMIN APPROVED')
+                ->where('tenders.assignedoffice',Auth::id())
+                ->orderBy('lastdateofsubmisssion','desc')
+                ->count();
+          $adminapprovedtenders=DB::table('tenders')
+          ->select('tenders.*','users.name','u1.name as assignedoffice')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->leftJoin('users as u1','tenders.assignedoffice','=','u1.id')
+          ->where('status','ADMIN APPROVED')
+          ->count();
+          //return $adminapprovedtenders;
+           $currenttenders=DB::table('tenders')
+          ->select('tenders.*','users.name')
+          ->leftJoin('users','tenders.author','=','users.id')
+          ->where('lastdateofsubmisssion', '>=',date('Y-m-d'))->count();
+           //return $currenttenders;
+           return view('tender.home',compact('nooftenders','temptenders','adminapprovedtenders','approvedtendercommitte','appliedtenders','rejectedtenders','assigntendertoapply','adminapprovedtenders','currenttenders'));
        }
 
        public function createtender()
