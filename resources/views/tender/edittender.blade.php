@@ -38,18 +38,31 @@
 	<td><input type="text" name="location" class="form-control" placeholder="Enter Work Location" value="{{$tender->location}}"></td>
 	<td><strong>Evaluation Process</strong></td>
 	<td>
-		<input type="radio" value="LCS" name="evaluationprocess" checked> <strong>LCS</strong>
-		<input type="radio" value="QCBS" name="evaluationprocess"><strong>QCBS</strong>
+		<input type="radio" value="LCS" name="evaluationprocess" {{($tender->evaluationprocess=='LCS')? 'checked':''}}><strong>LCS</strong>
+		<input type="radio" value="QCBS" name="evaluationprocess" {{($tender->evaluationprocess=='QCBS')? 'checked':''}}><strong>QCBS</strong>
+
+	@php
+	if($tender->evaluationprocess =='LCS')
+	   $val='none';
+	   else
+	   $val='block';
+	@endphp
+	<div id="evaluationscore" style="display: {{$val}}">
+	<strong>TS</strong><input type="number" name="evaluationtechnical" id="evaluationtechnical" value="{{$tender->evaluationtechnical}}" style="width:15%">
+	<strong>FS</strong><input type="number" name="evaluationfinancial" id="evaluationfinancial" value="{{$tender->evaluationfinancial}}" style="width:15%">
+	</div>
+	
+	
 	</td>
 	
 </tr>
-<tr id="evaluationscore" style="display: none;background-color: gray;">
+<!-- <tr id="evaluationscore" style="display: none;background-color: gray;">
 	<td><strong>TECHNICAL</strong></td>
-	<td><input type="number" name="evaluationtechnical" id="evaluationtechnical" class="form-control" value="0"></td>
+	<td><input type="number" name="evaluationtechnical" id="evaluationtechnical" class="form-control"></td>
 	<td><strong>FINANCIAL</strong></td>
-	<td><input type="number" name="evaluationfinancial" id="evaluationfinancial" class="form-control" value="0"></td>
+	<td><input type="number" name="evaluationfinancial" id="evaluationfinancial" class="form-control"></td>
 	
-</tr>
+</tr> -->
 <tr>
 	<td><strong>TENDER REF NO/TENDER ID *</strong></td>
 	<td>
@@ -391,6 +404,7 @@
        	   $("#evaluationscore").hide();
        }
     });
+    $('input:radio[name="gender"]').filter('[value="Male"]').attr('checked', true);
 
 	 $( ".convert2" ).on("change paste keyup", function() {
  var money1=RsPaise(Math.round(document.getElementById('registrationamount').value*100)/100);

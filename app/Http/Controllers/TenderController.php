@@ -1382,6 +1382,7 @@ public function userassociatepartner(){
         }
        public function updatetender(Request $request,$id){
 
+              //return $request->all();
 
                 $tender=tender::find($id);
 
