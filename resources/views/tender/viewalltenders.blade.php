@@ -82,9 +82,9 @@
             <td>APPLIED AS</td>
             <td>COMMENTS VIEW</td>
             <td>NO OF PARTICIPANT</td>
+            <td>PARTICIPANT LIST</td>
             <td>AWARDED TO</td>
             <td>AGREEMENT VALUE</td>
-            
             <td>AUTHOR</td>
             <td>VIEW</td>
             <td>EDIT</td>
@@ -308,8 +308,10 @@
             {data: 'recomended', name: 'recomended'},
             {data: 'commentview', name: 'commentview',searchable: false, sortable : false},
             {data: 'noofparticipant', name: 'noofparticipant',searchable: false, sortable : false},
+            {data: 'participantlist', name: 'participantlist',searchable: false, sortable : false},
             {data: 'awardedto', name: 'awardedto',searchable: false, sortable : false},
             {data: 'agreementvalue', name: 'agreementvalue',searchable: false, sortable : false},
+            
             {data: 'name', name: 'users.name'},
             {data: 'view', name: 'view'},
             {data: 'edit', name: 'edit'},

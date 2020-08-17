@@ -1731,6 +1731,14 @@ public function userassociatepartner(){
                     
                     
                     })
+                  ->addColumn('participantlist', function($tenders) {
+                    if ($tenders->participantlistupload !='')
+                     return '<a href="/img/posttenderdoc/'.$tenders->participantlistupload.'" target="_blank"><i style="color: green;font-size: 30px;" class="fa fa-check-circle-o"></i></a>';
+                    else
+                      return '<i style="color: red;font-size: 30px;" class="fa fa-times-circle-o"> </i>';
+                    
+                    
+                    })
                   ->addColumn('view', function($tenders){
                          return '<a target="_blank" href="/viewtender/'.$tenders->id.'" class="btn btn-info">VIEW</a>';
                     })
@@ -1923,7 +1931,7 @@ public function userassociatepartner(){
                        
           })
                   
-          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant','awardedto','rfpavailabledatelink'])
+          ->rawColumns(['idbtn','view','edit','now','sta','live','ldos','tendersiteidlink','tenderrefnolink','openingdate','nitandrfp','corrigendum','commentview','noofparticipant','awardedto','rfpavailabledatelink','participantlist'])
                 
                
                  ->make(true);
