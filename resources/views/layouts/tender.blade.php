@@ -279,6 +279,11 @@
           </ul>
         </li>
         @endif
+
+        @php
+        $temptenders=\App\temptender::where('isactive',1)->count();
+        $nottemptenders=\App\temptender::where('isactive',0)->count();
+        @endphp
       <li class="{{ Request::is('temptender*') ? 'active' : '' }} treeview">
           <a href="#">
             <i class="fa fa-folder"></i> <span>TEMP TENDER</span>
@@ -290,12 +295,14 @@
           <ul class="treeview-menu">
             <li class="{{ Request::is('temptender/temptenders') ? 'active' : '' }}"><a href="/temptender/temptenders"><i class="fa fa-circle-o text-aqua"></i>TEMP TENDERS
              <span class="pull-right-container">
+              <span class="label label-success pull-right">{{$temptenders}}</span>
                   
               </span>
 
             </a></li>
             <li class="{{ Request::is('temptender/notellgible') ? 'active' : '' }}"><a href="/temptender/notellgible"><i class="fa fa-circle-o text-aqua"></i>NOT ELLIGIBLE
              <span class="pull-right-container">
+              <span class="label label-success pull-right">{{$nottemptenders}}</span>
                   
               </span>
 
