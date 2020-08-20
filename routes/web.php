@@ -602,4 +602,6 @@ Route::post('/ajaxgettenderawardlist','AjaxController@ajaxgettenderawardlist');
 Route::post('/ajaxupdateaward','AjaxController@ajaxupdateaward');
 Route::post('/ajaxdeletetenderaward','AjaxController@ajaxdeletetenderaward');
 
+Route::post('/changestatus/{id}','TenderController@changestatus');
+
 });

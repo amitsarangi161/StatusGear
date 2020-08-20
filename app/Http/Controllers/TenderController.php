@@ -28,6 +28,13 @@ use DateTime;
 class TenderController extends Controller
 { 
   
+public function changestatus(Request $request,$id){
+  $changestatus=Tender::find($id);
+  $changestatus->status=$request->status;
+  $changestatus->save();
+  return back();
+
+}
 public function addagreementvalue(Request $request,$id)
 {
      $tender=tender::find($id);

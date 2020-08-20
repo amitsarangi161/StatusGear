@@ -181,12 +181,20 @@
 	<td>
 		<form action="/changestatus/{{$tender->id}}" method="post">
 			{{csrf_field()}}
-			<select class="form-control" name="status" required="">
+		<select class="form-control select2" name="status" required="">
+			<option value="">ALL</option>
+			<option value="ADMIN APPROVED" {{ ( $tender->status == 'ADMIN APPROVED') ? 'selected' : '' }}>ADMIN APPROVED</option>
+			<option value="ADMIN REJECTED" {{ ( $tender->status == 'ADMIN REJECTED') ? 'selected' : '' }}>ADMIN REJECTED</option>
+			<option value="APPLIED" {{ ( $tender->status == 'APPLIED') ? 'selected' : '' }}>APPLIED</option>
+			<option value="NOT APPLIED" {{ ( $tender->status == 'NOT APPLIED') ? 'selected' : '' }}>NOT APPLIED</option>
 
-	          <option value="">Select a Status</option>
-	         
-	          
-	        </select>
+			<option value="COMMITEE APPROVED" {{ ( $tender->status == 'COMMITEE APPROVED') ? 'selected' : '' }}>COMMITEE APPROVED</option>
+
+			<option value="COMMITTEE REJECTED" {{ ( $tender->status == 'COMMITTEE REJECTED') ? 'selected' : '' }}>COMMITTEE REJECTED</option>
+
+			<option value="NOT INTERESTED" {{ ( $tender->status == 'NOT INTERESTED') ? 'selected' : '' }}>NOT INTERESTED</option>
+	
+		</select>
          <button type="submit" class="btn btn-success">Change</button>
        </form>
 	</td>
