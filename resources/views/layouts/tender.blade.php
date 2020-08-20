@@ -289,7 +289,7 @@
             <i class="fa fa-folder"></i> <span>TEMP TENDER</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-              
+              <span class="label label-info pull-right">{{$temptenders}}</span>
             </span>
           </a>
           <ul class="treeview-menu">
