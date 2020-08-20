@@ -176,6 +176,22 @@
 	</td>
 </form>
 </tr>
+<tr>
+	<td><strong>CHANGE STATUS *</strong></td>
+	<td>
+		<form action="/changestatus/{{$tender->id}}" method="post">
+			{{csrf_field()}}
+			<select class="form-control" name="status" required="">
+
+	          <option value="">Select a Status</option>
+	         
+	          
+	        </select>
+         <button type="submit" class="btn btn-success">Change</button>
+       </form>
+	</td>
+
+</tr>
 
 </table>
 
