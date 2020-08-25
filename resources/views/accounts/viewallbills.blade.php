@@ -47,7 +47,7 @@
         <option value="" >Select a Year</option>
         <option value="2018-19" {{ (Request::get('year')=="2018-19") ? 'selected' : '' }}>2018-19</option>
         <option value="2019-20" {{ (Request::get('year')=="2019-20") ? 'selected' : '' }}>2019-20</option>
-        <option value="2020-20" {{ (Request::get('year')=="2020-21") ? 'selected' : '' }}>2020-21</option>
+        <option value="2020-21" {{ (Request::get('year')=="2020-21") ? 'selected' : '' }}>2020-21</option>
         
       </select>
     </td>

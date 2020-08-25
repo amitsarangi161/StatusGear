@@ -18,6 +18,7 @@ Route::post('/ajaxcheckbill','AccountController@ajaxcheckbill');
 Route::post('/ajaxsearchtenderno','AjaxController@ajaxsearchtenderno');
 Route::get('/', 'HomeController@home')->name('home');
 Route::get('gettenderlist','TenderController@gettenderlist')->name('gettenderlist');
+Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderapprovallist')->name('getpendingtenderapprovallist');
 Route::get('getaccountexpenseentrylist','AccountController@getaccountexpenseentrylist')->name('getaccountexpenseentrylist');
 Route::get('getaccountapprovedexpenseentry','AccountController@getaccountapprovedexpenseentry')->name('getaccountapprovedexpenseentry');
 Route::get('getaccountcancelledexpenseentry','AccountController@getaccountcancelledexpenseentry')->name('getaccountcancelledexpenseentry');
