@@ -21,6 +21,8 @@ Route::get('gettenderlist','TenderController@gettenderlist')->name('gettenderlis
 Route::get('getpendingtenderapprovallist','TenderController@getpendingtenderapprovallist')->name('getpendingtenderapprovallist');
 Route::get('getapprovedtenderapprovallist','TenderController@getapprovedtenderapprovallist')->name('getapprovedtenderapprovallist');
 Route::get('gettenderllistforcommitee','TenderController@gettenderllistforcommitee')->name('gettenderllistforcommitee');
+Route::get('getadminapprovedtenderslist','TenderController@getadminapprovedtenderslist')->name('getadminapprovedtenderslist');
+Route::get('getassignedtendersofficelist','TenderController@getassignedtendersofficelist')->name('getassignedtendersofficelist');
 Route::get('getaccountexpenseentrylist','AccountController@getaccountexpenseentrylist')->name('getaccountexpenseentrylist');
 Route::get('getaccountapprovedexpenseentry','AccountController@getaccountapprovedexpenseentry')->name('getaccountapprovedexpenseentry');
 Route::get('getaccountcancelledexpenseentry','AccountController@getaccountcancelledexpenseentry')->name('getaccountcancelledexpenseentry');
