@@ -2144,6 +2144,72 @@ public function userassociatepartner(){
                
                  ->make(true);
        }
+       public function gettemptenderslist(Request $request)
+       {
+
+          $temptenders=temptender::where('isactive',1);
+          
+          
+          return DataTables::of($temptenders)
+                 ->setRowClass(function ($temptenders) {
+                        $date = \Carbon\Carbon::parse($temptenders->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
+                              
+                   
+                })
+                 
+                 ->addColumn('status', function($temptenders){
+                         return '<span class="label label-success">'.$temptenders->status.'</span>';
+                    })
+                 ->addColumn('tender_website', function($temptenders){
+                         return '<a target="_blank"  href="'.$temptenders->tender_website.'">'.$temptenders->tender_website.'</a>';
+                    })
+                  ->addColumn('tender_site_ref', function($temptenders){
+                         return '<a target="_blank"  href="'.$temptenders->tender_site_ref.'">'.$temptenders->tender_site_ref.'</a>';
+                    })
+                  ->addColumn('tempid', function($temptenders){
+                  return '<select id="tid'.$temptenders->id.'" onchange="changestatus(this.value,'.$temptenders->id.')">
+                      <option value="">Select a Action</option>
+                      <option value="ELLIGIBLE,INTERESTED">ELLIGIBLE,INTERESTED</option>
+                     <option value="ELLIGIBLE,NOT INTERESTED">ELLIGIBLE,NOT INTERESTED</option>
+                     <option value="NOT ELLIGIBLE,INTERESTED">NOT ELLIGIBLE,INTERESTED</option>
+                     <option value="NOT ELLIGIBLE,NOT INTERESTED">NOT ELLIGIBLE,NOT INTERESTED</option>
+                    </select>';
+                    })
+
+                  ->addColumn('now', function($temptenders){
+                         return '<p class="b" title="'.$temptenders->nameofthework.'">'.$temptenders->nameofthework.'</p>';
+                    })
+                    ->addColumn('ldos', function($temptenders) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($temptenders->lastdateofsubmisssion).'</strong></span>';
+                     })
+                  ->editColumn('nitpublicationdate', function($temptenders) {
+                    return $this->changedateformat($temptenders->nitpublicationdate);
+                     })
+        
+                ->editColumn('lastdateofsubmisssion', function($temptenders) {
+                    return $this->changedateformat($temptenders->lastdateofsubmisssion);
+                     })
+                 
+                  
+                  ->rawColumns(['now','status','ldos','tender_website','tender_site_ref','tempid'])
+                
+               
+                 ->make(true);
+       }
        public function getviewalltenderlist(Request $request)
        {
           $tenders=DB::table('tenders')

@@ -171,6 +171,15 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 	</td>
 </form>
 </tr>
+<tr>
+	<td><strong>Reason For Approval</strong></td>
+	<td><textarea name="notes" class="form-control" placeholder="Reason For Approval">{{$tender->notes}}</textarea></td>
+	<td></td>
+	<td>
+		
+	</td>
+</tr>
+
 	
 </table>
 

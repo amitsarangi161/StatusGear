@@ -23,6 +23,7 @@ Route::get('getapprovedtenderapprovallist','TenderController@getapprovedtenderap
 Route::get('gettenderllistforcommitee','TenderController@gettenderllistforcommitee')->name('gettenderllistforcommitee');
 Route::get('getadminapprovedtenderslist','TenderController@getadminapprovedtenderslist')->name('getadminapprovedtenderslist');
 Route::get('getassignedtendersofficelist','TenderController@getassignedtendersofficelist')->name('getassignedtendersofficelist');
+Route::get('gettemptenderslist','TenderController@gettemptenderslist')->name('gettemptenderslist');
 Route::get('getaccountexpenseentrylist','AccountController@getaccountexpenseentrylist')->name('getaccountexpenseentrylist');
 Route::get('getaccountapprovedexpenseentry','AccountController@getaccountapprovedexpenseentry')->name('getaccountapprovedexpenseentry');
 Route::get('getaccountcancelledexpenseentry','AccountController@getaccountcancelledexpenseentry')->name('getaccountcancelledexpenseentry');

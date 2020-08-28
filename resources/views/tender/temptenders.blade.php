@@ -24,7 +24,7 @@
  </a>
 
 <div class="table-responsive">
-<table class="table table-responsive table-hover table-bordered table-striped datatablescroll">
+<table class="table table-responsive table-hover table-bordered table-striped yajratable">
 	<thead>
 		<tr class="bg-blue">
 			<td>ID</td>
@@ -36,7 +36,6 @@
 			<td>WORK VALUE</td>
 			<td>ACTION</td>
 			<td>LAST DATE OF SUB.</td>
-			<td>EMD AMT</td>
 			<td width="10%">TENDER WEBSITE</td>
 			<td width="10%">TENDER REF LINK</td>
 			<td>STATUS</td>
@@ -45,41 +44,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($temptenders as $tender)
-		   
-           
-		   <tr>
-		   	<td>{{$tender->id}}</td>
-		   	<td>{{$tender->tendersiteid}}</td>
-		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
-		   	<td>{{$tender->clientname}}</td>
-		  	 <td>{{$tender->location}}</td>
-		   	<td>{{$tender->tenderrefno}}</td>
-		   	<td>{{$tender->workvalue}}</td>
-		   
-		   	  <td id="tid{{$tender->id}}">
-		    	 <select onchange="changestatus(this.value,'{{$tender->id}}')" class="form-control">
-		    	 <option value="">Select a Action</option>
-		    	 <option value="ELLIGIBLE,INTERESTED">ELLIGIBLE,INTERESTED</option>
-		    	 <option value="ELLIGIBLE,NOT INTERESTED">ELLIGIBLE,NOT INTERESTED</option>
-		    	 <option value="NOT ELLIGIBLE,INTERESTED">NOT ELLIGIBLE,INTERESTED</option>
-		    	 <option value="NOT ELLIGIBLE,NOT INTERESTED">NOT ELLIGIBLE,NOT INTERESTED</option>
-		    	</select>
-		    </td>
-		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span>
-		   	</td>
-		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
-		   	<td width="10%"><a href="{{$tender->tender_website}}" target="_blank">{{$tender->tender_website}}</a></td>
-		   	<td width="10%"><a href="{{$tender->tender_site_ref}}" target="_blank">{{$tender->tender_site_ref}}</a></td>
-		   
-		    <td>
-		   		<span class="label label-success">{{$tender->status}}</span>
-		   	</td>
-		  
-		   	
-		   </tr>
-
-		@endforeach
+		
 	</tbody>
 </table>
 </div>
@@ -156,5 +121,38 @@
        
     }
 
+</script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  var table = $('.yajratable').DataTable({
+        order: [[ 8, "asc" ]],
+        processing: true, 
+        serverSide: true,
+        "scrollY": 450,
+        "scrollX": true,
+        "iDisplayLength": 25,
+          ajax: {
+            url: '{{ url("gettemptenderslist")  }}',
+        },
+        columns: [
+
+            {data: 'id', name: 'id'},
+            {data: 'tendersiteid', name: 'tendersiteid'},
+            {data: 'now',name: 'nameofthework'},
+            {data: 'clientname', name: 'clientname'},
+            {data: 'location', name: 'location'},
+            {data: 'tenderrefno', name: 'tenderrefno'},
+            {data: 'workvalue', name: 'workvalue'},
+            {data: 'tempid', name: 'action',searchable: false, sortable : false},
+            {data: 'ldos', name: 'lastdateofsubmisssion'},        
+            {data: 'tender_website', name:'tender_website'},    
+            {data: 'tender_site_ref', name:'tender_site_ref'},    
+            {data: 'status', name: 'status',searchable: false, sortable : false},
+
+          
+
+        ]
+
+    });
 </script>
 @endsection
