@@ -24,6 +24,7 @@ Route::get('gettenderllistforcommitee','TenderController@gettenderllistforcommit
 Route::get('getadminapprovedtenderslist','TenderController@getadminapprovedtenderslist')->name('getadminapprovedtenderslist');
 Route::get('getassignedtendersofficelist','TenderController@getassignedtendersofficelist')->name('getassignedtendersofficelist');
 Route::get('gettemptenderslist','TenderController@gettemptenderslist')->name('gettemptenderslist');
+Route::get('getnotilligibletemplist','TenderController@getnotilligibletemplist')->name('getnotilligibletemplist');
 Route::get('getaccountexpenseentrylist','AccountController@getaccountexpenseentrylist')->name('getaccountexpenseentrylist');
 Route::get('getaccountapprovedexpenseentry','AccountController@getaccountapprovedexpenseentry')->name('getaccountapprovedexpenseentry');
 Route::get('getaccountcancelledexpenseentry','AccountController@getaccountcancelledexpenseentry')->name('getaccountcancelledexpenseentry');
