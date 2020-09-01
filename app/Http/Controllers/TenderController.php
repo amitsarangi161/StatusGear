@@ -135,7 +135,7 @@ public function notellgible()
 {
       $temptenders=temptender::where('isactive',0)->get();
 
-      return view('tender.notilligibletemptenders',compact('temptenders'));
+      return view('tender.temptenders',compact('temptenders'));
 }
 
 public function temptenders()
