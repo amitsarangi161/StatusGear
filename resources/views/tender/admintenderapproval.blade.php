@@ -17,7 +17,7 @@
 	</tr>
 </table>
 <div class="table-responsive">
-<table class="table table-responsive table-hover table-bordered table-striped datatablescroll">
+<table class="table table-responsive table-hover table-bordered table-striped yajratable">
 	<thead>
 		<tr class="bg-blue">
 			<td>ID</td>
@@ -38,27 +38,44 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($tenders as $tender)
-		   <tr>
-		   	<td><a href="/viewtenderadminforapproval/{{$tender->id}}" class="btn btn-info">{{$tender->id}}</a></td>
-		   	<td><p class="b" title="{{$tender->nameofthework}}">{{$tender->nameofthework}}</p></td>
-		   	<td>{{$tender->clientname}}</td>
-		   	<td>{{$tender->location}}</td>
-		   	<td>{{$tender->source}}</td>
-		   	<td>{{$tender->workvalue}}</td>
-		    <td data-sort="{{strtotime($tender->nitpublicationdate)}}">{{$provider::changedateformat($tender->nitpublicationdate)}}</td>
-		   	<td data-sort="{{strtotime($tender->lastdateofsubmisssion)}}"><span class="label label-danger btn btn-lg" style="font-size: 12px;">{{$provider::changedateformat($tender->lastdateofsubmisssion)}}</span></td>
-		   	<td data-sort="{{strtotime($tender->rfpavailabledate)}}"><a href="/viewassignedtenderoffice/{{$tender->id}}">{{$provider::changedateformat($tender->rfpavailabledate)}}</a></td>
-		   	<td>{{$tend::moneyFormatIndia($tender->emdamount)}}</td>
-		   	<td data-sort="{{strtotime($tender->created_at)}}">{{$provider::changedatetimeformat($tender->created_at)}}</td>
-		   	<td><span class="label label-success">{{$tender->status}}</span></td>
-		   	<td>{{$tender->name}}</td>
-		   	<td><a href="/viewtenderadminforapproval/{{$tender->id}}" class="btn btn-info">VIEW</a></td>
-		   	
-		   </tr>
-
-		@endforeach
+	
 	</tbody>
 </table>
 </div>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+  var table = $('.yajratable').DataTable({
+        order: [[ 8, "asc" ]],
+        processing: true, 
+        serverSide: true,
+        "scrollY": 450,
+        "scrollX": true,
+        "iDisplayLength": 25,
+          ajax: {
+            url: '{{ url("getadminpendingtenderslist")  }}',
+        },
+        columns: [
+
+            {data: 'idbtn', name: 'id'},
+            {data: 'now',name: 'nameofthework'},
+            {data: 'clientname', name: 'clientname'},
+            {data: 'location', name: 'location'},
+            {data: 'source', name: 'source'},
+            {data: 'workvalue', name: 'workvalue'},
+            {data: 'nitpublicationdate', name: 'nitpublicationdate'},
+            {data: 'ldos', name: 'lastdateofsubmisssion'},
+            {data: 'rfpavailabledate', name:'rfpavailabledate'},    
+            {data: 'emdamount', name:'emdamount'},    
+            {name: 'created_at',data: 'created_at'},
+            {data: 'sta', name: 'status'},
+            {data: 'name', name: 'users.name'},
+            {data: 'view', name: 'view'},
+                      
+
+          
+
+        ]
+
+    });
+</script>
 @endsection
