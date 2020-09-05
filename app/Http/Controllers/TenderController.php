@@ -2378,6 +2378,106 @@ public function userassociatepartner(){
                
                  ->make(true);
        }
+       public function getcommitteerejectedelist(Request $request)
+       {
+
+          $tenders=DB::table('tenders')
+              ->select('tenders.*','users.name')
+              ->leftJoin('users','tenders.author','=','users.id')
+              ->where('status','COMMITTEE REJECTED')
+              ->orderBy('lastdateofsubmisssion','desc');
+          
+          
+          return DataTables::of($tenders)
+                 ->setRowClass(function ($tenders) {
+                        $date = \Carbon\Carbon::parse($tenders->lastdateofsubmisssion);
+                        $now = \Carbon\Carbon::now();
+                        $diff = $now->diffInDays($date);
+                        if($date<$now){
+                            $day=-($diff);
+                         }
+                        else
+                        {
+                          $day=$diff;
+                        }
+                        if($day>=0 && $day<=5)
+                          {
+                              return 'blink';
+                          }
+                      
+                              
+                   
+                })
+                 
+                 
+                 ->addColumn('idbtn', function($tenders){
+                         return '<a target="_blank" href="/viewcommitteerejectedtender/'.$tenders->id.'" class="btn btn-info">'.$tenders->id.'</a>';
+                    })
+
+                  ->addColumn('sta', function($tenders) {
+                    /*if ($tenders->status=='PENDING') return '<span class="label label-default">'.$tenders->status.'</span>';*/
+                      if ($tenders->status=='ELLIGIBLE') return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='NOT ELLIGIBLE') return '<span class="label label-warning" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='PENDING')
+                      return '<select id="status" onchange="changestatus(this.value,'.$tenders->id.')">'.
+                               '<option value="PENDING">PENDING</option>'.
+                               '<option value="ELLIGIBLE">ELLIGIBLE</option>'.
+                               '<option value="NOT ELLIGIBLE">NOT ELLIGIBLE</option>'.
+                               '<option value="NOT INTERESTED">NOT INTERESTED</option>'.
+                               '</select>';
+
+
+
+                    if ($tenders->status=='COMMITEE APPROVED') return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN APPROVED') return '<span class="label label-primary" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='ADMIN REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    if ($tenders->status=='COMMITTEE REJECTED') return '<span class="label label-danger" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    else
+                      return '<span class="label label-success" ondblclick="revokestatus('.$tenders->id.')">'.$tenders->status.'</span>';
+                    
+                    
+                    })
+                ->addColumn('status', function($tenders){
+                  return '<select id="status" onchange="changestatus(this.value,'.$tenders->id.')">
+                      <option value="ADMIN APPROVED">Select a option</option>
+                      <option value="APPLIED">APPLIED</option>
+                      <option value="NOT APPLIED">NOT APPLIED</option>
+                    </select>';
+                    })
+                  ->addColumn('view', function($tenders){
+                         return '<a target="_blank" href="/viewcommitteerejectedtender/'.$tenders->id.'" class="btn btn-info">VIEW</a>';
+                    })
+                  ->addColumn('now', function($tenders){
+                         return '<p class="b" title="'.$tenders->nameofthework.'">'.$tenders->nameofthework.'</p>';
+                    })
+                    ->addColumn('ldos', function($tenders) {
+                    return '<strong><span class="label label-danger" style="font-size:13px;">'.$this->changedateformat($tenders->lastdateofsubmisssion).'</strong></span>';
+                     })
+                  ->editColumn('nitpublicationdate', function($tenders) {
+                    return $this->changedateformat($tenders->nitpublicationdate);
+                     })
+                   ->editColumn('emdamount', function($tenders) {
+                    return app('App\Http\Controllers\AccountController')->moneyFormatIndia($tenders->emdamount);
+                     })
+                   ->editColumn('location', function($tenders) {
+                    return $tenders->location;
+                     })
+                ->editColumn('lastdateofsubmisssion', function($tenders) {
+                    return $this->changedateformat($tenders->lastdateofsubmisssion);
+                     })
+                 
+                  ->editColumn('rfpavailabledate', function($tenders) {
+                    return $this->changedateformat($tenders->rfpavailabledate);
+                     })
+                  ->editColumn('created_at', function($tenders) {
+                        return $this->changedatetimeformat($tenders->created_at);
+                     })
+                  
+                  ->rawColumns(['idbtn','view','now','sta','status','ldos'])
+                
+               
+                 ->make(true);
+       }
        public function gettemptenderslist(Request $request)
        {
 
