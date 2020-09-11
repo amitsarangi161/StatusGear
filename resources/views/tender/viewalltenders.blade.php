@@ -21,6 +21,130 @@
 }
 
 </style>
+<style type="text/css">
+  .center {
+ width:85%;
+ padding: 25px;
+margin: 0 auto;
+border: 1px solid #ccc;
+margin-bottom: 25px;
+}
+.box45{display:inline-block;width: 100%;
+margin: 0 auto;}
+.padboth{padding-left: 5px;
+padding-right: 5px;}
+/** Custom Select **/
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  width: 100%;
+}
+  .custom-select-wrapper select {
+    display: none;
+  }
+  .custom-select.ff {
+    position: relative;
+    display: inline-block;
+  padding: 0;
+  border-radius: 3px;
+  height: 37px;
+  }
+    .custom-select-trigger {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0 84px 0 22px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #686868;
+      line-height: 35px;
+      background: #f2f2f2;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+      .custom-select-trigger:after {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 10px; height: 10px;
+        top: 50%; right: 25px;
+        margin-top: -3px;
+        border-bottom: 1px solid #057ba9;
+    border-right: 1px solid #057ba9;
+        transform: rotate(45deg) translateY(-50%);
+        transition: all .4s ease-in-out;
+        transform-origin: 50% 0;
+    
+      }
+      .custom-select.ff.opened .custom-select-trigger:after {
+        margin-top: 3px;
+        transform: rotate(-135deg) translateY(-50%);
+      }
+  .custom-options {
+    position: absolute;
+    display: block;
+    top: 100%; left: 0; right: 0;
+    min-width: 100%;
+    margin: 15px 0;
+    border: 1px solid #b5b5b5;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 1px rgba(0,0,0,.07);
+    background: #151414;
+    transition: all .4s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-15px);
+  z-index: 9;
+  }
+  .custom-select.ff.opened .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0);
+  }
+    .custom-options:before {
+      position: absolute;
+      display: block;
+      content: '';
+      bottom: 100%; right: 25px;
+      width: 7px; height: 7px;
+      margin-bottom: -4px;
+      border-top: 1px solid #413e3e;
+      border-left: 1px solid #413e3e;
+      background: #413e3e;
+      transform: rotate(45deg);
+      transition: all .4s ease-in-out;
+    }
+    .option-hover:before {
+      background: #f9f9f9;
+    }
+    .custom-option {
+      position: relative;
+display: block;
+padding: 0 22px;
+border-bottom: 1px solid #383838;
+font-size: 15px;
+font-weight: 400;
+color: #fff;
+line-height: 42px;
+cursor: pointer;
+transition: all .4s ease-in-out;
+    }
+    .custom-option:first-of-type {
+      border-radius: 4px 4px 0 0;
+    }
+    .custom-option:last-of-type {
+      border-bottom: 0;
+      border-radius: 0 0 4px 4px;
+    }
+    .custom-option:hover,
+    .custom-option.selection {
+      background: #1d1d1d;
+    }
+</style>
 
 <table class="table">
     <tr class="bg-navy">
@@ -28,37 +152,86 @@
         
     </tr>
 </table>
-<table class="table">
-    <tr>
-      <form method="POST" id="search-form1" class="form-inline" role="form">
-        <td>
-         
-          <button type="submit" value="" name="all" id="all" class="btn btn-primary">ALL</button>
-        </td>
-      </form>
-      <form method="POST" id="search-form2" class="form-inline" role="form">
-        <td><button type="submit" value="" name="live" id="live" class="btn btn-success">LIVE</button></td>
-      </form>
-      <form method="POST" id="search-form3" class="form-inline" role="form">
-        <td><button type="submit" value="" name="expired" id="expired" class="btn btn-danger">EXPIRED</button></td>
-      </form>
-      <form method="POST" id="search-form4" class="form-inline" role="form">
-        <td><button type="submit" value="" name="applied" id="applied" class="btn btn-warning">APPLIED</button></td>
-      </form>
-      <form method="POST" id="search-form5" class="form-inline" role="form">
-        <td><button type="submit" value="" name="technical" id="technical" class="btn btn-info">TECHNICAL EVALUATION</button></td>
-      </form>
-      <form method="POST" id="search-form6" class="form-inline" role="form">
-        <td><button type="submit" value="" name="financial" id="financial" class="btn btn-primary">FINANCIAL EVALUATION</button></td>
-      </form>
-      <form method="POST" id="search-form7" class="form-inline" role="form">
-        <td><button type="submit" value="" name="ei" id="ei" class="btn btn-success">ELLIGIBLE,INTERESTED</button></td>
-      </form>
-      <form method="POST" id="search-form8" class="form-inline" role="form">
-        <td><button type="submit" value="" name="ni" id="ni" class="btn btn-info">NOT ELLIGIBLE,INTERESTED</button></td>
-      </form>
-    </tr>
-</table>
+
+<div class="center">
+<div class="row">
+
+<div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/live.png')}}" style="width:18px;margin-right:4px;">Live/Expire</label>
+  <select name="sources" id="sources" class="form-control custom-select ff sources" placeholder="Select">
+    <option value="">SELECT</option>
+    <option value="profile">All</option>
+    <option value="word">Live</option>
+    <option value="hashtag">Expired</option>
+  </select>
+  </div>
+  </div>
+   <div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/status.png')}}" style="width:18px;margin-right:4px;">Status</label>
+  <select name="sources" id="sources" class="form-control select2 custom-select ff sources" placeholder="Select" multiple="">
+    <option value="">SELECT</option>
+    @foreach($statuses as $status)
+                   <option value="{{$status->status}}">{{$status->status}}</option>
+
+    @endforeach
+  </select>
+  </div>
+  </div>
+  <div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/evalue.png')}}" style="width:18px;margin-right:4px;">Evaluation</label>
+  <select name="sources" id="sources" class="form-control custom-select ff sources" placeholder="Select">
+    <option >SELECT</option>
+    <option value="TECHNICAL BID OPENING">TECHNICAL BID OPENING</option>
+    <option value="TECHNICAL EVALUATION">TECHNICAL EVALUATION</option>
+    <option value="Financial EVALUATION">Financial EVALUATION</option>
+    <option value="TECHNICAL BID OPENING">TECHNICAL BID OPENING</option>
+    <option value="AOC">AOC</option>
+    <option value="RETENDER">RETENDER</option>
+    <option value="CANCELLED">CANCELLED</option>
+  </select>
+  </div>
+  </div>
+
+  </div>
+
+  <div class="row">
+
+<div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/date.png')}}" style="width:18px;margin-right:4px;">Date (From)</label>
+  <div><input type="text" class="form-control datepicker" name=""></div>
+  </div>
+  </div>
+  <div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/date.png')}}"style="width:18px;margin-right:4px;"> Date (To)</label>
+  <div><input type="text" class="form-control datepicker" name=""></div>
+  </div>
+  </div>
+  <div class="col-md-4 padboth">
+<div class="form-group">
+<label><img src="{{asset('filter/date1.png')}}" style="width:18px;margin-right:4px;">Date Type</label>
+  <select name="sources" id="sources" class="form-control custom-select ff sources" placeholder="Select">
+    <option value="profile">SELECT</option>
+    <option value="word">BID SUBMISSION DATE</option>
+    <option value="word">RFP/NIT AVAILABLE DATE</option>
+    <option value="word">PRE-BID CLARIFICATION DATE</option>
+    <option value="word">PRE-BID MEETING DATE</option>
+    <option value="hashtag">TENDER UPLOAD DATE</option>
+  </select>
+  </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="text-center box45">
+  <button type="submit" class="btn btn-primary"><img src="{{asset('filter/check.png')}}" style="width:18px;">Filter</button>
+  <button type="submit" class="btn btn-danger"><img src="{{asset('filter/check.png')}}" style="width:18px;">Clear</button>
+  </div>
+  </div>
+  </div>
 <div class="table-responsive">
 <table class="table table-responsive table-hover table-bordered table-striped yajratable">
     <thead>
@@ -346,5 +519,50 @@
        $("#tid").val(id);
        $('#revokeModal').modal('show');
   }
+  </script>
+  <script type="text/javascript">
+    $(".custom-select").each(function() {
+  var classes = $(this).attr("class"),
+      id      = $(this).attr("id"),
+      name    = $(this).attr("name");
+  var template =  '<div class="' + classes + '">';
+      template += '<span class="custom-select-trigger">' + $(this).attr("placeholder") + '</span>';
+      template += '<div class="custom-options">';
+      $(this).find("option").each(function() {
+        template += '<span class="custom-option ' + $(this).attr("class") + '" data-value="' + $(this).attr("value") + '">' + $(this).html() + '</span>';
+      });
+  template += '</div></div>';
+  
+  $(this).wrap('<div class="custom-select-wrapper"></div>');
+  $(this).hide();
+  $(this).after(template);
+});
+$(".custom-option:first-of-type").hover(function() {
+  $(this).parents(".custom-options").addClass("option-hover");
+}, function() {
+  $(this).parents(".custom-options").removeClass("option-hover");
+});
+$(".custom-select-trigger").on("click", function() {
+  $('html').one('click',function() {
+    $(".custom-select").removeClass("opened");
+  });
+  $(this).parents(".custom-select").toggleClass("opened");
+  event.stopPropagation();
+});
+$(".custom-option").on("click", function() {
+  $(this).parents(".custom-select-wrapper").find("select").val($(this).data("value"));
+  $(this).parents(".custom-options").find(".custom-option").removeClass("selection");
+  $(this).addClass("selection");
+  $(this).parents(".custom-select").removeClass("opened");
+  $(this).parents(".custom-select").find(".custom-select-trigger").text($(this).text());
+});
+
+
+<div class="col-md-6 padboth">
+<div class="form-group">
+<label><img src="live.png" style="width:18px;margin-right:4px;">Live</label>
+ <div><input type="text" class="form-control datepicker" name=""></div>
+  </div>
+  </div>
   </script>
 @endsection
