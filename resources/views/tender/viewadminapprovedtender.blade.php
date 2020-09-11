@@ -26,10 +26,10 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 50%, #fade9b 100%);
 
 <table class="table table-responsive table-hover table-bordered table-striped">
 <tr>
-	<td><strong>Name Of the Work *</strong></td>
-	<td><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
-	<td><strong>Client Name *</strong></td>
-	<td>
+	<td width="20%"><strong>Name Of the Work *</strong></td>
+	<td width="30%"><textarea name="nameofthework" class="form-control" placeholder="Enter Name of The Work" disabled="">{{$tender->nameofthework}}</textarea></td>
+	<td width="20%"><strong>Client Name *</strong></td>
+	<td width="30%">
 		<input type="text" name="clientname" class="form-control" placeholder="Enter Name of the Work" value="{{$tender->clientname}}" disabled="">
 	</td>
 </tr>
